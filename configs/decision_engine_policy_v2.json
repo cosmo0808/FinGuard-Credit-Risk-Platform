@@ -1,0 +1,50 @@
+{
+  "policy_version": "2.0.0",
+  "model_versions": {"champion": "scorecard_logit_v1.0", "challenger": "lgbm_m4_v1.0", "calibration_fit_split": "OOT_Valid", "calibration_fit_weeks": [65, 77], "oot_monitor_used_for_fit": false},
+  "pdo_scorecard": {"base_score": 600.0, "base_bad_good_odds": 0.05, "points_to_double_odds": 50.0, "factor": 72.13475204444818, "base_points": 383.9035952556319},
+  "calibration": {
+    "champion": {"intercept_alpha": -0.2681707440279647, "platt_alpha": -0.16438543232438987, "platt_beta": 1.034478350488692},
+    "challenger": {"intercept_alpha": -0.27812185198150563, "platt_alpha": -0.10972912650931903, "platt_beta": 1.059846024844399}
+  },
+  "thresholds": {
+    "iso_approval": {"champion_pd_cutoff": 0.030810455894633697, "challenger_pd_cutoff": 0.03356910754805267, "valid_target_eligible_approval_rate": 0.75},
+    "iso_risk": {"champion_pd_cutoff": 0.030810455894633697, "challenger_pd_cutoff": 0.04648983019655445, "valid_reference_bad_rate": 0.012622675619834711}
+  },
+  "hard_knockout_rules": [
+    {"rule_id": "R01", "field": "bureau_active_max_dpd", "operator": ">=", "value": 90, "reason_code": "SEVERE_ACTIVE_DELINQUENCY"},
+    {"rule_id": "R02", "field": "active_bureau_monthly_debt / maininc_215A", "operator": ">", "value": 0.6, "applies_when_income_verified": true, "reason_code": "EXISTING_DEBT_TO_INCOME_OVER_60_PERCENT"}
+  ],
+  "tri_state_router": {
+    "active_model": "challenger", "cutoff_source": "iso_risk.challenger_pd_cutoff", "grey_zone_half_width_absolute_pd": 0.005,
+    "model_disagreement_routes_to_review": true, "hard_rule_routes_to_auto_decline": true,
+    "manual_review_capacity_per_day": 1000, "cost_per_manual_review_currency_units": 25.0,
+    "assumed_bad_reduction_after_verification_pct": 20.0,
+    "assumption_note": "Review band, capacity, cost, and verification effect are configurable scenario assumptions; they are not estimated from OOT_Monitor outcomes."
+  },
+  "limit_policy": {
+    "dsr_cap": 0.5, "verified_income_threshold": 100.0, "minor_dpd_behavior_multiplier": 0.75,
+    "clean_history_behavior_multiplier": 1.0, "early_payment_behavior_multiplier": 1.15,
+    "early_payment_ratio_threshold": 0.7, "hard_policy_behavior_multiplier": 0.0,
+    "affordability_bands": {"VERIFIED_INCOME": {"basis": "present_value_of_payment_under_dsr_cap"}, "UNVERIFIED_INCOME": {"basis": "tier_fallback_fraction_of_requested_amount"}},
+    "risk_tiers": [
+      {"tier": "A", "pd_upper_exclusive": 0.01, "apr_pct": 9.0, "verified_income_multiple": 4.0, "unverified_fallback_pct": 80.0},
+      {"tier": "B", "pd_upper_exclusive": 0.02, "apr_pct": 12.0, "verified_income_multiple": 3.0, "unverified_fallback_pct": 75.0},
+      {"tier": "C", "pd_upper_exclusive": 0.04, "apr_pct": 15.0, "verified_income_multiple": 2.0, "unverified_fallback_pct": 70.0},
+      {"tier": "D", "pd_upper_exclusive": 0.07, "apr_pct": 18.0, "verified_income_multiple": 1.0, "unverified_fallback_pct": 60.0},
+      {"tier": "E", "pd_upper_exclusive": null, "apr_pct": 0.0, "verified_income_multiple": 0.0, "unverified_fallback_pct": 0.0}
+    ],
+    "decision_matrix": [
+      {"risk_tier":"A","affordability_band":"VERIFIED_INCOME","apr_pct":9.0,"max_behavior_multiplier":1.15,"dsr_cap_pct":50,"limit_basis":"verified_income_multiple"},
+      {"risk_tier":"A","affordability_band":"UNVERIFIED_INCOME","apr_pct":9.0,"max_behavior_multiplier":1.15,"dsr_cap_pct":null,"limit_basis":"unverified_fallback_pct"},
+      {"risk_tier":"B","affordability_band":"VERIFIED_INCOME","apr_pct":12.0,"max_behavior_multiplier":1.15,"dsr_cap_pct":50,"limit_basis":"verified_income_multiple"},
+      {"risk_tier":"B","affordability_band":"UNVERIFIED_INCOME","apr_pct":12.0,"max_behavior_multiplier":1.15,"dsr_cap_pct":null,"limit_basis":"unverified_fallback_pct"},
+      {"risk_tier":"C","affordability_band":"VERIFIED_INCOME","apr_pct":15.0,"max_behavior_multiplier":1.15,"dsr_cap_pct":50,"limit_basis":"verified_income_multiple"},
+      {"risk_tier":"C","affordability_band":"UNVERIFIED_INCOME","apr_pct":15.0,"max_behavior_multiplier":1.15,"dsr_cap_pct":null,"limit_basis":"unverified_fallback_pct"},
+      {"risk_tier":"D","affordability_band":"VERIFIED_INCOME","apr_pct":18.0,"max_behavior_multiplier":1.15,"dsr_cap_pct":50,"limit_basis":"verified_income_multiple"},
+      {"risk_tier":"D","affordability_band":"UNVERIFIED_INCOME","apr_pct":18.0,"max_behavior_multiplier":1.15,"dsr_cap_pct":null,"limit_basis":"unverified_fallback_pct"},
+      {"risk_tier":"E","affordability_band":"VERIFIED_INCOME","apr_pct":0.0,"max_behavior_multiplier":0.0,"dsr_cap_pct":50,"limit_basis":"hard_decline"},
+      {"risk_tier":"E","affordability_band":"UNVERIFIED_INCOME","apr_pct":0.0,"max_behavior_multiplier":0.0,"dsr_cap_pct":null,"limit_basis":"hard_decline"}
+    ]
+  },
+  "provenance": {"empirical_source": "Stage 4 loan engine, Stage 5 OOT_Valid calibrators and cutoffs", "threshold_fit_rows": 82602, "oot_monitor_used_for_threshold_selection": false}
+}

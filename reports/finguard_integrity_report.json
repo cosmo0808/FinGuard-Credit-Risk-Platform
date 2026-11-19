@@ -1,0 +1,108 @@
+{
+  "generated_at_utc": "2026-11-19T13:55:31.427118+00:00",
+  "suite": "FinGuard institutional integrity",
+  "invariants": 16,
+  "test_cases": 19,
+  "passed": 16,
+  "failed": 0,
+  "skipped": 0,
+  "exit_status": 0,
+  "status": "PASS",
+  "tests": [
+    {
+      "test": "tests/test_ci_contract.py::test_policy_schema_and_two_dimensional_matrix",
+      "status": "passed",
+      "duration_seconds": 0.007571
+    },
+    {
+      "test": "tests/test_ci_contract.py::test_scorecard_pdo_constants_reconstruct_factor",
+      "status": "passed",
+      "duration_seconds": 0.000503
+    },
+    {
+      "test": "tests/test_ci_contract.py::test_api_request_contract_and_bounds",
+      "status": "passed",
+      "duration_seconds": 0.000303
+    },
+    {
+      "test": "tests/test_finguard_integrity.py::test_01_temporal_splits_are_disjoint_and_complete",
+      "status": "passed",
+      "duration_seconds": 0.148944
+    },
+    {
+      "test": "tests/test_finguard_integrity.py::test_02_fitted_models_exclude_leakage_and_sensitive_fields",
+      "status": "passed",
+      "duration_seconds": 0.000309
+    },
+    {
+      "test": "tests/test_finguard_integrity.py::test_03_champion_coefficients_pvalues_and_vif_pass",
+      "status": "passed",
+      "duration_seconds": 2.474637
+    },
+    {
+      "test": "tests/test_finguard_integrity.py::test_04_pdo_score_reconstructs_saved_logit_pd",
+      "status": "passed",
+      "duration_seconds": 0.099783
+    },
+    {
+      "test": "tests/test_finguard_integrity.py::test_05_oot_valid_bad_rates_strictly_decrease_across_ten_risk_deciles",
+      "status": "passed",
+      "duration_seconds": 0.062277
+    },
+    {
+      "test": "tests/test_finguard_integrity.py::test_06_recalibrator_is_valid_only_and_intercept_preserves_rank",
+      "status": "passed",
+      "duration_seconds": 0.178873
+    },
+    {
+      "test": "tests/test_finguard_integrity.py::test_07_recommended_limits_are_bounded_finite",
+      "status": "passed",
+      "duration_seconds": 0.003738
+    },
+    {
+      "test": "tests/test_finguard_integrity.py::test_08_policy_knockouts_always_have_zero_limit",
+      "status": "passed",
+      "duration_seconds": 0.004489
+    },
+    {
+      "test": "tests/test_finguard_integrity.py::test_09_verified_income_approvals_satisfy_total_dsr_cap",
+      "status": "passed",
+      "duration_seconds": 0.011512
+    },
+    {
+      "test": "tests/test_finguard_integrity.py::test_10_oot_monitor_isorisk_headline_matches_stage6_artifact",
+      "status": "passed",
+      "duration_seconds": 0.005945
+    },
+    {
+      "test": "tests/test_finguard_integrity.py::test_11_exported_ui_has_no_fabricated_currency_labels",
+      "status": "passed",
+      "duration_seconds": 0.63499
+    },
+    {
+      "test": "tests/test_finguard_integrity.py::test_12_python_model_parity_fixtures_cover_five_monitor_spotlights",
+      "status": "passed",
+      "duration_seconds": 0.018693
+    },
+    {
+      "test": "tests/test_finguard_integrity.py::test_13_policy_config_json_schema_and_thresholds",
+      "status": "passed",
+      "duration_seconds": 0.005852
+    },
+    {
+      "test": "tests/test_finguard_integrity.py::test_14_fastapi_health_and_single_underwrite_parity",
+      "status": "passed",
+      "duration_seconds": 0.635133
+    },
+    {
+      "test": "tests/test_finguard_integrity.py::test_15_rule_waterfall_and_tristate_accounting_identity",
+      "status": "passed",
+      "duration_seconds": 0.082394
+    },
+    {
+      "test": "tests/test_finguard_integrity.py::test_16_woe_bin_explorer_completeness",
+      "status": "passed",
+      "duration_seconds": 0.042744
+    }
+  ]
+}

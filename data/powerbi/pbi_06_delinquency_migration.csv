@@ -1,0 +1,61 @@
+Table_Label,Model,Risk_Tier,Prior_Delinquency_Severity,Application_Count,Current_Defaults,Current_Default_Rate_Pct,Mean_Intercept_Recalibrated_PD_Pct
+Prior-Delinquency Severity -> Current Loan Default Migration Table,Challenger LightGBM M4,Tier A: Super Prime,0 DPD,501828,1901.0,0.37881505216926914,0.5021410208685951
+Prior-Delinquency Severity -> Current Loan Default Migration Table,Challenger LightGBM M4,Tier A: Super Prime,1-10 DPD,286,3.0,1.048951048951049,0.6523270792616161
+Prior-Delinquency Severity -> Current Loan Default Migration Table,Challenger LightGBM M4,Tier A: Super Prime,31-89 DPD,1,0.0,0.0,0.8019753178045221
+Prior-Delinquency Severity -> Current Loan Default Migration Table,Challenger LightGBM M4,Tier A: Super Prime,No prior application,135612,866.0,0.6385865557620269,0.5846565710882516
+Prior-Delinquency Severity -> Current Loan Default Migration Table,Challenger LightGBM M4,Tier A: Super Prime,Prior contract: DPD unavailable,9,0.0,0.0,0.6326837379567349
+Prior-Delinquency Severity -> Current Loan Default Migration Table,Challenger LightGBM M4,Tier B: Prime,0 DPD,253708,3631.0,1.4311728443722704,1.4406313360389993
+Prior-Delinquency Severity -> Current Loan Default Migration Table,Challenger LightGBM M4,Tier B: Prime,1-10 DPD,468,7.0,1.4957264957264957,1.5148169292899616
+Prior-Delinquency Severity -> Current Loan Default Migration Table,Challenger LightGBM M4,Tier B: Prime,11-30 DPD,5,0.0,0.0,1.2996483762253797
+Prior-Delinquency Severity -> Current Loan Default Migration Table,Challenger LightGBM M4,Tier B: Prime,31-89 DPD,1,0.0,0.0,1.2660159819743986
+Prior-Delinquency Severity -> Current Loan Default Migration Table,Challenger LightGBM M4,Tier B: Prime,No prior application,80421,1383.0,1.7197000783377474,1.4281595088154595
+Prior-Delinquency Severity -> Current Loan Default Migration Table,Challenger LightGBM M4,Tier B: Prime,Prior contract: DPD unavailable,3,0.0,0.0,1.5335238645614309
+Prior-Delinquency Severity -> Current Loan Default Migration Table,Challenger LightGBM M4,Tier C: Standard,0 DPD,223869,7159.0,3.197852315416605,2.8455602082296982
+Prior-Delinquency Severity -> Current Loan Default Migration Table,Challenger LightGBM M4,Tier C: Standard,1-10 DPD,804,32.0,3.9800995024875623,2.967426444814976
+Prior-Delinquency Severity -> Current Loan Default Migration Table,Challenger LightGBM M4,Tier C: Standard,11-30 DPD,14,0.0,0.0,3.2030409287099646
+Prior-Delinquency Severity -> Current Loan Default Migration Table,Challenger LightGBM M4,Tier C: Standard,90+ DPD,1,0.0,0.0,3.6480020331392664
+Prior-Delinquency Severity -> Current Loan Default Migration Table,Challenger LightGBM M4,Tier C: Standard,No prior application,58353,1912.0,3.2766096001919354,2.7832464884647274
+Prior-Delinquency Severity -> Current Loan Default Migration Table,Challenger LightGBM M4,Tier C: Standard,Prior contract: DPD unavailable,4,1.0,25.0,2.7433146448991046
+Prior-Delinquency Severity -> Current Loan Default Migration Table,Challenger LightGBM M4,Tier D: High Risk,0 DPD,128641,8676.0,6.744350556976392,5.2524393618154654
+Prior-Delinquency Severity -> Current Loan Default Migration Table,Challenger LightGBM M4,Tier D: High Risk,1-10 DPD,746,53.0,7.104557640750671,5.346449917025759
+Prior-Delinquency Severity -> Current Loan Default Migration Table,Challenger LightGBM M4,Tier D: High Risk,11-30 DPD,58,7.0,12.068965517241379,5.440938802535403
+Prior-Delinquency Severity -> Current Loan Default Migration Table,Challenger LightGBM M4,Tier D: High Risk,31-89 DPD,5,0.0,0.0,5.924920522020301
+Prior-Delinquency Severity -> Current Loan Default Migration Table,Challenger LightGBM M4,Tier D: High Risk,90+ DPD,10,1.0,10.0,6.086824567790963
+Prior-Delinquency Severity -> Current Loan Default Migration Table,Challenger LightGBM M4,Tier D: High Risk,No prior application,22822,1461.0,6.4017176408728425,5.185457300313969
+Prior-Delinquency Severity -> Current Loan Default Migration Table,Challenger LightGBM M4,Tier E: Decline,0 DPD,109584,19445.0,17.744378741422107,12.414104882798158
+Prior-Delinquency Severity -> Current Loan Default Migration Table,Challenger LightGBM M4,Tier E: Decline,1-10 DPD,1029,262.0,25.461613216715257,14.127965347574426
+Prior-Delinquency Severity -> Current Loan Default Migration Table,Challenger LightGBM M4,Tier E: Decline,11-30 DPD,238,62.0,26.05042016806723,17.20977845404689
+Prior-Delinquency Severity -> Current Loan Default Migration Table,Challenger LightGBM M4,Tier E: Decline,31-89 DPD,84,18.0,21.428571428571427,25.58402433837771
+Prior-Delinquency Severity -> Current Loan Default Migration Table,Challenger LightGBM M4,Tier E: Decline,90+ DPD,125,18.0,14.399999999999999,25.759865044696333
+Prior-Delinquency Severity -> Current Loan Default Migration Table,Challenger LightGBM M4,Tier E: Decline,No prior application,7929,1095.0,13.81006432084752,10.168064759189665
+Prior-Delinquency Severity -> Current Loan Default Migration Table,Challenger LightGBM M4,Tier E: Decline,Prior contract: DPD unavailable,1,1.0,100.0,7.225995661619786
+Prior-Delinquency Severity -> Current Loan Default Migration Table,Champion Scorecard,Tier A: Super Prime,0 DPD,316969,1996.0,0.62971457776628,0.6878419537712497
+Prior-Delinquency Severity -> Current Loan Default Migration Table,Champion Scorecard,Tier A: Super Prime,1-10 DPD,186,4.0,2.1505376344086025,0.7242143832114017
+Prior-Delinquency Severity -> Current Loan Default Migration Table,Champion Scorecard,Tier A: Super Prime,31-89 DPD,1,0.0,0.0,0.6147505254238165
+Prior-Delinquency Severity -> Current Loan Default Migration Table,Champion Scorecard,Tier A: Super Prime,No prior application,113696,803.0,0.7062693498452013,0.6924419891128714
+Prior-Delinquency Severity -> Current Loan Default Migration Table,Champion Scorecard,Tier A: Super Prime,Prior contract: DPD unavailable,4,0.0,0.0,0.8184938513463332
+Prior-Delinquency Severity -> Current Loan Default Migration Table,Champion Scorecard,Tier B: Prime,0 DPD,374523,5830.0,1.5566467212961554,1.4321790442317297
+Prior-Delinquency Severity -> Current Loan Default Migration Table,Champion Scorecard,Tier B: Prime,1-10 DPD,504,17.0,3.373015873015873,1.496745498826662
+Prior-Delinquency Severity -> Current Loan Default Migration Table,Champion Scorecard,Tier B: Prime,11-30 DPD,3,0.0,0.0,1.7326656299189132
+Prior-Delinquency Severity -> Current Loan Default Migration Table,Champion Scorecard,Tier B: Prime,No prior application,119054,2135.0,1.7933038789120903,1.4515207798528944
+Prior-Delinquency Severity -> Current Loan Default Migration Table,Champion Scorecard,Tier B: Prime,Prior contract: DPD unavailable,7,0.0,0.0,1.4150698302564617
+Prior-Delinquency Severity -> Current Loan Default Migration Table,Champion Scorecard,Tier C: Standard,0 DPD,281465,10582.0,3.759614872186595,2.8251220604448317
+Prior-Delinquency Severity -> Current Loan Default Migration Table,Champion Scorecard,Tier C: Standard,1-10 DPD,867,51.0,5.88235294117647,2.9363231330538957
+Prior-Delinquency Severity -> Current Loan Default Migration Table,Champion Scorecard,Tier C: Standard,11-30 DPD,40,6.0,15.0,3.0913869169254053
+Prior-Delinquency Severity -> Current Loan Default Migration Table,Champion Scorecard,Tier C: Standard,31-89 DPD,5,0.0,0.0,2.915643061184131
+Prior-Delinquency Severity -> Current Loan Default Migration Table,Champion Scorecard,Tier C: Standard,90+ DPD,1,0.0,0.0,3.908608784826911
+Prior-Delinquency Severity -> Current Loan Default Migration Table,Champion Scorecard,Tier C: Standard,No prior application,64817,2893.0,4.4633352361263245,2.6487187357833295
+Prior-Delinquency Severity -> Current Loan Default Migration Table,Champion Scorecard,Tier C: Standard,Prior contract: DPD unavailable,5,1.0,20.0,2.752845017699442
+Prior-Delinquency Severity -> Current Loan Default Migration Table,Champion Scorecard,Tier D: High Risk,0 DPD,143099,9921.0,6.932962494496817,5.225388667364171
+Prior-Delinquency Severity -> Current Loan Default Migration Table,Champion Scorecard,Tier D: High Risk,1-10 DPD,817,99.0,12.11750305997552,5.379393972071123
+Prior-Delinquency Severity -> Current Loan Default Migration Table,Champion Scorecard,Tier D: High Risk,11-30 DPD,66,14.0,21.21212121212121,5.434464414815398
+Prior-Delinquency Severity -> Current Loan Default Migration Table,Champion Scorecard,Tier D: High Risk,31-89 DPD,12,0.0,0.0,5.59922828386796
+Prior-Delinquency Severity -> Current Loan Default Migration Table,Champion Scorecard,Tier D: High Risk,90+ DPD,4,0.0,0.0,6.888292067012852
+Prior-Delinquency Severity -> Current Loan Default Migration Table,Champion Scorecard,Tier D: High Risk,No prior application,6850,764.0,11.153284671532846,4.940364071581205
+Prior-Delinquency Severity -> Current Loan Default Migration Table,Champion Scorecard,Tier D: High Risk,Prior contract: DPD unavailable,1,1.0,100.0,4.310749506669596
+Prior-Delinquency Severity -> Current Loan Default Migration Table,Champion Scorecard,Tier E: Decline,0 DPD,101574,12483.0,12.289562289562289,11.370959585766295
+Prior-Delinquency Severity -> Current Loan Default Migration Table,Champion Scorecard,Tier E: Decline,1-10 DPD,959,186.0,19.39520333680918,12.437768502598514
+Prior-Delinquency Severity -> Current Loan Default Migration Table,Champion Scorecard,Tier E: Decline,11-30 DPD,206,49.0,23.78640776699029,13.659945758206746
+Prior-Delinquency Severity -> Current Loan Default Migration Table,Champion Scorecard,Tier E: Decline,31-89 DPD,73,18.0,24.65753424657534,17.09126587669734
+Prior-Delinquency Severity -> Current Loan Default Migration Table,Champion Scorecard,Tier E: Decline,90+ DPD,131,19.0,14.50381679389313,23.140758937419374
+Prior-Delinquency Severity -> Current Loan Default Migration Table,Champion Scorecard,Tier E: Decline,No prior application,720,122.0,16.944444444444446,8.165787552573542

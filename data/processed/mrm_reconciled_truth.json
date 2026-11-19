@@ -1,0 +1,4000 @@
+{
+  "metadata": {
+    "generated_at_local": "2026-11-19 16:49:00",
+    "script": "src/mrm_v2_reconcile.py",
+    "B": 1000,
+    "seed": 42,
+    "duckdb_memory_limit": "3GB",
+    "html_untouched": true,
+    "html_hashes_before": {
+      "D:\\data analysis\\FinGuard\\docs\\index.html": "7f70e16018c134f1ac043015d23f9c60630cbe085203f3a7e9a68a20dcaa735e",
+      "D:\\data analysis\\FinGuard\\dashboard\\FinGuard_Interactive_Command_Center.html": "7f70e16018c134f1ac043015d23f9c60630cbe085203f3a7e9a68a20dcaa735e"
+    },
+    "html_hashes_after": {
+      "D:\\data analysis\\FinGuard\\docs\\index.html": "7f70e16018c134f1ac043015d23f9c60630cbe085203f3a7e9a68a20dcaa735e",
+      "D:\\data analysis\\FinGuard\\dashboard\\FinGuard_Interactive_Command_Center.html": "7f70e16018c134f1ac043015d23f9c60630cbe085203f3a7e9a68a20dcaa735e"
+    },
+    "python_executable": "D:\\data analysis\\FinGuard\\.venv\\Scripts\\python.exe"
+  },
+  "section_1_split_reconciliation": {
+    "canonical_split_rows": [
+      {
+        "split_name": "Train_Dev",
+        "rows": 1292350,
+        "distinct_case_ids": 1292350,
+        "week_min": 0,
+        "week_max": 64,
+        "date_min": "2019-01-01T00:00:00",
+        "date_max": "2020-03-30T00:00:00",
+        "target_observed": 1292350,
+        "target_observed_pct": 100.0,
+        "observed_bad_rate_pct": 3.315355747282083
+      },
+      {
+        "split_name": "OOT_Valid",
+        "rows": 82602,
+        "distinct_case_ids": 82602,
+        "week_min": 65,
+        "week_max": 77,
+        "date_min": "2020-03-31T00:00:00",
+        "date_max": "2020-06-29T00:00:00",
+        "target_observed": 82602,
+        "target_observed_pct": 100.0,
+        "observed_bad_rate_pct": 2.3401370426866177
+      },
+      {
+        "split_name": "OOT_Monitor",
+        "rows": 151707,
+        "distinct_case_ids": 151707,
+        "week_min": 78,
+        "week_max": 91,
+        "date_min": "2020-06-30T00:00:00",
+        "date_max": "2020-10-05T00:00:00",
+        "target_observed": 151707,
+        "target_observed_pct": 100.0,
+        "observed_bad_rate_pct": 2.119216647880454
+      }
+    ],
+    "artifact_split_rows": {
+      "feature_mart": [
+        {
+          "split_name": "Train_Dev",
+          "rows": 1292350,
+          "distinct_case_ids": 1292350,
+          "week_min": 0,
+          "week_max": 64,
+          "target_null_rows": 0.0
+        },
+        {
+          "split_name": "OOT_Valid",
+          "rows": 82602,
+          "distinct_case_ids": 82602,
+          "week_min": 65,
+          "week_max": 77,
+          "target_null_rows": 0.0
+        },
+        {
+          "split_name": "OOT_Monitor",
+          "rows": 151707,
+          "distinct_case_ids": 151707,
+          "week_min": 78,
+          "week_max": 91,
+          "target_null_rows": 0.0
+        }
+      ],
+      "stage5_predictions": [
+        {
+          "split_name": "Train_Dev",
+          "rows": 1292350,
+          "distinct_case_ids": 1292350,
+          "week_min": 0,
+          "week_max": 64,
+          "target_null_rows": 0.0
+        },
+        {
+          "split_name": "OOT_Valid",
+          "rows": 82602,
+          "distinct_case_ids": 82602,
+          "week_min": 65,
+          "week_max": 77,
+          "target_null_rows": 0.0
+        },
+        {
+          "split_name": "OOT_Monitor",
+          "rows": 151707,
+          "distinct_case_ids": 151707,
+          "week_min": 78,
+          "week_max": 91,
+          "target_null_rows": 0.0
+        }
+      ]
+    },
+    "stage3_prediction_split_rows": [
+      {
+        "split_name": "Train_Dev",
+        "rows": 1292350,
+        "distinct_case_ids": 1292350,
+        "week_min": 0,
+        "week_max": 64
+      },
+      {
+        "split_name": "OOT_Valid",
+        "rows": 82602,
+        "distinct_case_ids": 82602,
+        "week_min": 65,
+        "week_max": 77
+      }
+    ],
+    "train_dev_case_id_artifact": {
+      "rows": 1292350,
+      "distinct_case_ids": 1292350,
+      "min_case_id": 0,
+      "max_case_id": 2679837
+    },
+    "case_level_assignment_mismatches": [],
+    "date_boundary_reconciliation": {
+      "through_2020_03_30": 1292350,
+      "march_to_june_2020": 82602,
+      "from_2020_06_30": 151707,
+      "boundary_membership_mismatch": 0
+    },
+    "claimed_count_discrepancy": {
+      "Train_Dev": {
+        "claimed_rows": 1292315,
+        "canonical_rows": 1292350,
+        "claimed_minus_canonical": -35
+      },
+      "OOT_Valid": {
+        "claimed_rows": 82637,
+        "canonical_rows": 82602,
+        "claimed_minus_canonical": 35
+      }
+    },
+    "discrepancy_case_ids": [],
+    "discrepancy_case_ids_status": "NOT_REPRODUCIBLE_FROM_CURRENT_ARTIFACTS",
+    "canonical_week_split_verified": true,
+    "interpretation": "The mart, Stage 3 predictions, Stage 5 predictions, and Train_Dev case-ID artifact agree on WEEK_NUM splits. Current artifacts do not contain a 35-row membership difference to enumerate. The 1,292,315/82,637 pair is therefore not reproduced; retain 1,292,350/82,602 as canonical for the saved week-based artifacts."
+  },
+  "section_2_resource_telemetry": {
+    "duckdb_sample_mart_query": {
+      "elapsed_seconds": 0.2056161999998949,
+      "baseline_rss_mb": 224.899072,
+      "peak_rss_mb": 333.889536,
+      "peak_rss_delta_mb": 108.990464,
+      "python_tracemalloc_peak_mb": 0.191923
+    },
+    "oot_monitor_champion_m4_limit_scoring": {
+      "elapsed_seconds": 16.73341319999963,
+      "baseline_rss_mb": 235.15136,
+      "peak_rss_mb": 541.966336,
+      "peak_rss_delta_mb": 306.814976,
+      "python_tracemalloc_peak_mb": 192.426882
+    },
+    "standalone_model_bundle_export_verify": {
+      "elapsed_seconds": 8.820413299999927,
+      "baseline_rss_mb": 393.9328,
+      "peak_rss_mb": 491.45856,
+      "peak_rss_delta_mb": 97.52576,
+      "python_tracemalloc_peak_mb": 96.294773
+    },
+    "bundle_roundtrip": {
+      "json_bytes_utf8": 13702072,
+      "sha256": "55460ce9726155acf4a1006a4008455884b6ed343deaecbc5d3c9a6bf42e41d2",
+      "roundtrip_feature_count": 73,
+      "roundtrip_tree_count": 1218,
+      "standalone_bundle_schema_valid": true
+    },
+    "duckdb_query_rows": 92,
+    "oot_monitor_scoring": {
+      "rows": 151707,
+      "champion_pd_mean": 0.027354741092181528,
+      "challenger_pd_mean": 0.025515910640285897,
+      "positive_limits": 128605,
+      "limits_total": 5625187725.213215,
+      "champion_scored_rows": 151707,
+      "challenger_scored_rows": 151707
+    }
+  },
+  "section_3_weekly_stability_and_bootstrap": {
+    "weekly_metrics": [
+      {
+        "split_name": "OOT_Monitor",
+        "week": 78,
+        "model": "Champion Scorecard",
+        "n": 8755,
+        "target_observed_pct": 100.0,
+        "observed_bad_rate_pct": 2.227298686464877,
+        "mean_recalibrated_pd_pct": 2.3320146360492506,
+        "weekly_gini": 0.6190953750299544
+      },
+      {
+        "split_name": "OOT_Monitor",
+        "week": 78,
+        "model": "Challenger LightGBM M4",
+        "n": 8755,
+        "target_observed_pct": 100.0,
+        "observed_bad_rate_pct": 2.227298686464877,
+        "mean_recalibrated_pd_pct": 2.7456114308198516,
+        "weekly_gini": 0.7303546609154086
+      },
+      {
+        "split_name": "OOT_Monitor",
+        "week": 79,
+        "model": "Champion Scorecard",
+        "n": 5158,
+        "target_observed_pct": 100.0,
+        "observed_bad_rate_pct": 2.1713842574641333,
+        "mean_recalibrated_pd_pct": 2.432771636627147,
+        "weekly_gini": 0.558393140252534
+      },
+      {
+        "split_name": "OOT_Monitor",
+        "week": 79,
+        "model": "Challenger LightGBM M4",
+        "n": 5158,
+        "target_observed_pct": 100.0,
+        "observed_bad_rate_pct": 2.1713842574641333,
+        "mean_recalibrated_pd_pct": 2.9003797899784547,
+        "weekly_gini": 0.6558483381461979
+      },
+      {
+        "split_name": "OOT_Monitor",
+        "week": 80,
+        "model": "Champion Scorecard",
+        "n": 6246,
+        "target_observed_pct": 100.0,
+        "observed_bad_rate_pct": 1.921229586935639,
+        "mean_recalibrated_pd_pct": 2.4145395658218503,
+        "weekly_gini": 0.47492382196104055
+      },
+      {
+        "split_name": "OOT_Monitor",
+        "week": 80,
+        "model": "Challenger LightGBM M4",
+        "n": 6246,
+        "target_observed_pct": 100.0,
+        "observed_bad_rate_pct": 1.921229586935639,
+        "mean_recalibrated_pd_pct": 2.862230795890991,
+        "weekly_gini": 0.5738491674828596
+      },
+      {
+        "split_name": "OOT_Monitor",
+        "week": 81,
+        "model": "Champion Scorecard",
+        "n": 6743,
+        "target_observed_pct": 100.0,
+        "observed_bad_rate_pct": 2.788076523802462,
+        "mean_recalibrated_pd_pct": 2.4681518159421776,
+        "weekly_gini": 0.4991714948796597
+      },
+      {
+        "split_name": "OOT_Monitor",
+        "week": 81,
+        "model": "Challenger LightGBM M4",
+        "n": 6743,
+        "target_observed_pct": 100.0,
+        "observed_bad_rate_pct": 2.788076523802462,
+        "mean_recalibrated_pd_pct": 2.867190511851834,
+        "weekly_gini": 0.5883100443059546
+      },
+      {
+        "split_name": "OOT_Monitor",
+        "week": 82,
+        "model": "Champion Scorecard",
+        "n": 5423,
+        "target_observed_pct": 100.0,
+        "observed_bad_rate_pct": 2.2496773003872397,
+        "mean_recalibrated_pd_pct": 2.5392491179107375,
+        "weekly_gini": 0.4775251189846643
+      },
+      {
+        "split_name": "OOT_Monitor",
+        "week": 82,
+        "model": "Challenger LightGBM M4",
+        "n": 5423,
+        "target_observed_pct": 100.0,
+        "observed_bad_rate_pct": 2.2496773003872397,
+        "mean_recalibrated_pd_pct": 3.016604120316552,
+        "weekly_gini": 0.5852885783999926
+      },
+      {
+        "split_name": "OOT_Monitor",
+        "week": 83,
+        "model": "Champion Scorecard",
+        "n": 7295,
+        "target_observed_pct": 100.0,
+        "observed_bad_rate_pct": 2.138450993831391,
+        "mean_recalibrated_pd_pct": 2.5511497311767117,
+        "weekly_gini": 0.5203109679226781
+      },
+      {
+        "split_name": "OOT_Monitor",
+        "week": 83,
+        "model": "Challenger LightGBM M4",
+        "n": 7295,
+        "target_observed_pct": 100.0,
+        "observed_bad_rate_pct": 2.138450993831391,
+        "mean_recalibrated_pd_pct": 2.958140630509453,
+        "weekly_gini": 0.6321541837720572
+      },
+      {
+        "split_name": "OOT_Monitor",
+        "week": 84,
+        "model": "Champion Scorecard",
+        "n": 9721,
+        "target_observed_pct": 100.0,
+        "observed_bad_rate_pct": 2.2219936220553445,
+        "mean_recalibrated_pd_pct": 2.4684168137976763,
+        "weekly_gini": 0.5275098875835329
+      },
+      {
+        "split_name": "OOT_Monitor",
+        "week": 84,
+        "model": "Challenger LightGBM M4",
+        "n": 9721,
+        "target_observed_pct": 100.0,
+        "observed_bad_rate_pct": 2.2219936220553445,
+        "mean_recalibrated_pd_pct": 2.859634497055864,
+        "weekly_gini": 0.6089363298069244
+      },
+      {
+        "split_name": "OOT_Monitor",
+        "week": 85,
+        "model": "Champion Scorecard",
+        "n": 16239,
+        "target_observed_pct": 100.0,
+        "observed_bad_rate_pct": 1.8966685140710635,
+        "mean_recalibrated_pd_pct": 2.452825532817803,
+        "weekly_gini": 0.5732945731062611
+      },
+      {
+        "split_name": "OOT_Monitor",
+        "week": 85,
+        "model": "Challenger LightGBM M4",
+        "n": 16239,
+        "target_observed_pct": 100.0,
+        "observed_bad_rate_pct": 1.8966685140710635,
+        "mean_recalibrated_pd_pct": 2.831687136112794,
+        "weekly_gini": 0.6735736173938422
+      },
+      {
+        "split_name": "OOT_Monitor",
+        "week": 86,
+        "model": "Champion Scorecard",
+        "n": 15630,
+        "target_observed_pct": 100.0,
+        "observed_bad_rate_pct": 1.7722328854766476,
+        "mean_recalibrated_pd_pct": 2.7080489223724062,
+        "weekly_gini": 0.6259748620961203
+      },
+      {
+        "split_name": "OOT_Monitor",
+        "week": 86,
+        "model": "Challenger LightGBM M4",
+        "n": 15630,
+        "target_observed_pct": 100.0,
+        "observed_bad_rate_pct": 1.7722328854766476,
+        "mean_recalibrated_pd_pct": 3.037251153656862,
+        "weekly_gini": 0.7068783932208125
+      },
+      {
+        "split_name": "OOT_Monitor",
+        "week": 87,
+        "model": "Champion Scorecard",
+        "n": 17886,
+        "target_observed_pct": 100.0,
+        "observed_bad_rate_pct": 1.8394274851839427,
+        "mean_recalibrated_pd_pct": 2.820660067289855,
+        "weekly_gini": 0.5703907013768268
+      },
+      {
+        "split_name": "OOT_Monitor",
+        "week": 87,
+        "model": "Challenger LightGBM M4",
+        "n": 17886,
+        "target_observed_pct": 100.0,
+        "observed_bad_rate_pct": 1.8394274851839427,
+        "mean_recalibrated_pd_pct": 3.088014372957842,
+        "weekly_gini": 0.6493967629187989
+      },
+      {
+        "split_name": "OOT_Monitor",
+        "week": 88,
+        "model": "Champion Scorecard",
+        "n": 14234,
+        "target_observed_pct": 100.0,
+        "observed_bad_rate_pct": 1.8617394969790642,
+        "mean_recalibrated_pd_pct": 2.9089369236580223,
+        "weekly_gini": 0.5729716879829594
+      },
+      {
+        "split_name": "OOT_Monitor",
+        "week": 88,
+        "model": "Challenger LightGBM M4",
+        "n": 14234,
+        "target_observed_pct": 100.0,
+        "observed_bad_rate_pct": 1.8617394969790642,
+        "mean_recalibrated_pd_pct": 3.1569919162790656,
+        "weekly_gini": 0.6817959443889907
+      },
+      {
+        "split_name": "OOT_Monitor",
+        "week": 89,
+        "model": "Champion Scorecard",
+        "n": 13600,
+        "target_observed_pct": 100.0,
+        "observed_bad_rate_pct": 2.2720588235294117,
+        "mean_recalibrated_pd_pct": 3.030786520468806,
+        "weekly_gini": 0.5449966264248212
+      },
+      {
+        "split_name": "OOT_Monitor",
+        "week": 89,
+        "model": "Challenger LightGBM M4",
+        "n": 13600,
+        "target_observed_pct": 100.0,
+        "observed_bad_rate_pct": 2.2720588235294117,
+        "mean_recalibrated_pd_pct": 3.2386271668785294,
+        "weekly_gini": 0.6438305698261884
+      },
+      {
+        "split_name": "OOT_Monitor",
+        "week": 90,
+        "model": "Champion Scorecard",
+        "n": 12103,
+        "target_observed_pct": 100.0,
+        "observed_bad_rate_pct": 2.726596711559117,
+        "mean_recalibrated_pd_pct": 3.0942796121653426,
+        "weekly_gini": 0.5136578560599627
+      },
+      {
+        "split_name": "OOT_Monitor",
+        "week": 90,
+        "model": "Challenger LightGBM M4",
+        "n": 12103,
+        "target_observed_pct": 100.0,
+        "observed_bad_rate_pct": 2.726596711559117,
+        "mean_recalibrated_pd_pct": 3.366857721762008,
+        "weekly_gini": 0.641265195915667
+      },
+      {
+        "split_name": "OOT_Monitor",
+        "week": 91,
+        "model": "Champion Scorecard",
+        "n": 12674,
+        "target_observed_pct": 100.0,
+        "observed_bad_rate_pct": 2.2723686286886537,
+        "mean_recalibrated_pd_pct": 3.2540621806923693,
+        "weekly_gini": 0.5435976102050701
+      },
+      {
+        "split_name": "OOT_Monitor",
+        "week": 91,
+        "model": "Challenger LightGBM M4",
+        "n": 12674,
+        "target_observed_pct": 100.0,
+        "observed_bad_rate_pct": 2.2723686286886537,
+        "mean_recalibrated_pd_pct": 3.3630107770492854,
+        "weekly_gini": 0.6561933724455928
+      },
+      {
+        "split_name": "OOT_Valid",
+        "week": 65,
+        "model": "Champion Scorecard",
+        "n": 4258,
+        "target_observed_pct": 100.0,
+        "observed_bad_rate_pct": 2.254579614842649,
+        "mean_recalibrated_pd_pct": 2.427032516080398,
+        "weekly_gini": 0.5576520703187571
+      },
+      {
+        "split_name": "OOT_Valid",
+        "week": 65,
+        "model": "Challenger LightGBM M4",
+        "n": 4258,
+        "target_observed_pct": 100.0,
+        "observed_bad_rate_pct": 2.254579614842649,
+        "mean_recalibrated_pd_pct": 2.3739207374156965,
+        "weekly_gini": 0.6118327526830047
+      },
+      {
+        "split_name": "OOT_Valid",
+        "week": 66,
+        "model": "Champion Scorecard",
+        "n": 2278,
+        "target_observed_pct": 100.0,
+        "observed_bad_rate_pct": 2.28270412642669,
+        "mean_recalibrated_pd_pct": 2.410828239105275,
+        "weekly_gini": 0.4074227659133318
+      },
+      {
+        "split_name": "OOT_Valid",
+        "week": 66,
+        "model": "Challenger LightGBM M4",
+        "n": 2278,
+        "target_observed_pct": 100.0,
+        "observed_bad_rate_pct": 2.28270412642669,
+        "mean_recalibrated_pd_pct": 2.268981154188843,
+        "weekly_gini": 0.5460121639366922
+      },
+      {
+        "split_name": "OOT_Valid",
+        "week": 67,
+        "model": "Champion Scorecard",
+        "n": 1434,
+        "target_observed_pct": 100.0,
+        "observed_bad_rate_pct": 2.092050209205021,
+        "mean_recalibrated_pd_pct": 2.1631234959884615,
+        "weekly_gini": 0.5661680911680911
+      },
+      {
+        "split_name": "OOT_Valid",
+        "week": 67,
+        "model": "Challenger LightGBM M4",
+        "n": 1434,
+        "target_observed_pct": 100.0,
+        "observed_bad_rate_pct": 2.092050209205021,
+        "mean_recalibrated_pd_pct": 2.08686858897171,
+        "weekly_gini": 0.6315289648622984
+      },
+      {
+        "split_name": "OOT_Valid",
+        "week": 68,
+        "model": "Champion Scorecard",
+        "n": 825,
+        "target_observed_pct": 100.0,
+        "observed_bad_rate_pct": 2.5454545454545454,
+        "mean_recalibrated_pd_pct": 2.128636632917371,
+        "weekly_gini": 0.451314854299929
+      },
+      {
+        "split_name": "OOT_Valid",
+        "week": 68,
+        "model": "Challenger LightGBM M4",
+        "n": 825,
+        "target_observed_pct": 100.0,
+        "observed_bad_rate_pct": 2.5454545454545454,
+        "mean_recalibrated_pd_pct": 2.073988626689414,
+        "weekly_gini": 0.5049751243781095
+      },
+      {
+        "split_name": "OOT_Valid",
+        "week": 69,
+        "model": "Champion Scorecard",
+        "n": 1582,
+        "target_observed_pct": 100.0,
+        "observed_bad_rate_pct": 2.2123893805309733,
+        "mean_recalibrated_pd_pct": 2.5169586732203513,
+        "weekly_gini": 0.5659802382491457
+      },
+      {
+        "split_name": "OOT_Valid",
+        "week": 69,
+        "model": "Challenger LightGBM M4",
+        "n": 1582,
+        "target_observed_pct": 100.0,
+        "observed_bad_rate_pct": 2.2123893805309733,
+        "mean_recalibrated_pd_pct": 2.526723507586578,
+        "weekly_gini": 0.5564872102687228
+      },
+      {
+        "split_name": "OOT_Valid",
+        "week": 70,
+        "model": "Champion Scorecard",
+        "n": 3808,
+        "target_observed_pct": 100.0,
+        "observed_bad_rate_pct": 2.153361344537815,
+        "mean_recalibrated_pd_pct": 2.2513915257643644,
+        "weekly_gini": 0.641726562193158
+      },
+      {
+        "split_name": "OOT_Valid",
+        "week": 70,
+        "model": "Challenger LightGBM M4",
+        "n": 3808,
+        "target_observed_pct": 100.0,
+        "observed_bad_rate_pct": 2.153361344537815,
+        "mean_recalibrated_pd_pct": 2.291469291678999,
+        "weekly_gini": 0.718242279041148
+      },
+      {
+        "split_name": "OOT_Valid",
+        "week": 71,
+        "model": "Champion Scorecard",
+        "n": 7921,
+        "target_observed_pct": 100.0,
+        "observed_bad_rate_pct": 2.221941674031057,
+        "mean_recalibrated_pd_pct": 2.2384409308216004,
+        "weekly_gini": 0.6004541052878691
+      },
+      {
+        "split_name": "OOT_Valid",
+        "week": 71,
+        "model": "Challenger LightGBM M4",
+        "n": 7921,
+        "target_observed_pct": 100.0,
+        "observed_bad_rate_pct": 2.221941674031057,
+        "mean_recalibrated_pd_pct": 2.276259504642021,
+        "weekly_gini": 0.6644550736545576
+      },
+      {
+        "split_name": "OOT_Valid",
+        "week": 72,
+        "model": "Champion Scorecard",
+        "n": 8858,
+        "target_observed_pct": 100.0,
+        "observed_bad_rate_pct": 2.3368706254233462,
+        "mean_recalibrated_pd_pct": 2.3088861962224776,
+        "weekly_gini": 0.5507324556039708
+      },
+      {
+        "split_name": "OOT_Valid",
+        "week": 72,
+        "model": "Challenger LightGBM M4",
+        "n": 8858,
+        "target_observed_pct": 100.0,
+        "observed_bad_rate_pct": 2.3368706254233462,
+        "mean_recalibrated_pd_pct": 2.3702886372252507,
+        "weekly_gini": 0.611889273642376
+      },
+      {
+        "split_name": "OOT_Valid",
+        "week": 73,
+        "model": "Champion Scorecard",
+        "n": 8687,
+        "target_observed_pct": 100.0,
+        "observed_bad_rate_pct": 2.17566478646253,
+        "mean_recalibrated_pd_pct": 2.3262189553915595,
+        "weekly_gini": 0.49849513299736903
+      },
+      {
+        "split_name": "OOT_Valid",
+        "week": 73,
+        "model": "Challenger LightGBM M4",
+        "n": 8687,
+        "target_observed_pct": 100.0,
+        "observed_bad_rate_pct": 2.17566478646253,
+        "mean_recalibrated_pd_pct": 2.3210833549441636,
+        "weekly_gini": 0.5857643441780884
+      },
+      {
+        "split_name": "OOT_Valid",
+        "week": 74,
+        "model": "Champion Scorecard",
+        "n": 11280,
+        "target_observed_pct": 100.0,
+        "observed_bad_rate_pct": 2.6861702127659575,
+        "mean_recalibrated_pd_pct": 2.3911157655258997,
+        "weekly_gini": 0.5579151246636005
+      },
+      {
+        "split_name": "OOT_Valid",
+        "week": 74,
+        "model": "Challenger LightGBM M4",
+        "n": 11280,
+        "target_observed_pct": 100.0,
+        "observed_bad_rate_pct": 2.6861702127659575,
+        "mean_recalibrated_pd_pct": 2.4305693755583,
+        "weekly_gini": 0.6602563235279526
+      },
+      {
+        "split_name": "OOT_Valid",
+        "week": 75,
+        "model": "Champion Scorecard",
+        "n": 13656,
+        "target_observed_pct": 100.0,
+        "observed_bad_rate_pct": 2.1236086701816053,
+        "mean_recalibrated_pd_pct": 2.316434063474414,
+        "weekly_gini": 0.57512912330308
+      },
+      {
+        "split_name": "OOT_Valid",
+        "week": 75,
+        "model": "Challenger LightGBM M4",
+        "n": 13656,
+        "target_observed_pct": 100.0,
+        "observed_bad_rate_pct": 2.1236086701816053,
+        "mean_recalibrated_pd_pct": 2.259379946618573,
+        "weekly_gini": 0.6655048579256682
+      },
+      {
+        "split_name": "OOT_Valid",
+        "week": 76,
+        "model": "Champion Scorecard",
+        "n": 10261,
+        "target_observed_pct": 100.0,
+        "observed_bad_rate_pct": 2.485137900789397,
+        "mean_recalibrated_pd_pct": 2.344474266448681,
+        "weekly_gini": 0.55365094668689
+      },
+      {
+        "split_name": "OOT_Valid",
+        "week": 76,
+        "model": "Challenger LightGBM M4",
+        "n": 10261,
+        "target_observed_pct": 100.0,
+        "observed_bad_rate_pct": 2.485137900789397,
+        "mean_recalibrated_pd_pct": 2.3594921424641124,
+        "weekly_gini": 0.6409930512280866
+      },
+      {
+        "split_name": "OOT_Valid",
+        "week": 77,
+        "model": "Champion Scorecard",
+        "n": 7754,
+        "target_observed_pct": 100.0,
+        "observed_bad_rate_pct": 2.540624193964405,
+        "mean_recalibrated_pd_pct": 2.4514222972229196,
+        "weekly_gini": 0.5304168858133345
+      },
+      {
+        "split_name": "OOT_Valid",
+        "week": 77,
+        "model": "Challenger LightGBM M4",
+        "n": 7754,
+        "target_observed_pct": 100.0,
+        "observed_bad_rate_pct": 2.540624193964405,
+        "mean_recalibrated_pd_pct": 2.440691415419933,
+        "weekly_gini": 0.6035504111225081
+      },
+      {
+        "split_name": "Train_Dev",
+        "week": 0,
+        "model": "Champion Scorecard",
+        "n": 16735,
+        "target_observed_pct": 100.0,
+        "observed_bad_rate_pct": 2.3902001792650136,
+        "mean_recalibrated_pd_pct": 1.9262222654561116,
+        "weekly_gini": 0.5210423936333026
+      },
+      {
+        "split_name": "Train_Dev",
+        "week": 0,
+        "model": "Challenger LightGBM M4",
+        "n": 16735,
+        "target_observed_pct": 100.0,
+        "observed_bad_rate_pct": 2.3902001792650136,
+        "mean_recalibrated_pd_pct": 2.214639102765959,
+        "weekly_gini": 0.6450166819712277
+      },
+      {
+        "split_name": "Train_Dev",
+        "week": 1,
+        "model": "Champion Scorecard",
+        "n": 18841,
+        "target_observed_pct": 100.0,
+        "observed_bad_rate_pct": 2.5051748845602675,
+        "mean_recalibrated_pd_pct": 2.3059861351769224,
+        "weekly_gini": 0.47858611274891105
+      },
+      {
+        "split_name": "Train_Dev",
+        "week": 1,
+        "model": "Challenger LightGBM M4",
+        "n": 18841,
+        "target_observed_pct": 100.0,
+        "observed_bad_rate_pct": 2.5051748845602675,
+        "mean_recalibrated_pd_pct": 2.059349722924057,
+        "weekly_gini": 0.6494239788663843
+      },
+      {
+        "split_name": "Train_Dev",
+        "week": 2,
+        "model": "Champion Scorecard",
+        "n": 17476,
+        "target_observed_pct": 100.0,
+        "observed_bad_rate_pct": 2.6607919432364384,
+        "mean_recalibrated_pd_pct": 2.3759905114507296,
+        "weekly_gini": 0.4694817964087754
+      },
+      {
+        "split_name": "Train_Dev",
+        "week": 2,
+        "model": "Challenger LightGBM M4",
+        "n": 17476,
+        "target_observed_pct": 100.0,
+        "observed_bad_rate_pct": 2.6607919432364384,
+        "mean_recalibrated_pd_pct": 2.1660523418362754,
+        "weekly_gini": 0.6436934229148374
+      },
+      {
+        "split_name": "Train_Dev",
+        "week": 3,
+        "model": "Champion Scorecard",
+        "n": 16108,
+        "target_observed_pct": 100.0,
+        "observed_bad_rate_pct": 2.601191954308418,
+        "mean_recalibrated_pd_pct": 2.4345614868268233,
+        "weekly_gini": 0.4765973940667425
+      },
+      {
+        "split_name": "Train_Dev",
+        "week": 3,
+        "model": "Challenger LightGBM M4",
+        "n": 16108,
+        "target_observed_pct": 100.0,
+        "observed_bad_rate_pct": 2.601191954308418,
+        "mean_recalibrated_pd_pct": 2.170100428771011,
+        "weekly_gini": 0.6462018065649875
+      },
+      {
+        "split_name": "Train_Dev",
+        "week": 4,
+        "model": "Champion Scorecard",
+        "n": 14309,
+        "target_observed_pct": 100.0,
+        "observed_bad_rate_pct": 2.823397861485778,
+        "mean_recalibrated_pd_pct": 2.446312972413232,
+        "weekly_gini": 0.4658729141522566
+      },
+      {
+        "split_name": "Train_Dev",
+        "week": 4,
+        "model": "Challenger LightGBM M4",
+        "n": 14309,
+        "target_observed_pct": 100.0,
+        "observed_bad_rate_pct": 2.823397861485778,
+        "mean_recalibrated_pd_pct": 2.1442598318885757,
+        "weekly_gini": 0.6412147849089114
+      },
+      {
+        "split_name": "Train_Dev",
+        "week": 5,
+        "model": "Champion Scorecard",
+        "n": 15335,
+        "target_observed_pct": 100.0,
+        "observed_bad_rate_pct": 2.6540593413759375,
+        "mean_recalibrated_pd_pct": 2.4252506238672322,
+        "weekly_gini": 0.5040168237515503
+      },
+      {
+        "split_name": "Train_Dev",
+        "week": 5,
+        "model": "Challenger LightGBM M4",
+        "n": 15335,
+        "target_observed_pct": 100.0,
+        "observed_bad_rate_pct": 2.6540593413759375,
+        "mean_recalibrated_pd_pct": 2.062317622827069,
+        "weekly_gini": 0.6677820944300041
+      },
+      {
+        "split_name": "Train_Dev",
+        "week": 6,
+        "model": "Champion Scorecard",
+        "n": 16385,
+        "target_observed_pct": 100.0,
+        "observed_bad_rate_pct": 2.7158986878242293,
+        "mean_recalibrated_pd_pct": 2.435778300335333,
+        "weekly_gini": 0.48395161631398653
+      },
+      {
+        "split_name": "Train_Dev",
+        "week": 6,
+        "model": "Challenger LightGBM M4",
+        "n": 16385,
+        "target_observed_pct": 100.0,
+        "observed_bad_rate_pct": 2.7158986878242293,
+        "mean_recalibrated_pd_pct": 2.0878319929484253,
+        "weekly_gini": 0.6363097570947231
+      },
+      {
+        "split_name": "Train_Dev",
+        "week": 7,
+        "model": "Champion Scorecard",
+        "n": 17238,
+        "target_observed_pct": 100.0,
+        "observed_bad_rate_pct": 2.6801253045596938,
+        "mean_recalibrated_pd_pct": 2.4683892441086455,
+        "weekly_gini": 0.5009973534651648
+      },
+      {
+        "split_name": "Train_Dev",
+        "week": 7,
+        "model": "Challenger LightGBM M4",
+        "n": 17238,
+        "target_observed_pct": 100.0,
+        "observed_bad_rate_pct": 2.6801253045596938,
+        "mean_recalibrated_pd_pct": 2.061381623181131,
+        "weekly_gini": 0.6745033102329241
+      },
+      {
+        "split_name": "Train_Dev",
+        "week": 8,
+        "model": "Champion Scorecard",
+        "n": 13076,
+        "target_observed_pct": 100.0,
+        "observed_bad_rate_pct": 3.242581829305598,
+        "mean_recalibrated_pd_pct": 2.6171959258602615,
+        "weekly_gini": 0.4938148342569453
+      },
+      {
+        "split_name": "Train_Dev",
+        "week": 8,
+        "model": "Challenger LightGBM M4",
+        "n": 13076,
+        "target_observed_pct": 100.0,
+        "observed_bad_rate_pct": 3.242581829305598,
+        "mean_recalibrated_pd_pct": 2.293608449198209,
+        "weekly_gini": 0.6532478271762536
+      },
+      {
+        "split_name": "Train_Dev",
+        "week": 9,
+        "model": "Champion Scorecard",
+        "n": 14716,
+        "target_observed_pct": 100.0,
+        "observed_bad_rate_pct": 2.65017667844523,
+        "mean_recalibrated_pd_pct": 2.569949726954109,
+        "weekly_gini": 0.5023919214481829
+      },
+      {
+        "split_name": "Train_Dev",
+        "week": 9,
+        "model": "Challenger LightGBM M4",
+        "n": 14716,
+        "target_observed_pct": 100.0,
+        "observed_bad_rate_pct": 2.65017667844523,
+        "mean_recalibrated_pd_pct": 2.20506525617238,
+        "weekly_gini": 0.6698323292417947
+      },
+      {
+        "split_name": "Train_Dev",
+        "week": 10,
+        "model": "Champion Scorecard",
+        "n": 16650,
+        "target_observed_pct": 100.0,
+        "observed_bad_rate_pct": 2.828828828828829,
+        "mean_recalibrated_pd_pct": 2.475154180094077,
+        "weekly_gini": 0.49491720086416446
+      },
+      {
+        "split_name": "Train_Dev",
+        "week": 10,
+        "model": "Challenger LightGBM M4",
+        "n": 16650,
+        "target_observed_pct": 100.0,
+        "observed_bad_rate_pct": 2.828828828828829,
+        "mean_recalibrated_pd_pct": 2.3513587979087447,
+        "weekly_gini": 0.6398151308562423
+      },
+      {
+        "split_name": "Train_Dev",
+        "week": 11,
+        "model": "Champion Scorecard",
+        "n": 16101,
+        "target_observed_pct": 100.0,
+        "observed_bad_rate_pct": 2.2793615303397305,
+        "mean_recalibrated_pd_pct": 2.3933788425633087,
+        "weekly_gini": 0.5206425696412671
+      },
+      {
+        "split_name": "Train_Dev",
+        "week": 11,
+        "model": "Challenger LightGBM M4",
+        "n": 16101,
+        "target_observed_pct": 100.0,
+        "observed_bad_rate_pct": 2.2793615303397305,
+        "mean_recalibrated_pd_pct": 2.1678594373481674,
+        "weekly_gini": 0.6852982260600189
+      },
+      {
+        "split_name": "Train_Dev",
+        "week": 12,
+        "model": "Champion Scorecard",
+        "n": 17105,
+        "target_observed_pct": 100.0,
+        "observed_bad_rate_pct": 2.8003507746273018,
+        "mean_recalibrated_pd_pct": 2.5300954447150517,
+        "weekly_gini": 0.4659959863653953
+      },
+      {
+        "split_name": "Train_Dev",
+        "week": 12,
+        "model": "Challenger LightGBM M4",
+        "n": 17105,
+        "target_observed_pct": 100.0,
+        "observed_bad_rate_pct": 2.8003507746273018,
+        "mean_recalibrated_pd_pct": 2.363805677447273,
+        "weekly_gini": 0.6318324017492034
+      },
+      {
+        "split_name": "Train_Dev",
+        "week": 13,
+        "model": "Champion Scorecard",
+        "n": 15791,
+        "target_observed_pct": 100.0,
+        "observed_bad_rate_pct": 2.5964156798176177,
+        "mean_recalibrated_pd_pct": 2.437239782213173,
+        "weekly_gini": 0.541913764368773
+      },
+      {
+        "split_name": "Train_Dev",
+        "week": 13,
+        "model": "Challenger LightGBM M4",
+        "n": 15791,
+        "target_observed_pct": 100.0,
+        "observed_bad_rate_pct": 2.5964156798176177,
+        "mean_recalibrated_pd_pct": 2.250349868924765,
+        "weekly_gini": 0.7068708463562108
+      },
+      {
+        "split_name": "Train_Dev",
+        "week": 14,
+        "model": "Champion Scorecard",
+        "n": 17534,
+        "target_observed_pct": 100.0,
+        "observed_bad_rate_pct": 2.9941827306946505,
+        "mean_recalibrated_pd_pct": 2.4614363019919816,
+        "weekly_gini": 0.48717009762338703
+      },
+      {
+        "split_name": "Train_Dev",
+        "week": 14,
+        "model": "Challenger LightGBM M4",
+        "n": 17534,
+        "target_observed_pct": 100.0,
+        "observed_bad_rate_pct": 2.9941827306946505,
+        "mean_recalibrated_pd_pct": 2.321096143115188,
+        "weekly_gini": 0.674598153918514
+      },
+      {
+        "split_name": "Train_Dev",
+        "week": 15,
+        "model": "Champion Scorecard",
+        "n": 17713,
+        "target_observed_pct": 100.0,
+        "observed_bad_rate_pct": 2.8340766668548523,
+        "mean_recalibrated_pd_pct": 2.5031072925234374,
+        "weekly_gini": 0.5462952096095313
+      },
+      {
+        "split_name": "Train_Dev",
+        "week": 15,
+        "model": "Challenger LightGBM M4",
+        "n": 17713,
+        "target_observed_pct": 100.0,
+        "observed_bad_rate_pct": 2.8340766668548523,
+        "mean_recalibrated_pd_pct": 2.367689412686733,
+        "weekly_gini": 0.6871641896767122
+      },
+      {
+        "split_name": "Train_Dev",
+        "week": 16,
+        "model": "Champion Scorecard",
+        "n": 16598,
+        "target_observed_pct": 100.0,
+        "observed_bad_rate_pct": 3.223279913242559,
+        "mean_recalibrated_pd_pct": 2.5779664306040906,
+        "weekly_gini": 0.5194403345239336
+      },
+      {
+        "split_name": "Train_Dev",
+        "week": 16,
+        "model": "Challenger LightGBM M4",
+        "n": 16598,
+        "target_observed_pct": 100.0,
+        "observed_bad_rate_pct": 3.223279913242559,
+        "mean_recalibrated_pd_pct": 2.4557379032734072,
+        "weekly_gini": 0.6714270503816455
+      },
+      {
+        "split_name": "Train_Dev",
+        "week": 17,
+        "model": "Champion Scorecard",
+        "n": 12146,
+        "target_observed_pct": 100.0,
+        "observed_bad_rate_pct": 3.6225917997694714,
+        "mean_recalibrated_pd_pct": 2.760888751680675,
+        "weekly_gini": 0.5311283646304152
+      },
+      {
+        "split_name": "Train_Dev",
+        "week": 17,
+        "model": "Challenger LightGBM M4",
+        "n": 12146,
+        "target_observed_pct": 100.0,
+        "observed_bad_rate_pct": 3.6225917997694714,
+        "mean_recalibrated_pd_pct": 2.6989714672270635,
+        "weekly_gini": 0.6735696923100818
+      },
+      {
+        "split_name": "Train_Dev",
+        "week": 18,
+        "model": "Champion Scorecard",
+        "n": 11729,
+        "target_observed_pct": 100.0,
+        "observed_bad_rate_pct": 3.5808679341802367,
+        "mean_recalibrated_pd_pct": 2.7519300094380426,
+        "weekly_gini": 0.5240750097899272
+      },
+      {
+        "split_name": "Train_Dev",
+        "week": 18,
+        "model": "Challenger LightGBM M4",
+        "n": 11729,
+        "target_observed_pct": 100.0,
+        "observed_bad_rate_pct": 3.5808679341802367,
+        "mean_recalibrated_pd_pct": 2.7248368229121054,
+        "weekly_gini": 0.672277031778314
+      },
+      {
+        "split_name": "Train_Dev",
+        "week": 19,
+        "model": "Champion Scorecard",
+        "n": 17194,
+        "target_observed_pct": 100.0,
+        "observed_bad_rate_pct": 3.0766546469698732,
+        "mean_recalibrated_pd_pct": 2.5195997321239125,
+        "weekly_gini": 0.5179932359965678
+      },
+      {
+        "split_name": "Train_Dev",
+        "week": 19,
+        "model": "Challenger LightGBM M4",
+        "n": 17194,
+        "target_observed_pct": 100.0,
+        "observed_bad_rate_pct": 3.0766546469698732,
+        "mean_recalibrated_pd_pct": 2.44107477947734,
+        "weekly_gini": 0.6728459235337523
+      },
+      {
+        "split_name": "Train_Dev",
+        "week": 20,
+        "model": "Champion Scorecard",
+        "n": 16366,
+        "target_observed_pct": 100.0,
+        "observed_bad_rate_pct": 3.061224489795918,
+        "mean_recalibrated_pd_pct": 2.5921637326469513,
+        "weekly_gini": 0.4914118815630637
+      },
+      {
+        "split_name": "Train_Dev",
+        "week": 20,
+        "model": "Challenger LightGBM M4",
+        "n": 16366,
+        "target_observed_pct": 100.0,
+        "observed_bad_rate_pct": 3.061224489795918,
+        "mean_recalibrated_pd_pct": 2.4590706764600454,
+        "weekly_gini": 0.6752504445882899
+      },
+      {
+        "split_name": "Train_Dev",
+        "week": 21,
+        "model": "Champion Scorecard",
+        "n": 16962,
+        "target_observed_pct": 100.0,
+        "observed_bad_rate_pct": 3.20127343473647,
+        "mean_recalibrated_pd_pct": 2.6380845492616047,
+        "weekly_gini": 0.5519350139761943
+      },
+      {
+        "split_name": "Train_Dev",
+        "week": 21,
+        "model": "Challenger LightGBM M4",
+        "n": 16962,
+        "target_observed_pct": 100.0,
+        "observed_bad_rate_pct": 3.20127343473647,
+        "mean_recalibrated_pd_pct": 2.51512696904472,
+        "weekly_gini": 0.6945261839554564
+      },
+      {
+        "split_name": "Train_Dev",
+        "week": 22,
+        "model": "Champion Scorecard",
+        "n": 23261,
+        "target_observed_pct": 100.0,
+        "observed_bad_rate_pct": 2.403164094406947,
+        "mean_recalibrated_pd_pct": 2.4965622647750063,
+        "weekly_gini": 0.5375654292868841
+      },
+      {
+        "split_name": "Train_Dev",
+        "week": 22,
+        "model": "Challenger LightGBM M4",
+        "n": 23261,
+        "target_observed_pct": 100.0,
+        "observed_bad_rate_pct": 2.403164094406947,
+        "mean_recalibrated_pd_pct": 2.3065454460684354,
+        "weekly_gini": 0.679643964446246
+      },
+      {
+        "split_name": "Train_Dev",
+        "week": 23,
+        "model": "Champion Scorecard",
+        "n": 26734,
+        "target_observed_pct": 100.0,
+        "observed_bad_rate_pct": 2.367771377272387,
+        "mean_recalibrated_pd_pct": 2.492639963725077,
+        "weekly_gini": 0.5461262311135142
+      },
+      {
+        "split_name": "Train_Dev",
+        "week": 23,
+        "model": "Challenger LightGBM M4",
+        "n": 26734,
+        "target_observed_pct": 100.0,
+        "observed_bad_rate_pct": 2.367771377272387,
+        "mean_recalibrated_pd_pct": 2.250276651943157,
+        "weekly_gini": 0.6863181202828992
+      },
+      {
+        "split_name": "Train_Dev",
+        "week": 24,
+        "model": "Champion Scorecard",
+        "n": 19503,
+        "target_observed_pct": 100.0,
+        "observed_bad_rate_pct": 2.7431677177870073,
+        "mean_recalibrated_pd_pct": 2.5842927039204993,
+        "weekly_gini": 0.5152794475299276
+      },
+      {
+        "split_name": "Train_Dev",
+        "week": 24,
+        "model": "Challenger LightGBM M4",
+        "n": 19503,
+        "target_observed_pct": 100.0,
+        "observed_bad_rate_pct": 2.7431677177870073,
+        "mean_recalibrated_pd_pct": 2.4023440313421798,
+        "weekly_gini": 0.6624842824314046
+      },
+      {
+        "split_name": "Train_Dev",
+        "week": 25,
+        "model": "Champion Scorecard",
+        "n": 20744,
+        "target_observed_pct": 100.0,
+        "observed_bad_rate_pct": 2.8345545699961434,
+        "mean_recalibrated_pd_pct": 2.610853590159864,
+        "weekly_gini": 0.5040198357572838
+      },
+      {
+        "split_name": "Train_Dev",
+        "week": 25,
+        "model": "Challenger LightGBM M4",
+        "n": 20744,
+        "target_observed_pct": 100.0,
+        "observed_bad_rate_pct": 2.8345545699961434,
+        "mean_recalibrated_pd_pct": 2.437269402785503,
+        "weekly_gini": 0.6648106503962967
+      },
+      {
+        "split_name": "Train_Dev",
+        "week": 26,
+        "model": "Champion Scorecard",
+        "n": 20621,
+        "target_observed_pct": 100.0,
+        "observed_bad_rate_pct": 2.7738712962513943,
+        "mean_recalibrated_pd_pct": 2.589442883714361,
+        "weekly_gini": 0.5483977716133932
+      },
+      {
+        "split_name": "Train_Dev",
+        "week": 26,
+        "model": "Challenger LightGBM M4",
+        "n": 20621,
+        "target_observed_pct": 100.0,
+        "observed_bad_rate_pct": 2.7738712962513943,
+        "mean_recalibrated_pd_pct": 2.4160149995747138,
+        "weekly_gini": 0.680034178500436
+      },
+      {
+        "split_name": "Train_Dev",
+        "week": 27,
+        "model": "Champion Scorecard",
+        "n": 22450,
+        "target_observed_pct": 100.0,
+        "observed_bad_rate_pct": 2.8062360801781736,
+        "mean_recalibrated_pd_pct": 2.6203316152730474,
+        "weekly_gini": 0.5186263512432165
+      },
+      {
+        "split_name": "Train_Dev",
+        "week": 27,
+        "model": "Challenger LightGBM M4",
+        "n": 22450,
+        "target_observed_pct": 100.0,
+        "observed_bad_rate_pct": 2.8062360801781736,
+        "mean_recalibrated_pd_pct": 2.482396529522714,
+        "weekly_gini": 0.6824516607743005
+      },
+      {
+        "split_name": "Train_Dev",
+        "week": 28,
+        "model": "Champion Scorecard",
+        "n": 22013,
+        "target_observed_pct": 100.0,
+        "observed_bad_rate_pct": 2.6847771771226094,
+        "mean_recalibrated_pd_pct": 2.5400500941987176,
+        "weekly_gini": 0.553045708975118
+      },
+      {
+        "split_name": "Train_Dev",
+        "week": 28,
+        "model": "Challenger LightGBM M4",
+        "n": 22013,
+        "target_observed_pct": 100.0,
+        "observed_bad_rate_pct": 2.6847771771226094,
+        "mean_recalibrated_pd_pct": 2.3715660476493294,
+        "weekly_gini": 0.6959973308904408
+      },
+      {
+        "split_name": "Train_Dev",
+        "week": 29,
+        "model": "Champion Scorecard",
+        "n": 22841,
+        "target_observed_pct": 100.0,
+        "observed_bad_rate_pct": 2.6837704128540785,
+        "mean_recalibrated_pd_pct": 2.539506514289161,
+        "weekly_gini": 0.5575449567451778
+      },
+      {
+        "split_name": "Train_Dev",
+        "week": 29,
+        "model": "Challenger LightGBM M4",
+        "n": 22841,
+        "target_observed_pct": 100.0,
+        "observed_bad_rate_pct": 2.6837704128540785,
+        "mean_recalibrated_pd_pct": 2.3373211880344638,
+        "weekly_gini": 0.7077314710573297
+      },
+      {
+        "split_name": "Train_Dev",
+        "week": 30,
+        "model": "Champion Scorecard",
+        "n": 20688,
+        "target_observed_pct": 100.0,
+        "observed_bad_rate_pct": 2.9098994586233564,
+        "mean_recalibrated_pd_pct": 2.5717758455107833,
+        "weekly_gini": 0.5102491181606796
+      },
+      {
+        "split_name": "Train_Dev",
+        "week": 30,
+        "model": "Challenger LightGBM M4",
+        "n": 20688,
+        "target_observed_pct": 100.0,
+        "observed_bad_rate_pct": 2.9098994586233564,
+        "mean_recalibrated_pd_pct": 2.4090922972115125,
+        "weekly_gini": 0.6680976121613935
+      },
+      {
+        "split_name": "Train_Dev",
+        "week": 31,
+        "model": "Champion Scorecard",
+        "n": 21275,
+        "target_observed_pct": 100.0,
+        "observed_bad_rate_pct": 2.5569917743830786,
+        "mean_recalibrated_pd_pct": 2.5548255701090734,
+        "weekly_gini": 0.5550152052765538
+      },
+      {
+        "split_name": "Train_Dev",
+        "week": 31,
+        "model": "Challenger LightGBM M4",
+        "n": 21275,
+        "target_observed_pct": 100.0,
+        "observed_bad_rate_pct": 2.5569917743830786,
+        "mean_recalibrated_pd_pct": 2.3892385426471696,
+        "weekly_gini": 0.7039458703504555
+      },
+      {
+        "split_name": "Train_Dev",
+        "week": 32,
+        "model": "Champion Scorecard",
+        "n": 23889,
+        "target_observed_pct": 100.0,
+        "observed_bad_rate_pct": 2.3944074678722425,
+        "mean_recalibrated_pd_pct": 2.492445438279761,
+        "weekly_gini": 0.5535929846197034
+      },
+      {
+        "split_name": "Train_Dev",
+        "week": 32,
+        "model": "Challenger LightGBM M4",
+        "n": 23889,
+        "target_observed_pct": 100.0,
+        "observed_bad_rate_pct": 2.3944074678722425,
+        "mean_recalibrated_pd_pct": 2.279362363832606,
+        "weekly_gini": 0.7069644555384573
+      },
+      {
+        "split_name": "Train_Dev",
+        "week": 33,
+        "model": "Champion Scorecard",
+        "n": 21525,
+        "target_observed_pct": 100.0,
+        "observed_bad_rate_pct": 2.9361207897793262,
+        "mean_recalibrated_pd_pct": 2.5639381570978768,
+        "weekly_gini": 0.542533626731017
+      },
+      {
+        "split_name": "Train_Dev",
+        "week": 33,
+        "model": "Challenger LightGBM M4",
+        "n": 21525,
+        "target_observed_pct": 100.0,
+        "observed_bad_rate_pct": 2.9361207897793262,
+        "mean_recalibrated_pd_pct": 2.3999335885594553,
+        "weekly_gini": 0.6912141853579448
+      },
+      {
+        "split_name": "Train_Dev",
+        "week": 34,
+        "model": "Champion Scorecard",
+        "n": 23477,
+        "target_observed_pct": 100.0,
+        "observed_bad_rate_pct": 2.7175533500873197,
+        "mean_recalibrated_pd_pct": 2.4994052019122264,
+        "weekly_gini": 0.49885953754789725
+      },
+      {
+        "split_name": "Train_Dev",
+        "week": 34,
+        "model": "Challenger LightGBM M4",
+        "n": 23477,
+        "target_observed_pct": 100.0,
+        "observed_bad_rate_pct": 2.7175533500873197,
+        "mean_recalibrated_pd_pct": 2.3264758737510887,
+        "weekly_gini": 0.6617047147944841
+      },
+      {
+        "split_name": "Train_Dev",
+        "week": 35,
+        "model": "Champion Scorecard",
+        "n": 24137,
+        "target_observed_pct": 100.0,
+        "observed_bad_rate_pct": 2.8048224717239094,
+        "mean_recalibrated_pd_pct": 2.527277326075526,
+        "weekly_gini": 0.5509818402988964
+      },
+      {
+        "split_name": "Train_Dev",
+        "week": 35,
+        "model": "Challenger LightGBM M4",
+        "n": 24137,
+        "target_observed_pct": 100.0,
+        "observed_bad_rate_pct": 2.8048224717239094,
+        "mean_recalibrated_pd_pct": 2.442217493932632,
+        "weekly_gini": 0.7003710391741307
+      },
+      {
+        "split_name": "Train_Dev",
+        "week": 36,
+        "model": "Champion Scorecard",
+        "n": 23812,
+        "target_observed_pct": 100.0,
+        "observed_bad_rate_pct": 3.401646228792206,
+        "mean_recalibrated_pd_pct": 2.6696221909793527,
+        "weekly_gini": 0.5343448395791672
+      },
+      {
+        "split_name": "Train_Dev",
+        "week": 36,
+        "model": "Challenger LightGBM M4",
+        "n": 23812,
+        "target_observed_pct": 100.0,
+        "observed_bad_rate_pct": 3.401646228792206,
+        "mean_recalibrated_pd_pct": 2.741525010087645,
+        "weekly_gini": 0.6835942338884113
+      },
+      {
+        "split_name": "Train_Dev",
+        "week": 37,
+        "model": "Champion Scorecard",
+        "n": 22255,
+        "target_observed_pct": 100.0,
+        "observed_bad_rate_pct": 3.74747247809481,
+        "mean_recalibrated_pd_pct": 2.591030529528073,
+        "weekly_gini": 0.5233139850101152
+      },
+      {
+        "split_name": "Train_Dev",
+        "week": 37,
+        "model": "Challenger LightGBM M4",
+        "n": 22255,
+        "target_observed_pct": 100.0,
+        "observed_bad_rate_pct": 3.74747247809481,
+        "mean_recalibrated_pd_pct": 2.587674026852922,
+        "weekly_gini": 0.7010679025054081
+      },
+      {
+        "split_name": "Train_Dev",
+        "week": 38,
+        "model": "Champion Scorecard",
+        "n": 22424,
+        "target_observed_pct": 100.0,
+        "observed_bad_rate_pct": 3.839636104174099,
+        "mean_recalibrated_pd_pct": 2.6532668350681656,
+        "weekly_gini": 0.5128915659340969
+      },
+      {
+        "split_name": "Train_Dev",
+        "week": 38,
+        "model": "Challenger LightGBM M4",
+        "n": 22424,
+        "target_observed_pct": 100.0,
+        "observed_bad_rate_pct": 3.839636104174099,
+        "mean_recalibrated_pd_pct": 2.6376286341782027,
+        "weekly_gini": 0.6730533757792512
+      },
+      {
+        "split_name": "Train_Dev",
+        "week": 39,
+        "model": "Champion Scorecard",
+        "n": 21039,
+        "target_observed_pct": 100.0,
+        "observed_bad_rate_pct": 3.8975236465611482,
+        "mean_recalibrated_pd_pct": 2.6414862171515154,
+        "weekly_gini": 0.5254045639274336
+      },
+      {
+        "split_name": "Train_Dev",
+        "week": 39,
+        "model": "Challenger LightGBM M4",
+        "n": 21039,
+        "target_observed_pct": 100.0,
+        "observed_bad_rate_pct": 3.8975236465611482,
+        "mean_recalibrated_pd_pct": 2.6665991350670932,
+        "weekly_gini": 0.7129956247383831
+      },
+      {
+        "split_name": "Train_Dev",
+        "week": 40,
+        "model": "Champion Scorecard",
+        "n": 23907,
+        "target_observed_pct": 100.0,
+        "observed_bad_rate_pct": 3.484335131969716,
+        "mean_recalibrated_pd_pct": 2.5952156347594553,
+        "weekly_gini": 0.5429337375931562
+      },
+      {
+        "split_name": "Train_Dev",
+        "week": 40,
+        "model": "Challenger LightGBM M4",
+        "n": 23907,
+        "target_observed_pct": 100.0,
+        "observed_bad_rate_pct": 3.484335131969716,
+        "mean_recalibrated_pd_pct": 2.5622266574711605,
+        "weekly_gini": 0.7042499412870806
+      },
+      {
+        "split_name": "Train_Dev",
+        "week": 41,
+        "model": "Champion Scorecard",
+        "n": 21125,
+        "target_observed_pct": 100.0,
+        "observed_bad_rate_pct": 3.9905325443786985,
+        "mean_recalibrated_pd_pct": 2.6392197144374125,
+        "weekly_gini": 0.5140832763374499
+      },
+      {
+        "split_name": "Train_Dev",
+        "week": 41,
+        "model": "Challenger LightGBM M4",
+        "n": 21125,
+        "target_observed_pct": 100.0,
+        "observed_bad_rate_pct": 3.9905325443786985,
+        "mean_recalibrated_pd_pct": 2.6986450913194324,
+        "weekly_gini": 0.6829855034523304
+      },
+      {
+        "split_name": "Train_Dev",
+        "week": 42,
+        "model": "Champion Scorecard",
+        "n": 20643,
+        "target_observed_pct": 100.0,
+        "observed_bad_rate_pct": 3.880249963668071,
+        "mean_recalibrated_pd_pct": 2.6019893533109757,
+        "weekly_gini": 0.5226109611750558
+      },
+      {
+        "split_name": "Train_Dev",
+        "week": 42,
+        "model": "Challenger LightGBM M4",
+        "n": 20643,
+        "target_observed_pct": 100.0,
+        "observed_bad_rate_pct": 3.880249963668071,
+        "mean_recalibrated_pd_pct": 2.6006109709948966,
+        "weekly_gini": 0.6683901448157044
+      },
+      {
+        "split_name": "Train_Dev",
+        "week": 43,
+        "model": "Champion Scorecard",
+        "n": 21029,
+        "target_observed_pct": 100.0,
+        "observed_bad_rate_pct": 3.999239145941319,
+        "mean_recalibrated_pd_pct": 2.5761690008018667,
+        "weekly_gini": 0.494296360937273
+      },
+      {
+        "split_name": "Train_Dev",
+        "week": 43,
+        "model": "Challenger LightGBM M4",
+        "n": 21029,
+        "target_observed_pct": 100.0,
+        "observed_bad_rate_pct": 3.999239145941319,
+        "mean_recalibrated_pd_pct": 2.5400941697188655,
+        "weekly_gini": 0.6774166473673038
+      },
+      {
+        "split_name": "Train_Dev",
+        "week": 44,
+        "model": "Champion Scorecard",
+        "n": 25887,
+        "target_observed_pct": 100.0,
+        "observed_bad_rate_pct": 3.6234403368486117,
+        "mean_recalibrated_pd_pct": 2.536730469767231,
+        "weekly_gini": 0.5379386742130918
+      },
+      {
+        "split_name": "Train_Dev",
+        "week": 44,
+        "model": "Challenger LightGBM M4",
+        "n": 25887,
+        "target_observed_pct": 100.0,
+        "observed_bad_rate_pct": 3.6234403368486117,
+        "mean_recalibrated_pd_pct": 2.4413751388245686,
+        "weekly_gini": 0.6998089321832743
+      },
+      {
+        "split_name": "Train_Dev",
+        "week": 45,
+        "model": "Champion Scorecard",
+        "n": 28947,
+        "target_observed_pct": 100.0,
+        "observed_bad_rate_pct": 3.4580440114692372,
+        "mean_recalibrated_pd_pct": 2.528091022965117,
+        "weekly_gini": 0.49442845853781225
+      },
+      {
+        "split_name": "Train_Dev",
+        "week": 45,
+        "model": "Challenger LightGBM M4",
+        "n": 28947,
+        "target_observed_pct": 100.0,
+        "observed_bad_rate_pct": 3.4580440114692372,
+        "mean_recalibrated_pd_pct": 2.4512221842413195,
+        "weekly_gini": 0.684505539547406
+      },
+      {
+        "split_name": "Train_Dev",
+        "week": 46,
+        "model": "Champion Scorecard",
+        "n": 22299,
+        "target_observed_pct": 100.0,
+        "observed_bad_rate_pct": 4.10332301896946,
+        "mean_recalibrated_pd_pct": 2.628895461192875,
+        "weekly_gini": 0.4918399743232771
+      },
+      {
+        "split_name": "Train_Dev",
+        "week": 46,
+        "model": "Challenger LightGBM M4",
+        "n": 22299,
+        "target_observed_pct": 100.0,
+        "observed_bad_rate_pct": 4.10332301896946,
+        "mean_recalibrated_pd_pct": 2.6106052081456843,
+        "weekly_gini": 0.6540538454776466
+      },
+      {
+        "split_name": "Train_Dev",
+        "week": 47,
+        "model": "Champion Scorecard",
+        "n": 31888,
+        "target_observed_pct": 100.0,
+        "observed_bad_rate_pct": 2.9352734570998495,
+        "mean_recalibrated_pd_pct": 2.3769873416827045,
+        "weekly_gini": 0.5605128108480073
+      },
+      {
+        "split_name": "Train_Dev",
+        "week": 47,
+        "model": "Challenger LightGBM M4",
+        "n": 31888,
+        "target_observed_pct": 100.0,
+        "observed_bad_rate_pct": 2.9352734570998495,
+        "mean_recalibrated_pd_pct": 2.165349135674909,
+        "weekly_gini": 0.7322384894835787
+      },
+      {
+        "split_name": "Train_Dev",
+        "week": 48,
+        "model": "Champion Scorecard",
+        "n": 22298,
+        "target_observed_pct": 100.0,
+        "observed_bad_rate_pct": 3.9913893622746435,
+        "mean_recalibrated_pd_pct": 2.6920356839022648,
+        "weekly_gini": 0.5072049617070589
+      },
+      {
+        "split_name": "Train_Dev",
+        "week": 48,
+        "model": "Challenger LightGBM M4",
+        "n": 22298,
+        "target_observed_pct": 100.0,
+        "observed_bad_rate_pct": 3.9913893622746435,
+        "mean_recalibrated_pd_pct": 2.736202830952478,
+        "weekly_gini": 0.6834293805948843
+      },
+      {
+        "split_name": "Train_Dev",
+        "week": 49,
+        "model": "Champion Scorecard",
+        "n": 30938,
+        "target_observed_pct": 100.0,
+        "observed_bad_rate_pct": 3.2775227875105046,
+        "mean_recalibrated_pd_pct": 2.5233523637395447,
+        "weekly_gini": 0.5280181522315439
+      },
+      {
+        "split_name": "Train_Dev",
+        "week": 49,
+        "model": "Challenger LightGBM M4",
+        "n": 30938,
+        "target_observed_pct": 100.0,
+        "observed_bad_rate_pct": 3.2775227875105046,
+        "mean_recalibrated_pd_pct": 2.437273540234953,
+        "weekly_gini": 0.6924979178020219
+      },
+      {
+        "split_name": "Train_Dev",
+        "week": 50,
+        "model": "Champion Scorecard",
+        "n": 26244,
+        "target_observed_pct": 100.0,
+        "observed_bad_rate_pct": 4.039018442310623,
+        "mean_recalibrated_pd_pct": 2.638481990788753,
+        "weekly_gini": 0.4890542213085276
+      },
+      {
+        "split_name": "Train_Dev",
+        "week": 50,
+        "model": "Challenger LightGBM M4",
+        "n": 26244,
+        "target_observed_pct": 100.0,
+        "observed_bad_rate_pct": 4.039018442310623,
+        "mean_recalibrated_pd_pct": 2.6480843225833155,
+        "weekly_gini": 0.6855870229076264
+      },
+      {
+        "split_name": "Train_Dev",
+        "week": 51,
+        "model": "Champion Scorecard",
+        "n": 35920,
+        "target_observed_pct": 100.0,
+        "observed_bad_rate_pct": 3.162583518930958,
+        "mean_recalibrated_pd_pct": 2.5441168772823777,
+        "weekly_gini": 0.5592353605591691
+      },
+      {
+        "split_name": "Train_Dev",
+        "week": 51,
+        "model": "Challenger LightGBM M4",
+        "n": 35920,
+        "target_observed_pct": 100.0,
+        "observed_bad_rate_pct": 3.162583518930958,
+        "mean_recalibrated_pd_pct": 2.4527856600926197,
+        "weekly_gini": 0.7156095677387693
+      },
+      {
+        "split_name": "Train_Dev",
+        "week": 52,
+        "model": "Champion Scorecard",
+        "n": 22915,
+        "target_observed_pct": 100.0,
+        "observed_bad_rate_pct": 3.00676412830024,
+        "mean_recalibrated_pd_pct": 2.577799628403251,
+        "weekly_gini": 0.5509084863410665
+      },
+      {
+        "split_name": "Train_Dev",
+        "week": 52,
+        "model": "Challenger LightGBM M4",
+        "n": 22915,
+        "target_observed_pct": 100.0,
+        "observed_bad_rate_pct": 3.00676412830024,
+        "mean_recalibrated_pd_pct": 2.4089947122195023,
+        "weekly_gini": 0.7056638252484015
+      },
+      {
+        "split_name": "Train_Dev",
+        "week": 53,
+        "model": "Champion Scorecard",
+        "n": 22194,
+        "target_observed_pct": 100.0,
+        "observed_bad_rate_pct": 3.7082094259709835,
+        "mean_recalibrated_pd_pct": 2.6623445797915264,
+        "weekly_gini": 0.5565772492481236
+      },
+      {
+        "split_name": "Train_Dev",
+        "week": 53,
+        "model": "Challenger LightGBM M4",
+        "n": 22194,
+        "target_observed_pct": 100.0,
+        "observed_bad_rate_pct": 3.7082094259709835,
+        "mean_recalibrated_pd_pct": 2.7032624772544365,
+        "weekly_gini": 0.7192378606886738
+      },
+      {
+        "split_name": "Train_Dev",
+        "week": 54,
+        "model": "Champion Scorecard",
+        "n": 18740,
+        "target_observed_pct": 100.0,
+        "observed_bad_rate_pct": 4.637139807897546,
+        "mean_recalibrated_pd_pct": 2.761304678767653,
+        "weekly_gini": 0.4858694831176942
+      },
+      {
+        "split_name": "Train_Dev",
+        "week": 54,
+        "model": "Challenger LightGBM M4",
+        "n": 18740,
+        "target_observed_pct": 100.0,
+        "observed_bad_rate_pct": 4.637139807897546,
+        "mean_recalibrated_pd_pct": 2.8893638197566904,
+        "weekly_gini": 0.6732929814933117
+      },
+      {
+        "split_name": "Train_Dev",
+        "week": 55,
+        "model": "Champion Scorecard",
+        "n": 18538,
+        "target_observed_pct": 100.0,
+        "observed_bad_rate_pct": 4.256122559067861,
+        "mean_recalibrated_pd_pct": 2.7120134357859227,
+        "weekly_gini": 0.5064647780724327
+      },
+      {
+        "split_name": "Train_Dev",
+        "week": 55,
+        "model": "Challenger LightGBM M4",
+        "n": 18538,
+        "target_observed_pct": 100.0,
+        "observed_bad_rate_pct": 4.256122559067861,
+        "mean_recalibrated_pd_pct": 2.771657805098478,
+        "weekly_gini": 0.60589550342221
+      },
+      {
+        "split_name": "Train_Dev",
+        "week": 56,
+        "model": "Champion Scorecard",
+        "n": 17072,
+        "target_observed_pct": 100.0,
+        "observed_bad_rate_pct": 4.750468603561387,
+        "mean_recalibrated_pd_pct": 2.8650828600029596,
+        "weekly_gini": 0.5110175253841258
+      },
+      {
+        "split_name": "Train_Dev",
+        "week": 56,
+        "model": "Challenger LightGBM M4",
+        "n": 17072,
+        "target_observed_pct": 100.0,
+        "observed_bad_rate_pct": 4.750468603561387,
+        "mean_recalibrated_pd_pct": 2.9177016240999643,
+        "weekly_gini": 0.6141290603928473
+      },
+      {
+        "split_name": "Train_Dev",
+        "week": 57,
+        "model": "Champion Scorecard",
+        "n": 18221,
+        "target_observed_pct": 100.0,
+        "observed_bad_rate_pct": 4.599088963284123,
+        "mean_recalibrated_pd_pct": 2.8965722481873963,
+        "weekly_gini": 0.49349081489513846
+      },
+      {
+        "split_name": "Train_Dev",
+        "week": 57,
+        "model": "Challenger LightGBM M4",
+        "n": 18221,
+        "target_observed_pct": 100.0,
+        "observed_bad_rate_pct": 4.599088963284123,
+        "mean_recalibrated_pd_pct": 3.0071503277888216,
+        "weekly_gini": 0.6043318321730129
+      },
+      {
+        "split_name": "Train_Dev",
+        "week": 58,
+        "model": "Champion Scorecard",
+        "n": 17819,
+        "target_observed_pct": 100.0,
+        "observed_bad_rate_pct": 4.865592906448173,
+        "mean_recalibrated_pd_pct": 2.994573684277982,
+        "weekly_gini": 0.533734915002561
+      },
+      {
+        "split_name": "Train_Dev",
+        "week": 58,
+        "model": "Challenger LightGBM M4",
+        "n": 17819,
+        "target_observed_pct": 100.0,
+        "observed_bad_rate_pct": 4.865592906448173,
+        "mean_recalibrated_pd_pct": 3.1707329086980365,
+        "weekly_gini": 0.6303204025968157
+      },
+      {
+        "split_name": "Train_Dev",
+        "week": 59,
+        "model": "Champion Scorecard",
+        "n": 17729,
+        "target_observed_pct": 100.0,
+        "observed_bad_rate_pct": 5.0143832139432565,
+        "mean_recalibrated_pd_pct": 2.9510417433858267,
+        "weekly_gini": 0.5192946784264794
+      },
+      {
+        "split_name": "Train_Dev",
+        "week": 59,
+        "model": "Challenger LightGBM M4",
+        "n": 17729,
+        "target_observed_pct": 100.0,
+        "observed_bad_rate_pct": 5.0143832139432565,
+        "mean_recalibrated_pd_pct": 3.112347272549124,
+        "weekly_gini": 0.6134687216948238
+      },
+      {
+        "split_name": "Train_Dev",
+        "week": 60,
+        "model": "Champion Scorecard",
+        "n": 15864,
+        "target_observed_pct": 100.0,
+        "observed_bad_rate_pct": 4.595310136157337,
+        "mean_recalibrated_pd_pct": 2.9421946753029107,
+        "weekly_gini": 0.4939199694745462
+      },
+      {
+        "split_name": "Train_Dev",
+        "week": 60,
+        "model": "Challenger LightGBM M4",
+        "n": 15864,
+        "target_observed_pct": 100.0,
+        "observed_bad_rate_pct": 4.595310136157337,
+        "mean_recalibrated_pd_pct": 3.191292331341032,
+        "weekly_gini": 0.5882683647809854
+      },
+      {
+        "split_name": "Train_Dev",
+        "week": 61,
+        "model": "Champion Scorecard",
+        "n": 15568,
+        "target_observed_pct": 100.0,
+        "observed_bad_rate_pct": 5.183710174717369,
+        "mean_recalibrated_pd_pct": 3.074235533000402,
+        "weekly_gini": 0.4818464410260235
+      },
+      {
+        "split_name": "Train_Dev",
+        "week": 61,
+        "model": "Challenger LightGBM M4",
+        "n": 15568,
+        "target_observed_pct": 100.0,
+        "observed_bad_rate_pct": 5.183710174717369,
+        "mean_recalibrated_pd_pct": 3.3161298945380286,
+        "weekly_gini": 0.584656627653483
+      },
+      {
+        "split_name": "Train_Dev",
+        "week": 62,
+        "model": "Champion Scorecard",
+        "n": 17164,
+        "target_observed_pct": 100.0,
+        "observed_bad_rate_pct": 5.214402237240737,
+        "mean_recalibrated_pd_pct": 2.9842071554586926,
+        "weekly_gini": 0.5111084555711569
+      },
+      {
+        "split_name": "Train_Dev",
+        "week": 62,
+        "model": "Challenger LightGBM M4",
+        "n": 17164,
+        "target_observed_pct": 100.0,
+        "observed_bad_rate_pct": 5.214402237240737,
+        "mean_recalibrated_pd_pct": 3.282891987412738,
+        "weekly_gini": 0.5942393097061243
+      },
+      {
+        "split_name": "Train_Dev",
+        "week": 63,
+        "model": "Champion Scorecard",
+        "n": 14337,
+        "target_observed_pct": 100.0,
+        "observed_bad_rate_pct": 4.108251377554579,
+        "mean_recalibrated_pd_pct": 2.762604637502762,
+        "weekly_gini": 0.5520207785741209
+      },
+      {
+        "split_name": "Train_Dev",
+        "week": 63,
+        "model": "Challenger LightGBM M4",
+        "n": 14337,
+        "target_observed_pct": 100.0,
+        "observed_bad_rate_pct": 4.108251377554579,
+        "mean_recalibrated_pd_pct": 2.9431201781622387,
+        "weekly_gini": 0.6458689098411228
+      },
+      {
+        "split_name": "Train_Dev",
+        "week": 64,
+        "model": "Champion Scorecard",
+        "n": 10268,
+        "target_observed_pct": 100.0,
+        "observed_bad_rate_pct": 3.1359563693026877,
+        "mean_recalibrated_pd_pct": 2.801381547216409,
+        "weekly_gini": 0.5380348915197968
+      },
+      {
+        "split_name": "Train_Dev",
+        "week": 64,
+        "model": "Challenger LightGBM M4",
+        "n": 10268,
+        "target_observed_pct": 100.0,
+        "observed_bad_rate_pct": 3.1359563693026877,
+        "mean_recalibrated_pd_pct": 2.8650116509019283,
+        "weekly_gini": 0.5879528959486817
+      }
+    ],
+    "home_credit_gini_stability_diagnostics": {
+      "OOT_Valid": {
+        "Challenger LightGBM M4": {
+          "mean_weekly_gini": 0.6154993715730164,
+          "weekly_gini_slope": 0.005379993512181086,
+          "weekly_residual_std": 0.051646319043480854,
+          "stability_metric": 0.589676212051276,
+          "weeks": 13
+        },
+        "Champion Scorecard": {
+          "mean_weekly_gini": 0.542850642807579,
+          "weekly_gini_slope": 0.0038319253811729885,
+          "weekly_residual_std": 0.056845995672195254,
+          "stability_metric": 0.5144276449714814,
+          "weeks": 13
+        }
+      },
+      "OOT_Monitor": {
+        "Challenger LightGBM M4": {
+          "mean_weekly_gini": 0.6448339399242348,
+          "weekly_gini_slope": 0.0016902713089120744,
+          "weekly_residual_std": 0.04327591252253584,
+          "stability_metric": 0.6231959836629668,
+          "weeks": 14
+        },
+        "Champion Scorecard": {
+          "mean_weekly_gini": 0.5444152659904347,
+          "weekly_gini_slope": 0.001100663303426855,
+          "weekly_residual_std": 0.04443072645268029,
+          "stability_metric": 0.5221999027640946,
+          "weeks": 14
+        }
+      }
+    },
+    "late_window_label_maturity": {
+      "late_vs_prior": {
+        "Challenger LightGBM M4": {
+          "late_weeks": "W86-W91",
+          "late_rows": 86127,
+          "late_target_observed_pct": 100.0,
+          "late_bad_rate_pct": 2.0876148013979354,
+          "late_mean_pd_pct": 3.1936360329171243,
+          "late_bad_minus_pd_pp": -1.1060212315191889,
+          "prior_monitor_bad_rate_pct": 2.1607197316254956,
+          "prior_monitor_mean_pd_pct": 2.8656587465591272,
+          "late_weekly_bad_rate_range_pct": [
+            1.7722328854766476,
+            2.726596711559117
+          ]
+        },
+        "Champion Scorecard": {
+          "late_weeks": "W86-W91",
+          "late_rows": 86127,
+          "late_target_observed_pct": 100.0,
+          "late_bad_rate_pct": 2.0876148013979354,
+          "late_mean_pd_pct": 2.9502210188916753,
+          "late_bad_minus_pd_pp": -0.8626062174937399,
+          "prior_monitor_bad_rate_pct": 2.1607197316254956,
+          "prior_monitor_mean_pd_pct": 2.4534444189245947,
+          "late_weekly_bad_rate_range_pct": [
+            1.7722328854766476,
+            2.726596711559117
+          ]
+        }
+      },
+      "conclusion": "Recorded target labels are 100% observed in all saved splits; there is no missing-label evidence for W86-W91 censoring. These artifacts lack a separate label-maturity/observation-window timestamp, so full outcome maturity cannot be certified. Reported late PD/bad-rate gaps are empirical divergence against recorded labels."
+    },
+    "oot_monitor_bootstrap": {
+      "point_estimates": {
+        "Champion Scorecard": {
+          "roc_auc": 0.7750956825087664,
+          "gini": 0.5501913650175327,
+          "ks": 0.4221720413359163,
+          "brier": 0.020281392856664103,
+          "log_loss": 0.09256863936818374,
+          "a_over_e": 0.7747163976946443,
+          "e_over_a": 1.2907949321529033
+        },
+        "Challenger LightGBM M4": {
+          "roc_auc": 0.825708673520237,
+          "gini": 0.651417347040474,
+          "ks": 0.500636968718466,
+          "brier": 0.01954750003816884,
+          "log_loss": 0.08732820351964543,
+          "a_over_e": 0.6944021599390533,
+          "e_over_a": 1.4400876864895822
+        },
+        "M4 - Champion": {
+          "ks": 0.07846492738254968,
+          "roc_auc": 0.050612991011470654,
+          "gini": 0.10122598202294131,
+          "brier": -0.0007338928184952645,
+          "log_loss": -0.005240435848538311,
+          "a_over_e": -0.08031423775559099,
+          "e_over_a": 0.14929275433667888
+        }
+      },
+      "bootstrap_replicates": 1000,
+      "seed": 42,
+      "confidence_level": 0.95,
+      "confidence_intervals": {
+        "paired_applicant": {
+          "Champion Scorecard": {
+            "ks": [
+              0.40878445153699383,
+              0.43920265183346074
+            ],
+            "roc_auc": [
+              0.7672619741753773,
+              0.7828641872624451
+            ],
+            "gini": [
+              0.5345239483507546,
+              0.5657283745248902
+            ],
+            "brier": [
+              0.01963725530323543,
+              0.020888783579818927
+            ],
+            "log_loss": [
+              0.090247435821232,
+              0.09479441630110323
+            ],
+            "a_over_e": [
+              0.7479709093816597,
+              0.7997433488073885
+            ],
+            "e_over_a": [
+              1.2504011467193483,
+              1.336950394504515
+            ]
+          },
+          "Challenger LightGBM M4": {
+            "ks": [
+              0.4869926430807004,
+              0.515828780650629
+            ],
+            "roc_auc": [
+              0.8184698960202236,
+              0.8321619049411415
+            ],
+            "gini": [
+              0.6369397920404472,
+              0.6643238098822831
+            ],
+            "brier": [
+              0.018953038041703667,
+              0.02015366769181994
+            ],
+            "log_loss": [
+              0.08534691174314092,
+              0.08939951972337282
+            ],
+            "a_over_e": [
+              0.6703736232035715,
+              0.7159858480800403
+            ],
+            "e_over_a": [
+              1.3966756512414586,
+              1.4917054720974916
+            ]
+          },
+          "M4 - Champion": {
+            "ks": [
+              0.06424260645302894,
+              0.09132391386740635
+            ],
+            "roc_auc": [
+              0.04518624847433188,
+              0.05594810567581218
+            ],
+            "gini": [
+              0.09037249694866376,
+              0.11189621135162436
+            ],
+            "brier": [
+              -0.0008335498718507799,
+              -0.0006246492906997877
+            ],
+            "log_loss": [
+              -0.005799978547403749,
+              -0.0046160332051879156
+            ],
+            "a_over_e": [
+              -0.08507317234769811,
+              -0.07531151479887162
+            ],
+            "e_over_a": [
+              0.1414549793976644,
+              0.15763776720168937
+            ]
+          }
+        },
+        "weekly_block": {
+          "Champion Scorecard": {
+            "ks": [
+              0.40529542363537735,
+              0.4461685108999088
+            ],
+            "roc_auc": [
+              0.7644465375502919,
+              0.7860395908093195
+            ],
+            "gini": [
+              0.5288930751005837,
+              0.5720791816186389
+            ],
+            "brier": [
+              0.01888826384578767,
+              0.02207252896067564
+            ],
+            "log_loss": [
+              0.08716825758195346,
+              0.0994585281954161
+            ],
+            "a_over_e": [
+              0.7162321900495644,
+              0.8486041706998534
+            ],
+            "e_over_a": [
+              1.1784057097346032,
+              1.396195280840867
+            ]
+          },
+          "Challenger LightGBM M4": {
+            "ks": [
+              0.4815534685431676,
+              0.5251551340832736
+            ],
+            "roc_auc": [
+              0.8153157054182705,
+              0.8357209367475471
+            ],
+            "gini": [
+              0.6306314108365411,
+              0.6714418734950942
+            ],
+            "brier": [
+              0.01823639503749671,
+              0.02118217095027739
+            ],
+            "log_loss": [
+              0.08246213046541896,
+              0.09303367022106702
+            ],
+            "a_over_e": [
+              0.6495493139425808,
+              0.7501180972888156
+            ],
+            "e_over_a": [
+              1.3331234157577239,
+              1.5395290143300426
+            ]
+          },
+          "M4 - Champion": {
+            "ks": [
+              0.06716822731752267,
+              0.08865050905264026
+            ],
+            "roc_auc": [
+              0.046559030724152836,
+              0.054515157428587105
+            ],
+            "gini": [
+              0.09311806144830567,
+              0.10903031485717421
+            ],
+            "brier": [
+              -0.0009302435504586039,
+              -0.0005533110478755205
+            ],
+            "log_loss": [
+              -0.006307703128764585,
+              -0.004398732586575401
+            ],
+            "a_over_e": [
+              -0.10390534259452094,
+              -0.06300148304744405
+            ],
+            "e_over_a": [
+              0.12023126951617906,
+              0.17856938656721952
+            ]
+          }
+        }
+      }
+    }
+  },
+  "section_4_economics_cutoff_and_kgb": {
+    "cutoff_and_valid_monitor_metrics": {
+      "valid_frozen_policy_metrics": {
+        "OOT_Valid": {
+          "Champion Scorecard": [
+            {
+              "split": "OOT_Valid",
+              "model": "Champion Scorecard",
+              "policy": "Valid-Frozen 75% Quantile Policy",
+              "pd_cutoff": 0.030810455894633697,
+              "applications": 82602,
+              "approved": 61952,
+              "approval_pct": 75.00060531222005,
+              "observed_bads": 782,
+              "observed_bad_rate_pct": 1.2622675619834711,
+              "valid_reference_bad_rate_pct": 1.2622675619834711
+            },
+            {
+              "split": "OOT_Valid",
+              "model": "Champion Scorecard",
+              "policy": "Valid-Frozen Iso-Risk Policy",
+              "pd_cutoff": 0.030810455894633697,
+              "applications": 82602,
+              "approved": 61952,
+              "approval_pct": 75.00060531222005,
+              "observed_bads": 782,
+              "observed_bad_rate_pct": 1.2622675619834711,
+              "valid_reference_bad_rate_pct": 1.2622675619834711
+            }
+          ],
+          "Challenger LightGBM M4": [
+            {
+              "split": "OOT_Valid",
+              "model": "Challenger LightGBM M4",
+              "policy": "Valid-Frozen 75% Quantile Policy",
+              "pd_cutoff": 0.03356910754805267,
+              "applications": 82602,
+              "approved": 61952,
+              "approval_pct": 75.00060531222005,
+              "observed_bads": 642,
+              "observed_bad_rate_pct": 1.0362861570247932,
+              "valid_reference_bad_rate_pct": 1.2622675619834711
+            },
+            {
+              "split": "OOT_Valid",
+              "model": "Challenger LightGBM M4",
+              "policy": "Valid-Frozen Iso-Risk Policy",
+              "pd_cutoff": 0.04648983019655445,
+              "applications": 82602,
+              "approved": 66547,
+              "approval_pct": 80.5634246144161,
+              "observed_bads": 840,
+              "observed_bad_rate_pct": 1.262265767051858,
+              "valid_reference_bad_rate_pct": 1.2622675619834711
+            }
+          ]
+        },
+        "OOT_Monitor": {
+          "Champion Scorecard": [
+            {
+              "split": "OOT_Monitor",
+              "model": "Champion Scorecard",
+              "policy": "Valid-Frozen 75% Quantile Policy",
+              "pd_cutoff": 0.030810455894633697,
+              "applications": 151707,
+              "approved": 107404,
+              "approval_pct": 70.7969968425979,
+              "observed_bads": 1073,
+              "observed_bad_rate_pct": 0.9990316934192395,
+              "valid_reference_bad_rate_pct": 1.2622675619834711
+            },
+            {
+              "split": "OOT_Monitor",
+              "model": "Champion Scorecard",
+              "policy": "Valid-Frozen Iso-Risk Policy",
+              "pd_cutoff": 0.030810455894633697,
+              "applications": 151707,
+              "approved": 107404,
+              "approval_pct": 70.7969968425979,
+              "observed_bads": 1073,
+              "observed_bad_rate_pct": 0.9990316934192395,
+              "valid_reference_bad_rate_pct": 1.2622675619834711
+            }
+          ],
+          "Challenger LightGBM M4": [
+            {
+              "split": "OOT_Monitor",
+              "model": "Challenger LightGBM M4",
+              "policy": "Valid-Frozen 75% Quantile Policy",
+              "pd_cutoff": 0.03356910754805267,
+              "applications": 151707,
+              "approved": 101772,
+              "approval_pct": 67.08457750795942,
+              "observed_bads": 715,
+              "observed_bad_rate_pct": 0.7025507998270645,
+              "valid_reference_bad_rate_pct": 1.2622675619834711
+            },
+            {
+              "split": "OOT_Monitor",
+              "model": "Challenger LightGBM M4",
+              "policy": "Valid-Frozen Iso-Risk Policy",
+              "pd_cutoff": 0.04648983019655445,
+              "applications": 151707,
+              "approved": 114021,
+              "approval_pct": 75.15869406157923,
+              "observed_bads": 1007,
+              "observed_bad_rate_pct": 0.8831706440041746,
+              "valid_reference_bad_rate_pct": 1.2622675619834711
+            }
+          ]
+        }
+      },
+      "iso_risk_monitor_contribution": [
+        {
+          "model": "Champion Scorecard",
+          "iso_risk_cutoff": 0.030810455894633697,
+          "approved": 107404,
+          "approval_pct": 70.7969968425979,
+          "approved_bad_rate_pct": 0.9990316934192395,
+          "model_neutral_realized_contribution": 263287512.2541097,
+          "scenario_expected_contribution": 132180253.77115855
+        },
+        {
+          "model": "Challenger LightGBM M4",
+          "iso_risk_cutoff": 0.04648983019655445,
+          "approved": 114021,
+          "approval_pct": 75.15869406157923,
+          "approved_bad_rate_pct": 0.8831706440041746,
+          "model_neutral_realized_contribution": 272540636.6856715,
+          "scenario_expected_contribution": 140125997.00846383
+        }
+      ],
+      "stage5_headline_provenance": [
+        {
+          "Scenario": "S1_Baseline",
+          "Model": "Champion Scorecard",
+          "Approved_Count": 107404,
+          "Monitor_Approval_Pct": 70.7969968425979,
+          "Observed_Bad_Rate_Pct": 0.9990316934192395,
+          "Valid_PD_Cutoff": 0.030810455894633697,
+          "Source": "data/powerbi/pbi_04_stress_scenarios.csv"
+        },
+        {
+          "Scenario": "S1_Baseline",
+          "Model": "Challenger LightGBM M4",
+          "Approved_Count": 114021,
+          "Monitor_Approval_Pct": 75.15869406157923,
+          "Observed_Bad_Rate_Pct": 0.8831706440041746,
+          "Valid_PD_Cutoff": 0.04648983019655445,
+          "Source": "data/powerbi/pbi_04_stress_scenarios.csv"
+        }
+      ]
+    },
+    "non_circular_economic_contribution": {
+      "model_neutral_benchmark": {
+        "benchmark_apr_pct": 15.0,
+        "funding_cost_pct": 4.0,
+        "opex_pct": 1.5,
+        "lgd_pct": 75.0,
+        "equation": "Realized Contribution = (APR_benchmark - Funding Cost - Opex) / 12 × Principal × amortizing balance factor - Principal × target × LGD; APR_benchmark=15%, COF=4%, Opex=1.5%, LGD=75%.",
+        "same_applicants_both_approved_same_limit_count": 74805,
+        "max_abs_contribution_difference_same_limit": 0.0,
+        "asserted_identical": true
+      },
+      "iso_risk_paired_bootstrap": {
+        "point_estimates": {
+          "delta_approval_pp": 4.36169721898132,
+          "delta_bad_rate_bps": -11.586104941506491,
+          "delta_realized_contribution": 9253124.431561798
+        },
+        "bootstrap_replicates": 1000,
+        "seed": 42,
+        "confidence_intervals_95": {
+          "delta_approval_pp": [
+            4.1692044533212105,
+            4.535716875292495
+          ],
+          "delta_bad_rate_bps": [
+            -15.675153931055599,
+            -7.280464732638189
+          ],
+          "delta_realized_contribution": [
+            6923463.617650903,
+            11363226.992321525
+          ]
+        },
+        "paired_same_applicants": true
+      },
+      "swap_sets": {
+        "swap_in_count": 13966,
+        "swap_in_bads": 273,
+        "swap_out_count": 7349,
+        "swap_out_bads": 339,
+        "both_approve_count": 100055
+      },
+      "kgb_sensitivity": {
+        "assumption": "k multiplies OOT_Monitor target-based loss on Challenger-only (Swap-In) rows; this is a sensitivity on potentially unobserved outcomes, not evidence that these saved labels are missing.",
+        "swap_in_fixed_nii_less_funding_opex": 29490131.780974142,
+        "swap_in_base_observed_loss": 7438953.812836183,
+        "champion_swap_out_realized_contribution": 7212343.747146399,
+        "break_even_k_star": 2.9947474597014727,
+        "net_swap_contribution_by_k": [
+          {
+            "k": 1.0,
+            "net_swap_contribution": 14838834.22099156
+          },
+          {
+            "k": 1.25,
+            "net_swap_contribution": 12979095.767782517
+          },
+          {
+            "k": 1.5,
+            "net_swap_contribution": 11119357.31457347
+          },
+          {
+            "k": 2.0,
+            "net_swap_contribution": 7399880.408155377
+          },
+          {
+            "k": 2.5,
+            "net_swap_contribution": 3680403.5017372845
+          },
+          {
+            "k": 3.0,
+            "net_swap_contribution": -39073.40468080435
+          },
+          {
+            "k": 4.0,
+            "net_swap_contribution": -7478027.217516989
+          }
+        ]
+      },
+      "scenario_based_expected_contribution": {
+        "equation": "Stage 6 profit = max((APR_tier-COF-Opex),0)/12 × principal × amortizing balance factor - principal × PD × LGD; base COF=4%, Opex=1.5%, LGD=75%.",
+        "rows": [
+          {
+            "model": "Champion Scorecard",
+            "iso_risk_cutoff": 0.030810455894633697,
+            "approved": 107404,
+            "approval_pct": 70.7969968425979,
+            "approved_bad_rate_pct": 0.9990316934192395,
+            "model_neutral_realized_contribution": 263287512.2541097,
+            "scenario_expected_contribution": 132180253.77115855
+          },
+          {
+            "model": "Challenger LightGBM M4",
+            "iso_risk_cutoff": 0.04648983019655445,
+            "approved": 114021,
+            "approval_pct": 75.15869406157923,
+            "approved_bad_rate_pct": 0.8831706440041746,
+            "model_neutral_realized_contribution": 272540636.6856715,
+            "scenario_expected_contribution": 140125997.00846383
+          }
+        ]
+      },
+      "s4_tail_shock_comparison": [
+        {
+          "model": "Champion Scorecard",
+          "approved": 107404,
+          "stress_cof_pct": 5.5,
+          "stress_lgd_pct": 85.0,
+          "stress_pd_multiplier": "1.30x tiers A-B / 2.00x tiers C-E",
+          "expected_contribution_proxy": 50999674.14517282,
+          "realized_target_stress_proxy": 83134886.76448373
+        },
+        {
+          "model": "Challenger LightGBM M4",
+          "approved": 114021,
+          "stress_cof_pct": 5.5,
+          "stress_lgd_pct": 85.0,
+          "stress_pd_multiplier": "1.30x tiers A-B / 2.00x tiers C-E",
+          "expected_contribution_proxy": 42484976.86771697,
+          "realized_target_stress_proxy": 109139074.49803041
+        }
+      ]
+    },
+    "model_neutral_paired_policy_bootstrap": {
+      "point_estimates": {
+        "delta_approval_pp": 4.36169721898132,
+        "delta_bad_rate_bps": -11.586104941506491,
+        "delta_realized_contribution": 9253124.431561798
+      },
+      "bootstrap_replicates": 1000,
+      "seed": 42,
+      "confidence_intervals_95": {
+        "delta_approval_pp": [
+          4.1692044533212105,
+          4.535716875292495
+        ],
+        "delta_bad_rate_bps": [
+          -15.675153931055599,
+          -7.280464732638189
+        ],
+        "delta_realized_contribution": [
+          6923463.617650903,
+          11363226.992321525
+        ]
+      },
+      "paired_same_applicants": true
+    },
+    "s4_tail_shock": [
+      {
+        "model": "Champion Scorecard",
+        "approved": 107404,
+        "stress_cof_pct": 5.5,
+        "stress_lgd_pct": 85.0,
+        "stress_pd_multiplier": "1.30x tiers A-B / 2.00x tiers C-E",
+        "expected_contribution_proxy": 50999674.14517282,
+        "realized_target_stress_proxy": 83134886.76448373
+      },
+      {
+        "model": "Challenger LightGBM M4",
+        "approved": 114021,
+        "stress_cof_pct": 5.5,
+        "stress_lgd_pct": 85.0,
+        "stress_pd_multiplier": "1.30x tiers A-B / 2.00x tiers C-E",
+        "expected_contribution_proxy": 42484976.86771697,
+        "realized_target_stress_proxy": 109139074.49803041
+      }
+    ],
+    "stage5_recalibration_provenance": {
+      "fit_split": "OOT_Valid",
+      "fit_weeks": [
+        65,
+        77
+      ],
+      "fit_rows": 82602,
+      "oot_monitor_used_for_fit": false,
+      "iso_risk_valid_reference_bad_rate": 0.012622675619834711,
+      "iso_risk_cutoffs": {
+        "champion_pd_cutoff": 0.030810455894633697,
+        "challenger_pd_cutoff": 0.04648983019655445,
+        "valid_reference_bad_rate": 0.012622675619834711
+      },
+      "iso_approval_cutoffs": {
+        "champion_pd_cutoff": 0.030810455894633697,
+        "challenger_pd_cutoff": 0.03356910754805267,
+        "valid_target_eligible_approval_rate": 0.75
+      }
+    }
+  },
+  "section_5_missing_income_csi_and_fairness": {
+    "missing_income_by_split_tier": [
+      {
+        "split": "Train_Dev",
+        "income_status": "Verified",
+        "risk_tier": "Tier A: Super Prime",
+        "count": 408059,
+        "share_of_split_pct": 31.574960343560182,
+        "approval_pct": 89.84338049154657,
+        "observed_bad_rate_pct": 0.4166064221105281,
+        "mean_pd_pct": 0.4579545491389678,
+        "fallback_multiplier": null
+      },
+      {
+        "split": "Train_Dev",
+        "income_status": "Verified",
+        "risk_tier": "Tier B: Prime",
+        "count": 159266,
+        "share_of_split_pct": 12.323751305760823,
+        "approval_pct": 86.17156204086245,
+        "observed_bad_rate_pct": 1.6042344254266447,
+        "mean_pd_pct": 1.4347022697534244,
+        "fallback_multiplier": null
+      },
+      {
+        "split": "Train_Dev",
+        "income_status": "Verified",
+        "risk_tier": "Tier C: Standard",
+        "count": 134610,
+        "share_of_split_pct": 10.415909002979069,
+        "approval_pct": 83.65054602184088,
+        "observed_bad_rate_pct": 3.506425971324567,
+        "mean_pd_pct": 2.8447421448492567,
+        "fallback_multiplier": null
+      },
+      {
+        "split": "Train_Dev",
+        "income_status": "Verified",
+        "risk_tier": "Tier D: High Risk",
+        "count": 78376,
+        "share_of_split_pct": 6.064610979997679,
+        "approval_pct": 25.51929161988364,
+        "observed_bad_rate_pct": 7.031489231397367,
+        "mean_pd_pct": 5.260209937182859,
+        "fallback_multiplier": null
+      },
+      {
+        "split": "Train_Dev",
+        "income_status": "Verified",
+        "risk_tier": "Tier E: Decline",
+        "count": 75950,
+        "share_of_split_pct": 5.876890935118196,
+        "approval_pct": 0.0,
+        "observed_bad_rate_pct": 19.3285055957867,
+        "mean_pd_pct": 13.238743999846738,
+        "fallback_multiplier": null
+      },
+      {
+        "split": "Train_Dev",
+        "income_status": "Missing / unverified",
+        "risk_tier": "Tier A: Super Prime",
+        "count": 179221,
+        "share_of_split_pct": 13.867837660076605,
+        "approval_pct": 99.9090508366765,
+        "observed_bad_rate_pct": 0.6651006299484994,
+        "mean_pd_pct": 0.552297706194088,
+        "fallback_multiplier": 0.8
+      },
+      {
+        "split": "Train_Dev",
+        "income_status": "Missing / unverified",
+        "risk_tier": "Tier B: Prime",
+        "count": 103827,
+        "share_of_split_pct": 8.033969126010755,
+        "approval_pct": 99.6118543346143,
+        "observed_bad_rate_pct": 1.8906450152657788,
+        "mean_pd_pct": 1.4358332192287453,
+        "fallback_multiplier": 0.75
+      },
+      {
+        "split": "Train_Dev",
+        "income_status": "Missing / unverified",
+        "risk_tier": "Tier C: Standard",
+        "count": 85052,
+        "share_of_split_pct": 6.5811893063024725,
+        "approval_pct": 98.6231952217467,
+        "observed_bad_rate_pct": 3.684804590133095,
+        "mean_pd_pct": 2.808095173430169,
+        "fallback_multiplier": 0.7
+      },
+      {
+        "split": "Train_Dev",
+        "income_status": "Missing / unverified",
+        "risk_tier": "Tier D: High Risk",
+        "count": 41247,
+        "share_of_split_pct": 3.1916276550470073,
+        "approval_pct": 28.62753654811259,
+        "observed_bad_rate_pct": 7.399326011588722,
+        "mean_pd_pct": 5.248777778168524,
+        "fallback_multiplier": 0.6
+      },
+      {
+        "split": "Train_Dev",
+        "income_status": "Missing / unverified",
+        "risk_tier": "Tier E: Decline",
+        "count": 26742,
+        "share_of_split_pct": 2.069253685147212,
+        "approval_pct": 0.0,
+        "observed_bad_rate_pct": 16.22541320768828,
+        "mean_pd_pct": 11.801827303080875,
+        "fallback_multiplier": 0.0
+      },
+      {
+        "split": "OOT_Monitor",
+        "income_status": "Verified",
+        "risk_tier": "Tier A: Super Prime",
+        "count": 41862,
+        "share_of_split_pct": 27.59398050188851,
+        "approval_pct": 92.11934451292342,
+        "observed_bad_rate_pct": 0.26276814294586975,
+        "mean_pd_pct": 0.521373509206426,
+        "fallback_multiplier": null
+      },
+      {
+        "split": "OOT_Monitor",
+        "income_status": "Verified",
+        "risk_tier": "Tier B: Prime",
+        "count": 22348,
+        "share_of_split_pct": 14.731027572887209,
+        "approval_pct": 88.14659029890818,
+        "observed_bad_rate_pct": 0.8233398961875783,
+        "mean_pd_pct": 1.4354232712856656,
+        "fallback_multiplier": null
+      },
+      {
+        "split": "OOT_Monitor",
+        "income_status": "Verified",
+        "risk_tier": "Tier C: Standard",
+        "count": 18349,
+        "share_of_split_pct": 12.09502527899174,
+        "approval_pct": 85.3125510927026,
+        "observed_bad_rate_pct": 1.7821134666739333,
+        "mean_pd_pct": 2.8319193857477742,
+        "fallback_multiplier": null
+      },
+      {
+        "split": "OOT_Monitor",
+        "income_status": "Verified",
+        "risk_tier": "Tier D: High Risk",
+        "count": 10330,
+        "share_of_split_pct": 6.809178218539685,
+        "approval_pct": 26.234269119070667,
+        "observed_bad_rate_pct": 3.8044530493707645,
+        "mean_pd_pct": 5.25028688344694,
+        "fallback_multiplier": null
+      },
+      {
+        "split": "OOT_Monitor",
+        "income_status": "Verified",
+        "risk_tier": "Tier E: Decline",
+        "count": 10036,
+        "share_of_split_pct": 6.615383601284054,
+        "approval_pct": 0.0,
+        "observed_bad_rate_pct": 10.870864886408928,
+        "mean_pd_pct": 13.30396040279927,
+        "fallback_multiplier": null
+      },
+      {
+        "split": "OOT_Monitor",
+        "income_status": "Missing / unverified",
+        "risk_tier": "Tier A: Super Prime",
+        "count": 9641,
+        "share_of_split_pct": 6.355013282182101,
+        "approval_pct": 99.90664868789545,
+        "observed_bad_rate_pct": 0.2800539363136604,
+        "mean_pd_pct": 0.6271865564712225,
+        "fallback_multiplier": 0.8
+      },
+      {
+        "split": "OOT_Monitor",
+        "income_status": "Missing / unverified",
+        "risk_tier": "Tier B: Prime",
+        "count": 12521,
+        "share_of_split_pct": 8.253409532849506,
+        "approval_pct": 99.73644277613609,
+        "observed_bad_rate_pct": 0.7746985065090648,
+        "mean_pd_pct": 1.466763459079661,
+        "fallback_multiplier": 0.75
+      },
+      {
+        "split": "OOT_Monitor",
+        "income_status": "Missing / unverified",
+        "risk_tier": "Tier C: Standard",
+        "count": 12587,
+        "share_of_split_pct": 8.2969144469273,
+        "approval_pct": 99.38031302137126,
+        "observed_bad_rate_pct": 1.3744339397791372,
+        "mean_pd_pct": 2.8990548312015285,
+        "fallback_multiplier": 0.7
+      },
+      {
+        "split": "OOT_Monitor",
+        "income_status": "Missing / unverified",
+        "risk_tier": "Tier D: High Risk",
+        "count": 8375,
+        "share_of_split_pct": 5.520509930326221,
+        "approval_pct": 33.026865671641794,
+        "observed_bad_rate_pct": 3.3791044776119405,
+        "mean_pd_pct": 5.242016775915729,
+        "fallback_multiplier": 0.6
+      },
+      {
+        "split": "OOT_Monitor",
+        "income_status": "Missing / unverified",
+        "risk_tier": "Tier E: Decline",
+        "count": 5658,
+        "share_of_split_pct": 3.7295576341236725,
+        "approval_pct": 0.0,
+        "observed_bad_rate_pct": 9.367267585719336,
+        "mean_pd_pct": 11.410811357196822,
+        "fallback_multiplier": 0.0
+      }
+    ],
+    "missing_income_policy_alternatives": [
+      {
+        "split": "Train_Dev",
+        "policy": "Current tiered cap / haircut",
+        "count": 436089,
+        "auto_approved": 378171,
+        "review_queue": 0,
+        "auto_approval_pct": 86.71876612342894
+      },
+      {
+        "split": "Train_Dev",
+        "policy": "Manual verification route",
+        "count": 436089,
+        "auto_approved": 0,
+        "review_queue": 436089,
+        "auto_approval_pct": 0.0
+      },
+      {
+        "split": "Train_Dev",
+        "policy": "Decline unverified income",
+        "count": 436089,
+        "auto_approved": 0,
+        "review_queue": 0,
+        "auto_approval_pct": 0.0
+      },
+      {
+        "split": "OOT_Monitor",
+        "policy": "Current tiered cap / haircut",
+        "count": 48782,
+        "auto_approved": 37395,
+        "review_queue": 0,
+        "auto_approval_pct": 76.65737362141773
+      },
+      {
+        "split": "OOT_Monitor",
+        "policy": "Manual verification route",
+        "count": 48782,
+        "auto_approved": 0,
+        "review_queue": 48782,
+        "auto_approval_pct": 0.0
+      },
+      {
+        "split": "OOT_Monitor",
+        "policy": "Decline unverified income",
+        "count": 48782,
+        "auto_approved": 0,
+        "review_queue": 0,
+        "auto_approval_pct": 0.0
+      }
+    ],
+    "gender_missingness_oot_monitor": {
+      "Unknown": {
+        "count": 150591,
+        "share_pct": 99.26437145286638
+      },
+      "F": {
+        "count": 926,
+        "share_pct": 0.6103871278187559
+      },
+      "M": {
+        "count": 190,
+        "share_pct": 0.12524141931486352
+      }
+    },
+    "age_within_risk_tier_fairness": {
+      "gender_missingness_oot_monitor": {
+        "Unknown": {
+          "count": 150591,
+          "share_pct": 99.26437145286638
+        },
+        "F": {
+          "count": 926,
+          "share_pct": 0.6103871278187559
+        },
+        "M": {
+          "count": 190,
+          "share_pct": 0.12524141931486352
+        }
+      },
+      "age_within_risk_tier": [
+        {
+          "model": "Champion Scorecard",
+          "age_band": "<25",
+          "risk_tier": "Tier A: Super Prime",
+          "count": 586,
+          "approval_pct": 98.80546075085324,
+          "observed_bad_rate_pct": 1.7064846416382253,
+          "false_rejection_good_rate_pct": 1.0416666666666665,
+          "false_approval_bad_rate_pct": 90.0,
+          "AIR": 0.8457993789340684
+        },
+        {
+          "model": "Champion Scorecard",
+          "age_band": "<25",
+          "risk_tier": "Tier B: Prime",
+          "count": 2314,
+          "approval_pct": 98.53068280034573,
+          "observed_bad_rate_pct": 2.765773552290406,
+          "false_rejection_good_rate_pct": 1.4222222222222223,
+          "false_approval_bad_rate_pct": 96.875,
+          "AIR": 0.8457993789340684
+        },
+        {
+          "model": "Champion Scorecard",
+          "age_band": "<25",
+          "risk_tier": "Tier C: Standard",
+          "count": 2051,
+          "approval_pct": 69.6733300828864,
+          "observed_bad_rate_pct": 6.923451974646514,
+          "false_rejection_good_rate_pct": 29.91094814038764,
+          "false_approval_bad_rate_pct": 64.08450704225352,
+          "AIR": 0.8457993789340684
+        },
+        {
+          "model": "Champion Scorecard",
+          "age_band": "<25",
+          "risk_tier": "Tier D: High Risk",
+          "count": 832,
+          "approval_pct": 0.0,
+          "observed_bad_rate_pct": 8.774038461538462,
+          "false_rejection_good_rate_pct": 100.0,
+          "false_approval_bad_rate_pct": 0.0,
+          "AIR": 0.8457993789340684
+        },
+        {
+          "model": "Champion Scorecard",
+          "age_band": "<25",
+          "risk_tier": "Tier E: Decline",
+          "count": 561,
+          "approval_pct": 0.0,
+          "observed_bad_rate_pct": 17.290552584670234,
+          "false_rejection_good_rate_pct": 100.0,
+          "false_approval_bad_rate_pct": 0.0,
+          "AIR": 0.8457993789340684
+        },
+        {
+          "model": "Champion Scorecard",
+          "age_band": "25-34",
+          "risk_tier": "Tier A: Super Prime",
+          "count": 4450,
+          "approval_pct": 94.33707865168539,
+          "observed_bad_rate_pct": 0.2696629213483146,
+          "false_rejection_good_rate_pct": 5.6557007661108605,
+          "false_approval_bad_rate_pct": 91.66666666666666,
+          "AIR": 0.7559117298209437
+        },
+        {
+          "model": "Champion Scorecard",
+          "age_band": "25-34",
+          "risk_tier": "Tier B: Prime",
+          "count": 9044,
+          "approval_pct": 92.98982750995135,
+          "observed_bad_rate_pct": 0.8845643520566122,
+          "false_rejection_good_rate_pct": 7.039268183846498,
+          "false_approval_bad_rate_pct": 96.25,
+          "AIR": 0.7559117298209437
+        },
+        {
+          "model": "Champion Scorecard",
+          "age_band": "25-34",
+          "risk_tier": "Tier C: Standard",
+          "count": 7890,
+          "approval_pct": 60.443599493029154,
+          "observed_bad_rate_pct": 2.9784537389100127,
+          "false_rejection_good_rate_pct": 39.42521227955584,
+          "false_approval_bad_rate_pct": 56.17021276595745,
+          "AIR": 0.7559117298209437
+        },
+        {
+          "model": "Champion Scorecard",
+          "age_band": "25-34",
+          "risk_tier": "Tier D: High Risk",
+          "count": 3851,
+          "approval_pct": 0.0,
+          "observed_bad_rate_pct": 5.011685276551545,
+          "false_rejection_good_rate_pct": 100.0,
+          "false_approval_bad_rate_pct": 0.0,
+          "AIR": 0.7559117298209437
+        },
+        {
+          "model": "Champion Scorecard",
+          "age_band": "25-34",
+          "risk_tier": "Tier E: Decline",
+          "count": 3531,
+          "approval_pct": 0.0,
+          "observed_bad_rate_pct": 9.62900028320589,
+          "false_rejection_good_rate_pct": 100.0,
+          "false_approval_bad_rate_pct": 0.0,
+          "AIR": 0.7559117298209437
+        },
+        {
+          "model": "Champion Scorecard",
+          "age_band": "35-49",
+          "risk_tier": "Tier A: Super Prime",
+          "count": 10049,
+          "approval_pct": 92.65598567021594,
+          "observed_bad_rate_pct": 0.4577569907453478,
+          "false_rejection_good_rate_pct": 7.33779866040188,
+          "false_approval_bad_rate_pct": 91.30434782608695,
+          "AIR": 0.8033079839616847
+        },
+        {
+          "model": "Champion Scorecard",
+          "age_band": "35-49",
+          "risk_tier": "Tier B: Prime",
+          "count": 15509,
+          "approval_pct": 91.7273840995551,
+          "observed_bad_rate_pct": 0.8188793603713973,
+          "false_rejection_good_rate_pct": 8.308412430113119,
+          "false_approval_bad_rate_pct": 96.06299212598425,
+          "AIR": 0.8033079839616847
+        },
+        {
+          "model": "Champion Scorecard",
+          "age_band": "35-49",
+          "risk_tier": "Tier C: Standard",
+          "count": 11461,
+          "approval_pct": 59.706831864584245,
+          "observed_bad_rate_pct": 1.6577960038391064,
+          "false_rejection_good_rate_pct": 40.10291899565256,
+          "false_approval_bad_rate_pct": 48.421052631578945,
+          "AIR": 0.8033079839616847
+        },
+        {
+          "model": "Champion Scorecard",
+          "age_band": "35-49",
+          "risk_tier": "Tier D: High Risk",
+          "count": 5346,
+          "approval_pct": 0.0,
+          "observed_bad_rate_pct": 4.077815188926301,
+          "false_rejection_good_rate_pct": 100.0,
+          "false_approval_bad_rate_pct": 0.0,
+          "AIR": 0.8033079839616847
+        },
+        {
+          "model": "Champion Scorecard",
+          "age_band": "35-49",
+          "risk_tier": "Tier E: Decline",
+          "count": 4959,
+          "approval_pct": 0.0,
+          "observed_bad_rate_pct": 8.771929824561402,
+          "false_rejection_good_rate_pct": 100.0,
+          "false_approval_bad_rate_pct": 0.0,
+          "AIR": 0.8033079839616847
+        },
+        {
+          "model": "Champion Scorecard",
+          "age_band": "50+",
+          "risk_tier": "Tier A: Super Prime",
+          "count": 31386,
+          "approval_pct": 97.16752692283184,
+          "observed_bad_rate_pct": 0.46198942203530236,
+          "false_rejection_good_rate_pct": 2.832815850965078,
+          "false_approval_bad_rate_pct": 97.24137931034483,
+          "AIR": 1.0
+        },
+        {
+          "model": "Champion Scorecard",
+          "age_band": "50+",
+          "risk_tier": "Tier B: Prime",
+          "count": 19091,
+          "approval_pct": 94.33240794091456,
+          "observed_bad_rate_pct": 0.921900371902991,
+          "false_rejection_good_rate_pct": 5.688606925720328,
+          "false_approval_bad_rate_pct": 96.5909090909091,
+          "AIR": 1.0
+        },
+        {
+          "model": "Champion Scorecard",
+          "age_band": "50+",
+          "risk_tier": "Tier C: Standard",
+          "count": 10955,
+          "approval_pct": 62.55591054313099,
+          "observed_bad_rate_pct": 1.9260611592879964,
+          "false_rejection_good_rate_pct": 37.36969471332837,
+          "false_approval_bad_rate_pct": 58.767772511848335,
+          "AIR": 1.0
+        },
+        {
+          "model": "Champion Scorecard",
+          "age_band": "50+",
+          "risk_tier": "Tier D: High Risk",
+          "count": 4695,
+          "approval_pct": 0.0,
+          "observed_bad_rate_pct": 3.855165069222577,
+          "false_rejection_good_rate_pct": 100.0,
+          "false_approval_bad_rate_pct": 0.0,
+          "AIR": 1.0
+        },
+        {
+          "model": "Champion Scorecard",
+          "age_band": "50+",
+          "risk_tier": "Tier E: Decline",
+          "count": 3146,
+          "approval_pct": 0.0,
+          "observed_bad_rate_pct": 7.628734901462174,
+          "false_rejection_good_rate_pct": 100.0,
+          "false_approval_bad_rate_pct": 0.0,
+          "AIR": 1.0
+        },
+        {
+          "model": "M2 Zero Demographic/Employment Proxies",
+          "age_band": "<25",
+          "risk_tier": "Tier A: Super Prime",
+          "count": 1998,
+          "approval_pct": 95.24524524524524,
+          "observed_bad_rate_pct": 6.306306306306306,
+          "false_rejection_good_rate_pct": 4.487179487179487,
+          "false_approval_bad_rate_pct": 91.26984126984127,
+          "AIR": 1.0
+        },
+        {
+          "model": "M2 Zero Demographic/Employment Proxies",
+          "age_band": "<25",
+          "risk_tier": "Tier B: Prime",
+          "count": 2072,
+          "approval_pct": 96.71814671814671,
+          "observed_bad_rate_pct": 6.129343629343629,
+          "false_rejection_good_rate_pct": 2.930591259640103,
+          "false_approval_bad_rate_pct": 91.33858267716536,
+          "AIR": 1.0
+        },
+        {
+          "model": "M2 Zero Demographic/Employment Proxies",
+          "age_band": "<25",
+          "risk_tier": "Tier C: Standard",
+          "count": 1238,
+          "approval_pct": 88.61066235864298,
+          "observed_bad_rate_pct": 6.623586429725363,
+          "false_rejection_good_rate_pct": 10.986159169550174,
+          "false_approval_bad_rate_pct": 82.92682926829268,
+          "AIR": 1.0
+        },
+        {
+          "model": "M2 Zero Demographic/Employment Proxies",
+          "age_band": "<25",
+          "risk_tier": "Tier D: High Risk",
+          "count": 647,
+          "approval_pct": 0.0,
+          "observed_bad_rate_pct": 5.255023183925812,
+          "false_rejection_good_rate_pct": 100.0,
+          "false_approval_bad_rate_pct": 0.0,
+          "AIR": 1.0
+        },
+        {
+          "model": "M2 Zero Demographic/Employment Proxies",
+          "age_band": "<25",
+          "risk_tier": "Tier E: Decline",
+          "count": 389,
+          "approval_pct": 0.0,
+          "observed_bad_rate_pct": 4.370179948586118,
+          "false_rejection_good_rate_pct": 100.0,
+          "false_approval_bad_rate_pct": 0.0,
+          "AIR": 1.0
+        },
+        {
+          "model": "M2 Zero Demographic/Employment Proxies",
+          "age_band": "25-34",
+          "risk_tier": "Tier A: Super Prime",
+          "count": 10703,
+          "approval_pct": 89.10585817060637,
+          "observed_bad_rate_pct": 2.746893394375409,
+          "false_rejection_good_rate_pct": 10.798347583821693,
+          "false_approval_bad_rate_pct": 85.71428571428571,
+          "AIR": 0.9356123249908729
+        },
+        {
+          "model": "M2 Zero Demographic/Employment Proxies",
+          "age_band": "25-34",
+          "risk_tier": "Tier B: Prime",
+          "count": 7906,
+          "approval_pct": 91.24715406020744,
+          "observed_bad_rate_pct": 2.896534277763724,
+          "false_rejection_good_rate_pct": 8.610134166992314,
+          "false_approval_bad_rate_pct": 86.46288209606988,
+          "AIR": 0.9356123249908729
+        },
+        {
+          "model": "M2 Zero Demographic/Employment Proxies",
+          "age_band": "25-34",
+          "risk_tier": "Tier C: Standard",
+          "count": 5308,
+          "approval_pct": 84.36322532027128,
+          "observed_bad_rate_pct": 3.447626224566692,
+          "false_rejection_good_rate_pct": 15.512195121951219,
+          "false_approval_bad_rate_pct": 80.87431693989072,
+          "AIR": 0.9356123249908729
+        },
+        {
+          "model": "M2 Zero Demographic/Employment Proxies",
+          "age_band": "25-34",
+          "risk_tier": "Tier D: High Risk",
+          "count": 2839,
+          "approval_pct": 0.0,
+          "observed_bad_rate_pct": 3.134906657273688,
+          "false_rejection_good_rate_pct": 100.0,
+          "false_approval_bad_rate_pct": 0.0,
+          "AIR": 0.9356123249908729
+        },
+        {
+          "model": "M2 Zero Demographic/Employment Proxies",
+          "age_band": "25-34",
+          "risk_tier": "Tier E: Decline",
+          "count": 2010,
+          "approval_pct": 0.0,
+          "observed_bad_rate_pct": 3.233830845771144,
+          "false_rejection_good_rate_pct": 100.0,
+          "false_approval_bad_rate_pct": 0.0,
+          "AIR": 0.9356123249908729
+        },
+        {
+          "model": "M2 Zero Demographic/Employment Proxies",
+          "age_band": "35-49",
+          "risk_tier": "Tier A: Super Prime",
+          "count": 17926,
+          "approval_pct": 87.8500502064041,
+          "observed_bad_rate_pct": 2.1086689724422625,
+          "false_rejection_good_rate_pct": 12.132436744928198,
+          "false_approval_bad_rate_pct": 87.03703703703704,
+          "AIR": 0.9112444639842179
+        },
+        {
+          "model": "M2 Zero Demographic/Employment Proxies",
+          "age_band": "35-49",
+          "risk_tier": "Tier B: Prime",
+          "count": 12198,
+          "approval_pct": 90.13772749631087,
+          "observed_bad_rate_pct": 2.221675684538449,
+          "false_rejection_good_rate_pct": 9.658757441100025,
+          "false_approval_bad_rate_pct": 81.18081180811808,
+          "AIR": 0.9112444639842179
+        },
+        {
+          "model": "M2 Zero Demographic/Employment Proxies",
+          "age_band": "35-49",
+          "risk_tier": "Tier C: Standard",
+          "count": 8788,
+          "approval_pct": 82.74920345926263,
+          "observed_bad_rate_pct": 2.082385070550751,
+          "false_rejection_good_rate_pct": 17.141196978500872,
+          "false_approval_bad_rate_pct": 77.59562841530054,
+          "AIR": 0.9112444639842179
+        },
+        {
+          "model": "M2 Zero Demographic/Employment Proxies",
+          "age_band": "35-49",
+          "risk_tier": "Tier D: High Risk",
+          "count": 4885,
+          "approval_pct": 0.0,
+          "observed_bad_rate_pct": 2.169907881269191,
+          "false_rejection_good_rate_pct": 100.0,
+          "false_approval_bad_rate_pct": 0.0,
+          "AIR": 0.9112444639842179
+        },
+        {
+          "model": "M2 Zero Demographic/Employment Proxies",
+          "age_band": "35-49",
+          "risk_tier": "Tier E: Decline",
+          "count": 3527,
+          "approval_pct": 0.0,
+          "observed_bad_rate_pct": 2.211511199319535,
+          "false_rejection_good_rate_pct": 100.0,
+          "false_approval_bad_rate_pct": 0.0,
+          "AIR": 0.9112444639842179
+        },
+        {
+          "model": "M2 Zero Demographic/Employment Proxies",
+          "age_band": "50+",
+          "risk_tier": "Tier A: Super Prime",
+          "count": 27246,
+          "approval_pct": 93.19533142479631,
+          "observed_bad_rate_pct": 1.350656977170961,
+          "false_rejection_good_rate_pct": 6.7713371530619835,
+          "false_approval_bad_rate_pct": 90.76086956521739,
+          "AIR": 0.9715975750573302
+        },
+        {
+          "model": "M2 Zero Demographic/Employment Proxies",
+          "age_band": "50+",
+          "risk_tier": "Tier B: Prime",
+          "count": 17762,
+          "approval_pct": 94.03783357729985,
+          "observed_bad_rate_pct": 1.4356491386105168,
+          "false_rejection_good_rate_pct": 5.934768949563032,
+          "false_approval_bad_rate_pct": 92.15686274509804,
+          "AIR": 0.9715975750573302
+        },
+        {
+          "model": "M2 Zero Demographic/Employment Proxies",
+          "age_band": "50+",
+          "risk_tier": "Tier C: Standard",
+          "count": 12620,
+          "approval_pct": 87.11568938193344,
+          "observed_bad_rate_pct": 1.3549920760697305,
+          "false_rejection_good_rate_pct": 12.796208530805686,
+          "false_approval_bad_rate_pct": 80.7017543859649,
+          "AIR": 0.9715975750573302
+        },
+        {
+          "model": "M2 Zero Demographic/Employment Proxies",
+          "age_band": "50+",
+          "risk_tier": "Tier D: High Risk",
+          "count": 6836,
+          "approval_pct": 0.0,
+          "observed_bad_rate_pct": 1.2873025160912814,
+          "false_rejection_good_rate_pct": 100.0,
+          "false_approval_bad_rate_pct": 0.0,
+          "AIR": 0.9715975750573302
+        },
+        {
+          "model": "M2 Zero Demographic/Employment Proxies",
+          "age_band": "50+",
+          "risk_tier": "Tier E: Decline",
+          "count": 4809,
+          "approval_pct": 0.0,
+          "observed_bad_rate_pct": 1.4763984196298607,
+          "false_rejection_good_rate_pct": 100.0,
+          "false_approval_bad_rate_pct": 0.0,
+          "AIR": 0.9715975750573302
+        },
+        {
+          "model": "M4-NoDrift",
+          "age_band": "<25",
+          "risk_tier": "Tier A: Super Prime",
+          "count": 2619,
+          "approval_pct": 95.6090110729286,
+          "observed_bad_rate_pct": 6.681939671630394,
+          "false_rejection_good_rate_pct": 4.091653027823241,
+          "false_approval_bad_rate_pct": 91.42857142857143,
+          "AIR": 1.0
+        },
+        {
+          "model": "M4-NoDrift",
+          "age_band": "<25",
+          "risk_tier": "Tier B: Prime",
+          "count": 1455,
+          "approval_pct": 95.80756013745705,
+          "observed_bad_rate_pct": 5.979381443298969,
+          "false_rejection_good_rate_pct": 3.874269005847953,
+          "false_approval_bad_rate_pct": 90.80459770114942,
+          "AIR": 1.0
+        },
+        {
+          "model": "M4-NoDrift",
+          "age_band": "<25",
+          "risk_tier": "Tier C: Standard",
+          "count": 1247,
+          "approval_pct": 96.87249398556536,
+          "observed_bad_rate_pct": 5.613472333600641,
+          "false_rejection_good_rate_pct": 2.7187765505522514,
+          "false_approval_bad_rate_pct": 90.0,
+          "AIR": 1.0
+        },
+        {
+          "model": "M4-NoDrift",
+          "age_band": "<25",
+          "risk_tier": "Tier D: High Risk",
+          "count": 561,
+          "approval_pct": 13.725490196078432,
+          "observed_bad_rate_pct": 6.59536541889483,
+          "false_rejection_good_rate_pct": 86.25954198473282,
+          "false_approval_bad_rate_pct": 13.513513513513514,
+          "AIR": 1.0
+        },
+        {
+          "model": "M4-NoDrift",
+          "age_band": "<25",
+          "risk_tier": "Tier E: Decline",
+          "count": 462,
+          "approval_pct": 0.0,
+          "observed_bad_rate_pct": 3.67965367965368,
+          "false_rejection_good_rate_pct": 100.0,
+          "false_approval_bad_rate_pct": 0.0,
+          "AIR": 1.0
+        },
+        {
+          "model": "M4-NoDrift",
+          "age_band": "25-34",
+          "risk_tier": "Tier A: Super Prime",
+          "count": 13088,
+          "approval_pct": 89.119804400978,
+          "observed_bad_rate_pct": 2.8117359413202934,
+          "false_rejection_good_rate_pct": 10.738993710691824,
+          "false_approval_bad_rate_pct": 84.23913043478261,
+          "AIR": 0.9375530143101899
+        },
+        {
+          "model": "M4-NoDrift",
+          "age_band": "25-34",
+          "risk_tier": "Tier B: Prime",
+          "count": 5965,
+          "approval_pct": 91.081307627829,
+          "observed_bad_rate_pct": 2.967309304274937,
+          "false_rejection_good_rate_pct": 8.880442294402211,
+          "false_approval_bad_rate_pct": 89.83050847457628,
+          "AIR": 0.9375530143101899
+        },
+        {
+          "model": "M4-NoDrift",
+          "age_band": "25-34",
+          "risk_tier": "Tier C: Standard",
+          "count": 4997,
+          "approval_pct": 91.29477686611968,
+          "observed_bad_rate_pct": 3.442065239143486,
+          "false_rejection_good_rate_pct": 8.518134715025907,
+          "false_approval_bad_rate_pct": 86.04651162790698,
+          "AIR": 0.9375530143101899
+        },
+        {
+          "model": "M4-NoDrift",
+          "age_band": "25-34",
+          "risk_tier": "Tier D: High Risk",
+          "count": 2547,
+          "approval_pct": 14.723203769140165,
+          "observed_bad_rate_pct": 2.8268551236749118,
+          "false_rejection_good_rate_pct": 85.17171717171718,
+          "false_approval_bad_rate_pct": 11.11111111111111,
+          "AIR": 0.9375530143101899
+        },
+        {
+          "model": "M4-NoDrift",
+          "age_band": "25-34",
+          "risk_tier": "Tier E: Decline",
+          "count": 2169,
+          "approval_pct": 0.0,
+          "observed_bad_rate_pct": 3.273397879207008,
+          "false_rejection_good_rate_pct": 100.0,
+          "false_approval_bad_rate_pct": 0.0,
+          "AIR": 0.9375530143101899
+        },
+        {
+          "model": "M4-NoDrift",
+          "age_band": "35-49",
+          "risk_tier": "Tier A: Super Prime",
+          "count": 21665,
+          "approval_pct": 88.20678513731825,
+          "observed_bad_rate_pct": 2.1417032079390723,
+          "false_rejection_good_rate_pct": 11.716428470355172,
+          "false_approval_bad_rate_pct": 84.69827586206897,
+          "AIR": 0.9157251003272615
+        },
+        {
+          "model": "M4-NoDrift",
+          "age_band": "35-49",
+          "risk_tier": "Tier B: Prime",
+          "count": 9594,
+          "approval_pct": 89.2328538670002,
+          "observed_bad_rate_pct": 2.1367521367521367,
+          "false_rejection_good_rate_pct": 10.693364575567154,
+          "false_approval_bad_rate_pct": 85.85365853658537,
+          "AIR": 0.9157251003272615
+        },
+        {
+          "model": "M4-NoDrift",
+          "age_band": "35-49",
+          "risk_tier": "Tier C: Standard",
+          "count": 8026,
+          "approval_pct": 89.63369050585597,
+          "observed_bad_rate_pct": 2.342387241465238,
+          "false_rejection_good_rate_pct": 10.232202092370503,
+          "false_approval_bad_rate_pct": 84.04255319148936,
+          "AIR": 0.9157251003272615
+        },
+        {
+          "model": "M4-NoDrift",
+          "age_band": "35-49",
+          "risk_tier": "Tier D: High Risk",
+          "count": 4331,
+          "approval_pct": 12.468252135765411,
+          "observed_bad_rate_pct": 1.8471484645578389,
+          "false_rejection_good_rate_pct": 87.46177370030581,
+          "false_approval_bad_rate_pct": 8.75,
+          "AIR": 0.9157251003272615
+        },
+        {
+          "model": "M4-NoDrift",
+          "age_band": "35-49",
+          "risk_tier": "Tier E: Decline",
+          "count": 3708,
+          "approval_pct": 0.0,
+          "observed_bad_rate_pct": 2.1305285868392665,
+          "false_rejection_good_rate_pct": 100.0,
+          "false_approval_bad_rate_pct": 0.0,
+          "AIR": 0.9157251003272615
+        },
+        {
+          "model": "M4-NoDrift",
+          "age_band": "50+",
+          "risk_tier": "Tier A: Super Prime",
+          "count": 32460,
+          "approval_pct": 93.2347504621072,
+          "observed_bad_rate_pct": 1.4048059149722736,
+          "false_rejection_good_rate_pct": 6.721034870641169,
+          "false_approval_bad_rate_pct": 90.13157894736842,
+          "AIR": 0.9757840030056207
+        },
+        {
+          "model": "M4-NoDrift",
+          "age_band": "50+",
+          "risk_tier": "Tier B: Prime",
+          "count": 13935,
+          "approval_pct": 93.74237531395767,
+          "observed_bad_rate_pct": 1.306063867958378,
+          "false_rejection_good_rate_pct": 6.23136770159238,
+          "false_approval_bad_rate_pct": 91.75824175824175,
+          "AIR": 0.9757840030056207
+        },
+        {
+          "model": "M4-NoDrift",
+          "age_band": "50+",
+          "risk_tier": "Tier C: Standard",
+          "count": 11718,
+          "approval_pct": 93.62519201228878,
+          "observed_bad_rate_pct": 1.3910223587642943,
+          "false_rejection_good_rate_pct": 6.300302899177845,
+          "false_approval_bad_rate_pct": 88.34355828220859,
+          "AIR": 0.9757840030056207
+        },
+        {
+          "model": "M4-NoDrift",
+          "age_band": "50+",
+          "risk_tier": "Tier D: High Risk",
+          "count": 5958,
+          "approval_pct": 15.55891238670695,
+          "observed_bad_rate_pct": 1.4937898623699228,
+          "false_rejection_good_rate_pct": 84.42664849207702,
+          "false_approval_bad_rate_pct": 14.606741573033707,
+          "AIR": 0.9757840030056207
+        },
+        {
+          "model": "M4-NoDrift",
+          "age_band": "50+",
+          "risk_tier": "Tier E: Decline",
+          "count": 5202,
+          "approval_pct": 0.0,
+          "observed_bad_rate_pct": 1.2110726643598615,
+          "false_rejection_good_rate_pct": 100.0,
+          "false_approval_bad_rate_pct": 0.0,
+          "AIR": 0.9757840030056207
+        },
+        {
+          "model": "M4 Full",
+          "age_band": "<25",
+          "risk_tier": "Tier A: Super Prime",
+          "count": 659,
+          "approval_pct": 96.35811836115326,
+          "observed_bad_rate_pct": 1.2139605462822458,
+          "false_rejection_good_rate_pct": 3.686635944700461,
+          "false_approval_bad_rate_pct": 100.0,
+          "AIR": 0.7585384015415471
+        },
+        {
+          "model": "M4 Full",
+          "age_band": "<25",
+          "risk_tier": "Tier B: Prime",
+          "count": 1064,
+          "approval_pct": 96.2406015037594,
+          "observed_bad_rate_pct": 1.9736842105263157,
+          "false_rejection_good_rate_pct": 3.451581975071908,
+          "false_approval_bad_rate_pct": 80.95238095238095,
+          "AIR": 0.7585384015415471
+        },
+        {
+          "model": "M4 Full",
+          "age_band": "<25",
+          "risk_tier": "Tier C: Standard",
+          "count": 1897,
+          "approval_pct": 97.36425935687927,
+          "observed_bad_rate_pct": 3.373748023194518,
+          "false_rejection_good_rate_pct": 2.673213311511184,
+          "false_approval_bad_rate_pct": 98.4375,
+          "AIR": 0.7585384015415471
+        },
+        {
+          "model": "M4 Full",
+          "age_band": "<25",
+          "risk_tier": "Tier D: High Risk",
+          "count": 1478,
+          "approval_pct": 32.47631935047362,
+          "observed_bad_rate_pct": 6.562922868741543,
+          "false_rejection_good_rate_pct": 66.908037653874,
+          "false_approval_bad_rate_pct": 23.711340206185564,
+          "AIR": 0.7585384015415471
+        },
+        {
+          "model": "M4 Full",
+          "age_band": "<25",
+          "risk_tier": "Tier E: Decline",
+          "count": 1246,
+          "approval_pct": 0.0,
+          "observed_bad_rate_pct": 15.730337078651685,
+          "false_rejection_good_rate_pct": 100.0,
+          "false_approval_bad_rate_pct": 0.0,
+          "AIR": 0.7585384015415471
+        },
+        {
+          "model": "M4 Full",
+          "age_band": "25-34",
+          "risk_tier": "Tier A: Super Prime",
+          "count": 6803,
+          "approval_pct": 90.69528149345876,
+          "observed_bad_rate_pct": 0.17639276789651626,
+          "false_rejection_good_rate_pct": 9.306434987483433,
+          "false_approval_bad_rate_pct": 91.66666666666666,
+          "AIR": 0.8064257091154169
+        },
+        {
+          "model": "M4 Full",
+          "age_band": "25-34",
+          "risk_tier": "Tier B: Prime",
+          "count": 6129,
+          "approval_pct": 90.55310817425355,
+          "observed_bad_rate_pct": 0.881057268722467,
+          "false_rejection_good_rate_pct": 9.448559670781894,
+          "false_approval_bad_rate_pct": 90.74074074074075,
+          "AIR": 0.8064257091154169
+        },
+        {
+          "model": "M4 Full",
+          "age_band": "25-34",
+          "risk_tier": "Tier C: Standard",
+          "count": 6763,
+          "approval_pct": 91.32041993198284,
+          "observed_bad_rate_pct": 1.8187195031790626,
+          "false_rejection_good_rate_pct": 8.659638554216867,
+          "false_approval_bad_rate_pct": 90.2439024390244,
+          "AIR": 0.8064257091154169
+        },
+        {
+          "model": "M4 Full",
+          "age_band": "25-34",
+          "risk_tier": "Tier D: High Risk",
+          "count": 4658,
+          "approval_pct": 28.31687419493345,
+          "observed_bad_rate_pct": 4.422498926577931,
+          "false_rejection_good_rate_pct": 71.33872416891285,
+          "false_approval_bad_rate_pct": 20.87378640776699,
+          "AIR": 0.8064257091154169
+        },
+        {
+          "model": "M4 Full",
+          "age_band": "25-34",
+          "risk_tier": "Tier E: Decline",
+          "count": 4413,
+          "approval_pct": 0.0,
+          "observed_bad_rate_pct": 10.53704962610469,
+          "false_rejection_good_rate_pct": 100.0,
+          "false_approval_bad_rate_pct": 0.0,
+          "AIR": 0.8064257091154169
+        },
+        {
+          "model": "M4 Full",
+          "age_band": "35-49",
+          "risk_tier": "Tier A: Super Prime",
+          "count": 14080,
+          "approval_pct": 90.0,
+          "observed_bad_rate_pct": 0.2556818181818182,
+          "false_rejection_good_rate_pct": 9.997151808601538,
+          "false_approval_bad_rate_pct": 88.88888888888889,
+          "AIR": 0.8530770828237187
+        },
+        {
+          "model": "M4 Full",
+          "age_band": "35-49",
+          "risk_tier": "Tier B: Prime",
+          "count": 10445,
+          "approval_pct": 89.29631402584968,
+          "observed_bad_rate_pct": 0.5744375299186213,
+          "false_rejection_good_rate_pct": 10.698122291766971,
+          "false_approval_bad_rate_pct": 88.33333333333333,
+          "AIR": 0.8530770828237187
+        },
+        {
+          "model": "M4 Full",
+          "age_band": "35-49",
+          "risk_tier": "Tier C: Standard",
+          "count": 10670,
+          "approval_pct": 89.36269915651359,
+          "observed_bad_rate_pct": 1.330834114339269,
+          "false_rejection_good_rate_pct": 10.619300911854102,
+          "false_approval_bad_rate_pct": 88.02816901408451,
+          "AIR": 0.8530770828237187
+        },
+        {
+          "model": "M4 Full",
+          "age_band": "35-49",
+          "risk_tier": "Tier D: High Risk",
+          "count": 6616,
+          "approval_pct": 28.80894800483676,
+          "observed_bad_rate_pct": 3.083434099153567,
+          "false_rejection_good_rate_pct": 71.00748596381784,
+          "false_approval_bad_rate_pct": 23.03921568627451,
+          "AIR": 0.8530770828237187
+        },
+        {
+          "model": "M4 Full",
+          "age_band": "35-49",
+          "risk_tier": "Tier E: Decline",
+          "count": 5513,
+          "approval_pct": 0.0,
+          "observed_bad_rate_pct": 10.41175403591511,
+          "false_rejection_good_rate_pct": 100.0,
+          "false_approval_bad_rate_pct": 0.0,
+          "AIR": 0.8530770828237187
+        },
+        {
+          "model": "M4 Full",
+          "age_band": "50+",
+          "risk_tier": "Tier A: Super Prime",
+          "count": 29961,
+          "approval_pct": 95.85127332198525,
+          "observed_bad_rate_pct": 0.27035145689396217,
+          "false_rejection_good_rate_pct": 4.159973226238287,
+          "false_approval_bad_rate_pct": 100.0,
+          "AIR": 1.0
+        },
+        {
+          "model": "M4 Full",
+          "age_band": "50+",
+          "risk_tier": "Tier B: Prime",
+          "count": 17231,
+          "approval_pct": 94.51569845046718,
+          "observed_bad_rate_pct": 0.8473100806685625,
+          "false_rejection_good_rate_pct": 5.484342990927715,
+          "false_approval_bad_rate_pct": 94.52054794520548,
+          "AIR": 1.0
+        },
+        {
+          "model": "M4 Full",
+          "age_band": "50+",
+          "risk_tier": "Tier C: Standard",
+          "count": 11606,
+          "approval_pct": 91.37515078407719,
+          "observed_bad_rate_pct": 1.4733758400827157,
+          "false_rejection_good_rate_pct": 8.692610406646262,
+          "false_approval_bad_rate_pct": 95.90643274853801,
+          "AIR": 1.0
+        },
+        {
+          "model": "M4 Full",
+          "age_band": "50+",
+          "risk_tier": "Tier D: High Risk",
+          "count": 5953,
+          "approval_pct": 29.74970603057282,
+          "observed_bad_rate_pct": 2.838904753905594,
+          "false_rejection_good_rate_pct": 70.10719225449516,
+          "false_approval_bad_rate_pct": 24.85207100591716,
+          "AIR": 1.0
+        },
+        {
+          "model": "M4 Full",
+          "age_band": "50+",
+          "risk_tier": "Tier E: Decline",
+          "count": 4522,
+          "approval_pct": 0.0,
+          "observed_bad_rate_pct": 8.536045997346307,
+          "false_rejection_good_rate_pct": 100.0,
+          "false_approval_bad_rate_pct": 0.0,
+          "AIR": 1.0
+        }
+      ],
+      "definitions": {
+        "false_rejection_good": "good declined / all good in age × model-tier cell",
+        "false_approval_bad": "bad approved / all bad in age × model-tier cell",
+        "AIR": "age-band approval rate / maximum age-band approval rate for the same model"
+      }
+    },
+    "m4_no_drift_and_m2_comparison": {
+      "metrics": {
+        "M4 Full": {
+          "features": 73,
+          "oot_monitor_ks": 0.500636968718466,
+          "score_psi_train_dev_to_monitor": 0.07715317501046864,
+          "max_feature_csi": 1.3063852867574375,
+          "a_over_e": 0.6944021599390533
+        }
+      },
+      "M4-NoDrift": {
+        "features": 69,
+        "excluded_features": [
+          "has_tax_registry_record",
+          "person_education_level",
+          "tax_verified_income_ratio",
+          "person_family_status"
+        ],
+        "oot_monitor_ks": 0.5000752489862941,
+        "score_psi_train_dev_to_monitor": 0.006916257549825906,
+        "max_feature_csi_remaining_features": 0.24937581456405739,
+        "a_over_e": 0.8723610686203206,
+        "valid_frozen_cutoff": 0.0430640320517385
+      },
+      "M2 Zero Demographic/Employment Proxies": {
+        "features": 45,
+        "excluded_features": [
+          "active_bureau_monthly_debt",
+          "annuity_780A",
+          "annuitynextmonth_57A",
+          "app_cnt_last_30d",
+          "app_cnt_same_employer_7d",
+          "app_cnt_same_employer_phone_30d",
+          "app_cnt_same_mobile",
+          "app_cnt_same_phone",
+          "clients_matching_empl_and_client_phone",
+          "clients_same_mobile_12m",
+          "clients_sharing_mobile_cnt",
+          "clients_sharing_phone_cnt",
+          "credamount_770A",
+          "debit_records_cnt",
+          "has_active_bureau_debt",
+          "has_debitcard",
+          "has_tax_registry_record",
+          "loan_to_income",
+          "maininc_215A",
+          "person_education_level",
+          "person_employment_years",
+          "person_family_status",
+          "person_income_type",
+          "person_role_type",
+          "pti",
+          "tax_verified_income_ratio",
+          "total_debt_to_income",
+          "total_dsr_proxy"
+        ],
+        "oot_monitor_ks": 0.45460951569975294,
+        "score_psi_train_dev_to_monitor": 0.009797403523566938,
+        "max_feature_csi_retained_features": 0.10209167522881943,
+        "a_over_e": 0.8533834245790131,
+        "valid_frozen_cutoff": 0.03788214281008923
+      },
+      "training_protocol": {
+        "fit_split": "Train_Dev W0-W54",
+        "early_stopping": "Train_Dev W55-W64",
+        "calibration_and_cutoff_selection": "OOT_Valid W65-W77",
+        "monitor_used_for_fit_or_selection": false
+      }
+    },
+    "variant_training_details": {
+      "M2 Zero Demographic/Employment Proxies": {
+        "features": 45,
+        "excluded_features": [
+          "active_bureau_monthly_debt",
+          "annuity_780A",
+          "annuitynextmonth_57A",
+          "app_cnt_last_30d",
+          "app_cnt_same_employer_7d",
+          "app_cnt_same_employer_phone_30d",
+          "app_cnt_same_mobile",
+          "app_cnt_same_phone",
+          "clients_matching_empl_and_client_phone",
+          "clients_same_mobile_12m",
+          "clients_sharing_mobile_cnt",
+          "clients_sharing_phone_cnt",
+          "credamount_770A",
+          "debit_records_cnt",
+          "has_active_bureau_debt",
+          "has_debitcard",
+          "has_tax_registry_record",
+          "loan_to_income",
+          "maininc_215A",
+          "person_education_level",
+          "person_employment_years",
+          "person_family_status",
+          "person_income_type",
+          "person_role_type",
+          "pti",
+          "tax_verified_income_ratio",
+          "total_debt_to_income",
+          "total_dsr_proxy"
+        ],
+        "best_iteration": 889,
+        "calibration_split": "OOT_Valid W65-W77",
+        "calibration_alpha": -0.25379433296736914,
+        "calibration_beta": 1.017214162936123,
+        "valid_frozen_iso_risk_cutoff": 0.03788214281008923,
+        "monitor_gini_ks": {
+          "roc_auc": 0.8066749897748602,
+          "gini": 0.6133499795497204,
+          "ks": 0.45460951569975294
+        },
+        "monitor_brier": 0.01970326266662099,
+        "monitor_a_over_e": 0.8533834245790131,
+        "score_psi_train_dev_to_monitor": 0.009797403523566938
+      },
+      "M4-NoDrift": {
+        "features": 69,
+        "excluded_features": [
+          "has_tax_registry_record",
+          "person_education_level",
+          "person_family_status",
+          "tax_verified_income_ratio"
+        ],
+        "best_iteration": 1136,
+        "calibration_split": "OOT_Valid W65-W77",
+        "calibration_alpha": -0.13383360512301684,
+        "calibration_beta": 1.046287836517265,
+        "valid_frozen_iso_risk_cutoff": 0.0430640320517385,
+        "monitor_gini_ks": {
+          "roc_auc": 0.8281139609492029,
+          "gini": 0.6562279218984057,
+          "ks": 0.5000752489862941
+        },
+        "monitor_brier": 0.019458610694686407,
+        "monitor_a_over_e": 0.8723610686203206,
+        "score_psi_train_dev_to_monitor": 0.006916257549825906
+      }
+    }
+  }
+}

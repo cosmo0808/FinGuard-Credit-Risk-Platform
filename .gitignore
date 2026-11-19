@@ -1,0 +1,56 @@
+# Raw source data and derived row-level data
+data/parquet_files/
+data/feature_definitions.csv
+data/processed/*.parquet
+data/processed/*.pkl
+data/processed/models/
+*.parquet
+*.pkl
+*.joblib
+*.h5
+
+# Secrets and local credentials
+*kaggle.json
+kaggle.json
+AGENTS.md
+GEMINI.md
+.antigravity/
+.codex/
+.env
+.env.*
+!.env.example
+
+# Lightweight CSVs are denied by default; allow reviewed portfolio outputs.
+*.csv
+!data/processed/scorecard_points_table.csv
+!data/processed/stage2_selected_features.csv
+!data/processed/stage5_psi_csi_summary.csv
+!data/powerbi/*.csv
+
+# Local runtime and caches
+duckdb_temp/
+.venv/
+.playwright-browsers/
+venv/
+env/
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
+.pytest_cache/
+reports/.matplotlib/
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Executive dashboard exports are reviewable portfolio deliverables.
+# Keep PBIX files eligible only when their size is below the repository's 25 MB review limit.
+!dashboard/*.html
+!dashboard/*.pbix
+!dashboard/python_boards/*.png
+!dashboard/screenshots/*.png
+!docs/index.html
+dashboard/webapp_screenshots/
+api-smoke.log
+out.log
+qa-run.log

@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "required": ["policy_version", "pdo_scorecard", "calibration", "thresholds", "hard_knockout_rules", "tri_state_router", "limit_policy", "provenance"],
+  "properties": {
+    "policy_version": {"type": "string", "pattern": "^2\\.0\\.0$"},
+    "pdo_scorecard": {"type": "object", "required": ["base_score", "base_bad_good_odds", "points_to_double_odds", "factor"]},
+    "calibration": {"type": "object", "required": ["champion", "challenger"]},
+    "thresholds": {"type": "object", "required": ["iso_approval", "iso_risk"]},
+    "hard_knockout_rules": {"type": "array", "minItems": 2},
+    "tri_state_router": {"type": "object", "required": ["grey_zone_half_width_absolute_pd", "manual_review_capacity_per_day", "cost_per_manual_review_currency_units"]},
+    "limit_policy": {"type": "object", "required": ["dsr_cap", "risk_tiers"], "properties": {"risk_tiers": {"type": "array", "minItems": 5, "maxItems": 5}}},
+    "provenance": {"type": "object", "required": ["threshold_fit_rows", "oot_monitor_used_for_threshold_selection"]}
+  }
+}

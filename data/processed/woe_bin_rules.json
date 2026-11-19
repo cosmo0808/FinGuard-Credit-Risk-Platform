@@ -1,0 +1,754 @@
+{
+  "static_avg_dpd_tol_closure24m": {
+    "dtype": "numerical",
+    "bins": [
+      {
+        "lower": "-Infinity",
+        "upper": 0.5,
+        "woe": 0.4730022238870557
+      },
+      {
+        "lower": 0.5,
+        "upper": 1.5,
+        "woe": -0.3000437206686355
+      },
+      {
+        "lower": 1.5,
+        "upper": 5.5,
+        "woe": -0.8168194010144143
+      },
+      {
+        "lower": 5.5,
+        "upper": "Infinity",
+        "woe": -1.2372039140662823
+      }
+    ],
+    "special_codes": null,
+    "special_woe": 0.0,
+    "missing_woe": 0.0,
+    "unknown_woe": null
+  },
+  "bureau_active_max_dpd": {
+    "dtype": "numerical",
+    "bins": [
+      {
+        "lower": "-Infinity",
+        "upper": 0.5,
+        "woe": 0.30768428666386116
+      },
+      {
+        "lower": 0.5,
+        "upper": 3.5,
+        "woe": -0.04501308295244533
+      },
+      {
+        "lower": 3.5,
+        "upper": 10.5,
+        "woe": -0.34270443473439727
+      },
+      {
+        "lower": 10.5,
+        "upper": 27.5,
+        "woe": -0.5441236928550719
+      },
+      {
+        "lower": 27.5,
+        "upper": "Infinity",
+        "woe": -1.1966761165319828
+      }
+    ],
+    "special_codes": null,
+    "special_woe": 0.0,
+    "missing_woe": 0.0,
+    "unknown_woe": null
+  },
+  "static_avg_dbd_dpd_last24m": {
+    "dtype": "numerical",
+    "bins": [
+      {
+        "lower": "-Infinity",
+        "upper": -8.5,
+        "woe": 0.5776289565323398
+      },
+      {
+        "lower": -8.5,
+        "upper": -5.5,
+        "woe": 0.4706336924449013
+      },
+      {
+        "lower": -5.5,
+        "upper": -3.5,
+        "woe": 0.2687659704051355
+      },
+      {
+        "lower": -3.5,
+        "upper": -1.5,
+        "woe": 0.13307964974663822
+      },
+      {
+        "lower": -1.5,
+        "upper": 1.5,
+        "woe": -0.29845801973631403
+      },
+      {
+        "lower": 1.5,
+        "upper": "Infinity",
+        "woe": -1.1659047732897445
+      }
+    ],
+    "special_codes": null,
+    "special_woe": 0.0,
+    "missing_woe": 0.0,
+    "unknown_woe": null
+  },
+  "static_days_overdue_tol": {
+    "dtype": "numerical",
+    "bins": [
+      {
+        "lower": "-Infinity",
+        "upper": 2.5,
+        "woe": 0.49928726927006206
+      },
+      {
+        "lower": 2.5,
+        "upper": 4.5,
+        "woe": 0.0964847082554603
+      },
+      {
+        "lower": 4.5,
+        "upper": 12.5,
+        "woe": -0.1138643626887581
+      },
+      {
+        "lower": 12.5,
+        "upper": 28.5,
+        "woe": -0.3893701012636801
+      },
+      {
+        "lower": 28.5,
+        "upper": 69.5,
+        "woe": -0.6043833332391415
+      },
+      {
+        "lower": 69.5,
+        "upper": "Infinity",
+        "woe": -1.0264487001389653
+      }
+    ],
+    "special_codes": null,
+    "special_woe": 0.0,
+    "missing_woe": 0.0,
+    "unknown_woe": null
+  },
+  "static_pct_inst_paid_early_3d": {
+    "dtype": "numerical",
+    "bins": [
+      {
+        "lower": "-Infinity",
+        "upper": 0.16024500131607056,
+        "woe": -0.8040504417231609
+      },
+      {
+        "lower": 0.16024500131607056,
+        "upper": 0.30110999941825867,
+        "woe": -0.5454711510268639
+      },
+      {
+        "lower": 0.30110999941825867,
+        "upper": 0.5186350047588348,
+        "woe": -0.265418241885095
+      },
+      {
+        "lower": 0.5186350047588348,
+        "upper": 0.7182449996471405,
+        "woe": 0.10782990254214697
+      },
+      {
+        "lower": 0.7182449996471405,
+        "upper": 0.8360050022602081,
+        "woe": 0.45818019478176053
+      },
+      {
+        "lower": 0.8360050022602081,
+        "upper": "Infinity",
+        "woe": 0.8106066967521639
+      }
+    ],
+    "special_codes": null,
+    "special_woe": 0.0,
+    "missing_woe": 0.0,
+    "unknown_woe": null
+  },
+  "prev_appl_max_dpd_tolerance": {
+    "dtype": "numerical",
+    "bins": [
+      {
+        "lower": "-Infinity",
+        "upper": 0.5,
+        "woe": 0.2781298609467604
+      },
+      {
+        "lower": 0.5,
+        "upper": 3.5,
+        "woe": 0.149721654464118
+      },
+      {
+        "lower": 3.5,
+        "upper": 12.5,
+        "woe": -0.31934351885930035
+      },
+      {
+        "lower": 12.5,
+        "upper": "Infinity",
+        "woe": -0.9899821779224882
+      }
+    ],
+    "special_codes": null,
+    "special_woe": 0.0,
+    "missing_woe": 0.0,
+    "unknown_woe": null
+  },
+  "static_pct_inst_paid_late_10d": {
+    "dtype": "numerical",
+    "bins": [
+      {
+        "lower": "-Infinity",
+        "upper": 0.030735000036656857,
+        "woe": 0.3588507235729552
+      },
+      {
+        "lower": 0.030735000036656857,
+        "upper": 0.06200000084936619,
+        "woe": 0.20516590593496264
+      },
+      {
+        "lower": 0.06200000084936619,
+        "upper": 0.16628500074148178,
+        "woe": -0.1923028083316911
+      },
+      {
+        "lower": 0.16628500074148178,
+        "upper": 0.324194997549057,
+        "woe": -0.6200849082693818
+      },
+      {
+        "lower": 0.324194997549057,
+        "upper": "Infinity",
+        "woe": -1.1244492438439369
+      }
+    ],
+    "special_codes": null,
+    "special_woe": 0.0,
+    "missing_woe": 0.0,
+    "unknown_woe": null
+  },
+  "static_avg_max_dpd_last9m": {
+    "dtype": "numerical",
+    "bins": [
+      {
+        "lower": "-Infinity",
+        "upper": 0.5,
+        "woe": 0.3701190855629255
+      },
+      {
+        "lower": 0.5,
+        "upper": "Infinity",
+        "woe": -0.8201526377031301
+      }
+    ],
+    "special_codes": null,
+    "special_woe": 0.0,
+    "missing_woe": 0.0,
+    "unknown_woe": null
+  },
+  "static_last_rejected_amount": {
+    "dtype": "numerical",
+    "bins": [
+      {
+        "lower": "-Infinity",
+        "upper": 9999.89990234375,
+        "woe": -0.10075685726131134
+      },
+      {
+        "lower": 9999.89990234375,
+        "upper": 39955.0,
+        "woe": -0.32337409252303884
+      },
+      {
+        "lower": 39955.0,
+        "upper": 69191.0,
+        "woe": -0.32862074526050344
+      },
+      {
+        "lower": 69191.0,
+        "upper": "Infinity",
+        "woe": -0.3833156665765354
+      }
+    ],
+    "special_codes": null,
+    "special_woe": 0.0,
+    "missing_woe": 0.0,
+    "unknown_woe": null
+  },
+  "static_num_inst_paid_early": {
+    "dtype": "numerical",
+    "bins": [
+      {
+        "lower": "-Infinity",
+        "upper": 0.5,
+        "woe": -0.6094201796041898
+      },
+      {
+        "lower": 0.5,
+        "upper": 3.5,
+        "woe": -0.3487616095622039
+      },
+      {
+        "lower": 3.5,
+        "upper": 9.5,
+        "woe": -0.05179302377483186
+      },
+      {
+        "lower": 9.5,
+        "upper": 22.5,
+        "woe": 0.2386826891058802
+      },
+      {
+        "lower": 22.5,
+        "upper": 41.5,
+        "woe": 0.41737765815135885
+      },
+      {
+        "lower": 41.5,
+        "upper": "Infinity",
+        "woe": 0.7369013806032254
+      }
+    ],
+    "special_codes": null,
+    "special_woe": 0.0,
+    "missing_woe": 0.0,
+    "unknown_woe": null
+  },
+  "static_avg_dbd_dpd_last3m": {
+    "dtype": "numerical",
+    "bins": [
+      {
+        "lower": "-Infinity",
+        "upper": -7.5,
+        "woe": 0.42877260936817185
+      },
+      {
+        "lower": -7.5,
+        "upper": -3.5,
+        "woe": 0.2865492166235133
+      },
+      {
+        "lower": -3.5,
+        "upper": -0.5,
+        "woe": 0.07052669670590284
+      },
+      {
+        "lower": -0.5,
+        "upper": "Infinity",
+        "woe": -0.8126176384237236
+      }
+    ],
+    "special_codes": null,
+    "special_woe": 0.0,
+    "missing_woe": 0.0,
+    "unknown_woe": null
+  },
+  "bureau_queries_120d": {
+    "dtype": "numerical",
+    "bins": [
+      {
+        "lower": "-Infinity",
+        "upper": 0.5,
+        "woe": 0.29690545975305493
+      },
+      {
+        "lower": 0.5,
+        "upper": 1.5,
+        "woe": 0.17807933188430924
+      },
+      {
+        "lower": 1.5,
+        "upper": 2.5,
+        "woe": 0.032648637880066556
+      },
+      {
+        "lower": 2.5,
+        "upper": 3.5,
+        "woe": -0.1717040340999363
+      },
+      {
+        "lower": 3.5,
+        "upper": 5.5,
+        "woe": -0.43148406544280027
+      },
+      {
+        "lower": 5.5,
+        "upper": "Infinity",
+        "woe": -0.8338697294495376
+      }
+    ],
+    "special_codes": null,
+    "special_woe": 0.0,
+    "missing_woe": 0.0,
+    "unknown_woe": null
+  },
+  "prev_appl_avg_tenor": {
+    "dtype": "numerical",
+    "bins": [
+      {
+        "lower": "-Infinity",
+        "upper": 5.942810535430908,
+        "woe": 0.4268860330658528
+      },
+      {
+        "lower": 5.942810535430908,
+        "upper": 11.535897731781006,
+        "woe": 0.23613613844832493
+      },
+      {
+        "lower": 11.535897731781006,
+        "upper": 16.08012866973877,
+        "woe": -0.07178110175928021
+      },
+      {
+        "lower": 16.08012866973877,
+        "upper": 18.051315307617188,
+        "woe": -0.24532003831338622
+      },
+      {
+        "lower": 18.051315307617188,
+        "upper": 25.051315307617188,
+        "woe": -0.3706204699727653
+      },
+      {
+        "lower": 25.051315307617188,
+        "upper": "Infinity",
+        "woe": -0.5068995793976976
+      }
+    ],
+    "special_codes": null,
+    "special_woe": 0.0,
+    "missing_woe": 0.0,
+    "unknown_woe": null
+  },
+  "bureau_queries_30d": {
+    "dtype": "numerical",
+    "bins": [
+      {
+        "lower": "-Infinity",
+        "upper": 0.5,
+        "woe": 0.20812190176912004
+      },
+      {
+        "lower": 0.5,
+        "upper": 1.5,
+        "woe": -0.12235903523187108
+      },
+      {
+        "lower": 1.5,
+        "upper": "Infinity",
+        "woe": -0.6131071388948621
+      }
+    ],
+    "special_codes": null,
+    "special_woe": 0.0,
+    "missing_woe": 0.0,
+    "unknown_woe": null
+  },
+  "person_income_type": {
+    "dtype": "categorical",
+    "bins": [
+      {
+        "categories": [
+          "HANDICAPPED",
+          "OTHER",
+          "RETIRED_PENSIONER"
+        ],
+        "woe": 0.5240341579392651
+      },
+      {
+        "categories": [
+          "SALARIED_GOVT"
+        ],
+        "woe": 0.14532744257763364
+      },
+      {
+        "categories": [
+          "SELFEMPLOYED",
+          "HANDICAPPED_3",
+          "HANDICAPPED_2",
+          "EMPLOYED"
+        ],
+        "woe": -0.1607111102244927
+      },
+      {
+        "categories": [
+          "PRIVATE_SECTOR_EMPLOYEE"
+        ],
+        "woe": -0.18963112340198895
+      }
+    ],
+    "special_codes": null,
+    "special_woe": 0.0,
+    "missing_woe": 0.0,
+    "unknown_woe": 0.0
+  },
+  "person_employment_years": {
+    "dtype": "numerical",
+    "bins": [
+      {
+        "lower": "-Infinity",
+        "upper": 1.1622176766395569,
+        "woe": -0.4767096733964866
+      },
+      {
+        "lower": 1.1622176766395569,
+        "upper": 2.199863076210022,
+        "woe": -0.36923662872688956
+      },
+      {
+        "lower": 2.199863076210022,
+        "upper": 4.2587268352508545,
+        "woe": -0.235678902761558
+      },
+      {
+        "lower": 4.2587268352508545,
+        "upper": 6.353182792663574,
+        "woe": -0.0074133560569733525
+      },
+      {
+        "lower": 6.353182792663574,
+        "upper": 9.86858320236206,
+        "woe": 0.17478768384597032
+      },
+      {
+        "lower": 9.86858320236206,
+        "upper": "Infinity",
+        "woe": 0.49370422756962906
+      }
+    ],
+    "special_codes": null,
+    "special_woe": 0.0,
+    "missing_woe": 0.0,
+    "unknown_woe": null
+  },
+  "prev_appl_total_cnt": {
+    "dtype": "numerical",
+    "bins": [
+      {
+        "lower": "-Infinity",
+        "upper": 0.5,
+        "woe": 0.3799558625195698
+      },
+      {
+        "lower": 0.5,
+        "upper": 1.5,
+        "woe": 0.13082090035313643
+      },
+      {
+        "lower": 1.5,
+        "upper": 2.5,
+        "woe": 0.03608307813299971
+      },
+      {
+        "lower": 2.5,
+        "upper": 5.5,
+        "woe": -0.06750703621434306
+      },
+      {
+        "lower": 5.5,
+        "upper": 8.5,
+        "woe": -0.17922825370109452
+      },
+      {
+        "lower": 8.5,
+        "upper": "Infinity",
+        "woe": -0.30310774089597947
+      }
+    ],
+    "special_codes": null,
+    "special_woe": 0.0,
+    "missing_woe": 0.0,
+    "unknown_woe": null
+  },
+  "app_cnt_last_30d": {
+    "dtype": "numerical",
+    "bins": [
+      {
+        "lower": "-Infinity",
+        "upper": 0.5,
+        "woe": 0.07519009846169267
+      },
+      {
+        "lower": 0.5,
+        "upper": "Infinity",
+        "woe": -0.5020021774984422
+      }
+    ],
+    "special_codes": null,
+    "special_woe": 0.0,
+    "missing_woe": 0.0,
+    "unknown_woe": null
+  },
+  "prev_appl_rejection_rate": {
+    "dtype": "numerical",
+    "bins": [
+      {
+        "lower": "-Infinity",
+        "upper": 0.19375000149011612,
+        "woe": 0.11901519265985971
+      },
+      {
+        "lower": 0.19375000149011612,
+        "upper": 0.5590277910232544,
+        "woe": 0.012589775514934676
+      },
+      {
+        "lower": 0.5590277910232544,
+        "upper": 0.696153849363327,
+        "woe": -0.01922218699426148
+      },
+      {
+        "lower": 0.696153849363327,
+        "upper": 0.8153409063816071,
+        "woe": -0.04569904787655821
+      },
+      {
+        "lower": 0.8153409063816071,
+        "upper": "Infinity",
+        "woe": -0.14596714327690874
+      }
+    ],
+    "special_codes": null,
+    "special_woe": 0.0,
+    "missing_woe": 0.0,
+    "unknown_woe": null
+  },
+  "person_education_level": {
+    "dtype": "categorical",
+    "bins": [
+      {
+        "categories": [
+          "P33_146_175"
+        ],
+        "woe": 0.3382298796177494
+      },
+      {
+        "categories": [
+          "a55475b1"
+        ],
+        "woe": 0.04073197349658253
+      },
+      {
+        "categories": [
+          "P106_81_188",
+          "P97_36_170",
+          "P17_36_170",
+          "P157_18_172"
+        ],
+        "woe": -0.21977536079490756
+      }
+    ],
+    "special_codes": null,
+    "special_woe": 0.0,
+    "missing_woe": 0.0,
+    "unknown_woe": 0.0
+  },
+  "disbursedcredamount_1113A": {
+    "dtype": "numerical",
+    "bins": [
+      {
+        "lower": "-Infinity",
+        "upper": 58573.1015625,
+        "woe": 0.07998410732001515
+      },
+      {
+        "lower": 58573.1015625,
+        "upper": 98975.5,
+        "woe": -0.0013703443712915764
+      },
+      {
+        "lower": 98975.5,
+        "upper": 129997.69921875,
+        "woe": -0.28328980488362365
+      },
+      {
+        "lower": 129997.69921875,
+        "upper": "Infinity",
+        "woe": -0.5596565213118705
+      }
+    ],
+    "special_codes": null,
+    "special_woe": 0.0,
+    "missing_woe": 0.0,
+    "unknown_woe": null
+  },
+  "static_cnt_pmts_months_24m": {
+    "dtype": "numerical",
+    "bins": [
+      {
+        "lower": "-Infinity",
+        "upper": 7.5,
+        "woe": -0.20665547381630045
+      },
+      {
+        "lower": 7.5,
+        "upper": 9.5,
+        "woe": -0.09826181973067305
+      },
+      {
+        "lower": 9.5,
+        "upper": 11.5,
+        "woe": 0.03077642356614918
+      },
+      {
+        "lower": 11.5,
+        "upper": 19.5,
+        "woe": 0.06931236953417619
+      },
+      {
+        "lower": 19.5,
+        "upper": 22.5,
+        "woe": 0.15280864450642984
+      },
+      {
+        "lower": 22.5,
+        "upper": "Infinity",
+        "woe": 0.3406706241530011
+      }
+    ],
+    "special_codes": null,
+    "special_woe": 0.0,
+    "missing_woe": 0.0,
+    "unknown_woe": null
+  },
+  "person_family_status": {
+    "dtype": "categorical",
+    "bins": [
+      {
+        "categories": [
+          "WIDOWED",
+          "MARRIED"
+        ],
+        "woe": 0.08197440922249521
+      },
+      {
+        "categories": [
+          "DIVORCED",
+          "SINGLE",
+          "LIVING_WITH_PARTNER"
+        ],
+        "woe": -0.3746102091602901
+      }
+    ],
+    "special_codes": null,
+    "special_woe": 0.0,
+    "missing_woe": 0.0,
+    "unknown_woe": -0.7701965166278386
+  }
+}

@@ -1,0 +1,59 @@
+Type,Feature / Score,Comparison,PSI / CSI,Reference Status
+Score PSI,Champion Scorecard Score,Train_Dev vs OOT_Valid,0.027145308515591375,Below 0.10
+Score PSI,Champion Scorecard Score,Train_Dev vs OOT_Monitor,0.004857530930678243,Below 0.10
+Score PSI,Champion Scorecard PD,Train_Dev vs OOT_Valid,0.027226351412200166,Below 0.10
+Score PSI,Champion Scorecard PD,Train_Dev vs OOT_Monitor,0.0048582788265116575,Below 0.10
+Score PSI,Raw LightGBM M4 PD,Train_Dev vs OOT_Valid,0.004393891999251057,Below 0.10
+Score PSI,Raw LightGBM M4 PD,Train_Dev vs OOT_Monitor,0.07715317501046863,Below 0.10
+Feature CSI,static_avg_dpd_tol_closure24m,Train_Dev vs OOT_Valid,0.025109722432295957,Below 0.10
+Feature CSI,static_avg_dpd_tol_closure24m,Train_Dev vs OOT_Monitor,0.038955299029257213,Below 0.10
+Feature CSI,bureau_active_max_dpd,Train_Dev vs OOT_Valid,0.003335511594394257,Below 0.10
+Feature CSI,bureau_active_max_dpd,Train_Dev vs OOT_Monitor,0.005209239585314049,Below 0.10
+Feature CSI,static_avg_dbd_dpd_last24m,Train_Dev vs OOT_Valid,0.02377986059964431,Below 0.10
+Feature CSI,static_avg_dbd_dpd_last24m,Train_Dev vs OOT_Monitor,0.03464523415871354,Below 0.10
+Feature CSI,static_days_overdue_tol,Train_Dev vs OOT_Valid,0.03881926267339014,Below 0.10
+Feature CSI,static_days_overdue_tol,Train_Dev vs OOT_Monitor,0.06083503512059561,Below 0.10
+Feature CSI,prev_appl_max_dpd_tolerance,Train_Dev vs OOT_Valid,0.023949700544448924,Below 0.10
+Feature CSI,prev_appl_max_dpd_tolerance,Train_Dev vs OOT_Monitor,0.04582693938105879,Below 0.10
+Feature CSI,static_pct_inst_paid_late_10d,Train_Dev vs OOT_Valid,0.029977782685110078,Below 0.10
+Feature CSI,static_pct_inst_paid_late_10d,Train_Dev vs OOT_Monitor,0.0475436050811613,Below 0.10
+Feature CSI,static_avg_max_dpd_last9m,Train_Dev vs OOT_Valid,0.009663604385147073,Below 0.10
+Feature CSI,static_avg_max_dpd_last9m,Train_Dev vs OOT_Monitor,0.014356594454549253,Below 0.10
+Feature CSI,static_last_rejected_amount,Train_Dev vs OOT_Valid,0.022841307600284473,Below 0.10
+Feature CSI,static_last_rejected_amount,Train_Dev vs OOT_Monitor,0.04202383159776336,Below 0.10
+Feature CSI,static_num_inst_paid_early,Train_Dev vs OOT_Valid,0.052254441365297895,Below 0.10
+Feature CSI,static_num_inst_paid_early,Train_Dev vs OOT_Monitor,0.07392957408913217,Below 0.10
+Feature CSI,static_avg_dbd_dpd_last3m,Train_Dev vs OOT_Valid,0.040370505421888345,Below 0.10
+Feature CSI,static_avg_dbd_dpd_last3m,Train_Dev vs OOT_Monitor,0.03908308303025504,Below 0.10
+Feature CSI,bureau_queries_120d,Train_Dev vs OOT_Valid,0.14720999018691944,Moderate shift
+Feature CSI,bureau_queries_120d,Train_Dev vs OOT_Monitor,0.1296666560444545,Moderate shift
+Feature CSI,prev_appl_avg_tenor,Train_Dev vs OOT_Valid,0.03572449868978756,Below 0.10
+Feature CSI,prev_appl_avg_tenor,Train_Dev vs OOT_Monitor,0.06251430371825012,Below 0.10
+Feature CSI,bureau_queries_30d,Train_Dev vs OOT_Valid,0.08633755041882468,Below 0.10
+Feature CSI,bureau_queries_30d,Train_Dev vs OOT_Monitor,0.076265014542977,Below 0.10
+Feature CSI,person_income_type,Train_Dev vs OOT_Valid,0.14739987481509978,Moderate shift
+Feature CSI,person_income_type,Train_Dev vs OOT_Monitor,0.22447036511048862,Moderate shift
+Feature CSI,person_employment_years,Train_Dev vs OOT_Valid,0.3287764199299,Major shift
+Feature CSI,person_employment_years,Train_Dev vs OOT_Monitor,0.24937581456405739,Moderate shift
+Feature CSI,app_cnt_last_30d,Train_Dev vs OOT_Valid,0.0020261902956125346,Below 0.10
+Feature CSI,app_cnt_last_30d,Train_Dev vs OOT_Monitor,0.0035210684076376828,Below 0.10
+Feature CSI,person_education_level,Train_Dev vs OOT_Valid,0.26892118170750173,Major shift
+Feature CSI,person_education_level,Train_Dev vs OOT_Monitor,1.2974327117281685,Major shift
+Feature CSI,static_cnt_pmts_months_24m,Train_Dev vs OOT_Valid,0.04745919291611815,Below 0.10
+Feature CSI,static_cnt_pmts_months_24m,Train_Dev vs OOT_Monitor,0.08181283224780204,Below 0.10
+Feature CSI,person_family_status,Train_Dev vs OOT_Valid,0.0863735860788429,Below 0.10
+Feature CSI,person_family_status,Train_Dev vs OOT_Monitor,0.5972855242900715,Major shift
+Feature CSI,bureau_active_max_overdue_amt,Train_Dev vs OOT_Valid,0.0002000235360722824,Below 0.10
+Feature CSI,bureau_active_max_overdue_amt,Train_Dev vs OOT_Monitor,0.0018473119879607023,Below 0.10
+Feature CSI,credamount_770A,Train_Dev vs OOT_Valid,0.007240334269184202,Below 0.10
+Feature CSI,credamount_770A,Train_Dev vs OOT_Monitor,0.0362263033136376,Below 0.10
+Feature CSI,bureau_recent_query_velocity,Train_Dev vs OOT_Valid,0.030251822420318118,Below 0.10
+Feature CSI,bureau_recent_query_velocity,Train_Dev vs OOT_Monitor,0.04924855782340985,Below 0.10
+Feature CSI,bureau_active_contracts_cnt,Train_Dev vs OOT_Valid,0.005639936755728648,Below 0.10
+Feature CSI,bureau_active_contracts_cnt,Train_Dev vs OOT_Monitor,0.004599361934293695,Below 0.10
+Feature CSI,prev_appl_total_pmt_count,Train_Dev vs OOT_Valid,0.06543686052785971,Below 0.10
+Feature CSI,prev_appl_total_pmt_count,Train_Dev vs OOT_Monitor,0.10209167522881943,Moderate shift
+Feature CSI,has_tax_registry_record,Train_Dev vs OOT_Valid,0.6710022511472071,Major shift
+Feature CSI,has_tax_registry_record,Train_Dev vs OOT_Monitor,1.3063852867574375,Major shift
+Feature CSI,tax_verified_income_ratio,Train_Dev vs OOT_Valid,0.37558666717686123,Major shift
+Feature CSI,tax_verified_income_ratio,Train_Dev vs OOT_Monitor,0.7491197634260686,Major shift

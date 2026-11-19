@@ -1,0 +1,138 @@
+{
+  "generated_at_utc": "2026-11-19T13:55:50.492397+00:00",
+  "browser": "Playwright bundled Chromium headless",
+  "viewport": "1680x1080",
+  "device_scale_factor": 2,
+  "tabs": {
+    "v1": {
+      "overflow_count": 0,
+      "svg_text_overlaps": 0,
+      "midword_header_breaks": 0,
+      "table_header_count": 0,
+      "clipped_header_count": 0
+    },
+    "v2": {
+      "overflow_count": 0,
+      "svg_text_overlaps": 0,
+      "midword_header_breaks": 0,
+      "table_header_count": 0,
+      "clipped_header_count": 0,
+      "api_json_payload_chars": 2900
+    },
+    "v3": {
+      "overflow_count": 0,
+      "svg_text_overlaps": 0,
+      "midword_header_breaks": 0,
+      "table_header_count": 15,
+      "clipped_header_count": 0,
+      "decision_matrix_cells": 5,
+      "screenshot": "D:\\data analysis\\FinGuard\\dashboard\\webapp_screenshots\\tab03_workflow_rule_engine.png",
+      "bytes": 483490
+    },
+    "v4": {
+      "overflow_count": 0,
+      "svg_text_overlaps": 0,
+      "midword_header_breaks": 0,
+      "table_header_count": 38,
+      "clipped_header_count": 0,
+      "screenshot": "D:\\data analysis\\FinGuard\\dashboard\\webapp_screenshots\\tab04_strategy_and_stress_simulator.png",
+      "bytes": 1037921
+    },
+    "v5": {
+      "overflow_count": 0,
+      "svg_text_overlaps": 0,
+      "midword_header_breaks": 0,
+      "table_header_count": 34,
+      "clipped_header_count": 0,
+      "migration_percent_cells": 30,
+      "quarterly_rows": 8,
+      "screenshot": "D:\\data analysis\\FinGuard\\dashboard\\webapp_screenshots\\tab05_drift_calibration_fairness.png",
+      "bytes": 831104
+    },
+    "v6": {
+      "overflow_count": 0,
+      "svg_text_overlaps": 0,
+      "midword_header_breaks": 0,
+      "table_header_count": 9,
+      "clipped_header_count": 0,
+      "woe_feature_count": 19,
+      "screenshot": "D:\\data analysis\\FinGuard\\dashboard\\webapp_screenshots\\tab06_scorecard_woe_explorer.png",
+      "bytes": 642767
+    },
+    "v7": {
+      "overflow_count": 0,
+      "svg_text_overlaps": 0,
+      "midword_header_breaks": 0,
+      "table_header_count": 4,
+      "clipped_header_count": 0,
+      "screenshot": "D:\\data analysis\\FinGuard\\dashboard\\webapp_screenshots\\tab07_architecture_sql_verification.png",
+      "bytes": 1348100
+    }
+  },
+  "parity": [
+    {
+      "case": 1903172,
+      "scorecardAbs": 1.1582828880057905e-11,
+      "lgbmAbs": 0,
+      "scorecardInterceptAbs": 8.866222426379133e-12,
+      "lgbmInterceptAbs": 0,
+      "scorecardPlattAbs": 8.201675233063255e-12,
+      "lgbmPlattAbs": 0,
+      "passed": true
+    },
+    {
+      "case": 239708,
+      "scorecardAbs": 1.1056936616293811e-11,
+      "lgbmAbs": 0,
+      "scorecardInterceptAbs": 8.464032209484773e-12,
+      "lgbmInterceptAbs": 0,
+      "scorecardPlattAbs": 7.842276307512552e-12,
+      "lgbmPlattAbs": 0,
+      "passed": true
+    },
+    {
+      "case": 1006327,
+      "scorecardAbs": 6.789494660930373e-11,
+      "lgbmAbs": 0,
+      "scorecardInterceptAbs": 5.2918763121523327e-11,
+      "lgbmInterceptAbs": 0,
+      "scorecardPlattAbs": 5.445260561898202e-11,
+      "lgbmPlattAbs": 0,
+      "passed": true
+    },
+    {
+      "case": 1943596,
+      "scorecardAbs": 7.045273652667161e-11,
+      "lgbmAbs": 0,
+      "scorecardInterceptAbs": 5.394257675088443e-11,
+      "lgbmInterceptAbs": 0,
+      "scorecardPlattAbs": 5.033281669057643e-11,
+      "lgbmPlattAbs": 0,
+      "passed": true
+    },
+    {
+      "case": 998223,
+      "scorecardAbs": 1.509511812422537e-10,
+      "lgbmAbs": 0,
+      "scorecardInterceptAbs": 1.1583333250908545e-10,
+      "lgbmInterceptAbs": 0,
+      "scorecardPlattAbs": 1.12217774135559e-10,
+      "lgbmPlattAbs": 0,
+      "passed": true
+    }
+  ],
+  "screenshots": [
+    "D:\\data analysis\\FinGuard\\dashboard\\webapp_screenshots\\tab03_workflow_rule_engine.png",
+    "D:\\data analysis\\FinGuard\\dashboard\\webapp_screenshots\\tab04_strategy_and_stress_simulator.png",
+    "D:\\data analysis\\FinGuard\\dashboard\\webapp_screenshots\\tab05_drift_calibration_fairness.png",
+    "D:\\data analysis\\FinGuard\\dashboard\\webapp_screenshots\\tab06_scorecard_woe_explorer.png",
+    "D:\\data analysis\\FinGuard\\dashboard\\webapp_screenshots\\tab07_architecture_sql_verification.png"
+  ],
+  "memo_screenshot": {
+    "path": "D:\\data analysis\\FinGuard\\dashboard\\webapp_screenshots\\modal_underwriting_memo.png",
+    "bytes": 292875
+  },
+  "js_errors": [],
+  "console_errors": [],
+  "status": "PASS"
+}
