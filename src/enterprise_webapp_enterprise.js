@@ -50,6 +50,7 @@ function fgLoadCase(i){
  const result=fgRenderDual(c.lgbm_vector.slice(),fgValues(),reference);void fgUpdateApiTrace(result);
  const status=$('#caseLoadStatus'),card=$('#liveSimulatorCard');if(status)status.textContent=`✓ Loaded Case #${c.case_id} (${c.case} · ${c.label})`;
  if(card){card.classList.remove('case-loaded-pulse');void card.offsetWidth;card.classList.add('case-loaded-pulse');window.setTimeout(()=>card.classList.remove('case-loaded-pulse'),1200);card.scrollIntoView({behavior:'smooth',block:'start'})}
+ let toast=$('#caseLoadToast');if(!toast){toast=document.createElement('div');toast.id='caseLoadToast';toast.className='case-load-toast';toast.setAttribute('role','status');toast.setAttribute('aria-live','polite');toast.setAttribute('aria-atomic','true');document.body.append(toast)}const decision=window.__lastDecision||{};toast.textContent=`✓ Loaded Case #${c.case_id} — Champion ${decision.champion?.verdict||'updated'} · PD ${fmt((decision.champion?.pd_intercept||0)*100,4)}% | Challenger ${decision.challenger?.verdict||'updated'} · PD ${fmt((decision.challenger?.pd_intercept||0)*100,4)}% | Final limit ${fmt(decision.final_limit||0,0)}`;toast.classList.remove('visible');void toast.offsetWidth;toast.classList.add('visible');if(window.__caseToastTimer)clearTimeout(window.__caseToastTimer);window.__caseToastTimer=window.setTimeout(()=>toast.classList.remove('visible'),4500);
  return result
 }
 
