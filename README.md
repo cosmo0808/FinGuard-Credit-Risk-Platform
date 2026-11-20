@@ -17,7 +17,6 @@
 </p>
 
 - [Open the standalone interactive command center](dashboard/FinGuard_Interactive_Command_Center.html)
-- Power BI Desktop deliverable: `dashboard/FinGuard_Risk_Command_Center.pbix` (manual build in progress)
 
 ## At a glance
 
