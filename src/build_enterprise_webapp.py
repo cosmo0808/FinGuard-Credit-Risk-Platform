@@ -48,6 +48,7 @@ def main():
     import sys
     sys.path.insert(0, str(ROOT / "src"))
     from portfolio_scenarios_powerbi_stage6 import loan_engine, balance_factor
+    policy_cfg=json.loads((ROOT/"configs"/"decision_engine_policy_v2.json").read_text(encoding="utf-8"))
     for p in (DOCS, ROOT / "dashboard", BOARD.parent): p.mkdir(parents=True, exist_ok=True)
     pbi = {f"pbi{i:02d}": pd.read_csv(PBI / fname).to_dict("records") for i, fname in SCHEMA.items()}
     feature_groups = pd.read_csv(DATA / "feature_group_mapping.csv").set_index("column_name")["feature_group"].to_dict()
@@ -86,7 +87,7 @@ def main():
        m.bureau_active_max_dpd,m.static_avg_dpd_tol_closure24m,m.static_pct_inst_paid_early_3d
        FROM read_parquet('{pred_path}') p JOIN read_parquet('{(DATA/'finguard_feature_mart.parquet').as_posix()}') m USING(case_id,WEEK_NUM)
        WHERE p.split_name='OOT_Monitor' AND p.WEEK_NUM BETWEEN 78 AND 91""").fetchdf()
-    valid_policy=con.execute(f"""SELECT p.case_id,p.target,p.pd_scorecard_recal_platt sc,p.pd_lgbm_recal_platt lg,m.credamount_770A,m.annuity_780A,m.maininc_215A,m.active_bureau_monthly_debt,m.bureau_active_max_dpd,m.static_avg_dpd_tol_closure24m,m.static_pct_inst_paid_early_3d FROM read_parquet('{pred_path}') p JOIN read_parquet('{(DATA/'finguard_feature_mart.parquet').as_posix()}') m USING(case_id,WEEK_NUM) WHERE p.split_name='OOT_Valid'""").fetchdf()
+    valid_policy=con.execute(f"""SELECT p.case_id,p.target,p.pd_scorecard_recal_intercept sc,p.pd_lgbm_recal_intercept lg,m.credamount_770A,m.annuity_780A,m.maininc_215A,m.active_bureau_monthly_debt,m.bureau_active_max_dpd,m.static_avg_dpd_tol_closure24m,m.static_pct_inst_paid_early_3d FROM read_parquet('{pred_path}') p JOIN read_parquet('{(DATA/'finguard_feature_mart.parquet').as_posix()}') m USING(case_id,WEEK_NUM) WHERE p.split_name='OOT_Valid'""").fetchdf()
     iso_approval_cuts={}
     for model,col in [('Champion Scorecard','sc'),('Challenger LightGBM M4','lg')]:
         pv=valid_policy[col].to_numpy(float); eng=loan_engine(valid_policy,pv); elig=eng['limit']>0; k=min(round(.75*len(valid_policy)),int(elig.sum())); ids=np.flatnonzero(elig); order=np.lexsort((valid_policy.case_id.to_numpy()[ids],pv[ids])); iso_approval_cuts[model]=float(pv[ids[order[:k]]].max())
@@ -94,7 +95,7 @@ def main():
     challenger_valid_engine=loan_engine(valid_policy,valid_policy.lg.to_numpy(float)); challenger_valid_mask=challenger_valid_engine['limit']>0; challenger_valid=valid_policy.loc[challenger_valid_mask].sort_values(['lg','case_id']); cumulative_bad=np.cumsum(challenger_valid.target.to_numpy(int))/np.arange(1,len(challenger_valid)+1); risk_index=int(np.argmin(np.abs(cumulative_bad-valid_appetite))); lgb_cut=float(challenger_valid.lg.iloc[risk_index])
     # The Challenger Iso-Approval threshold is the separate valid-frozen 75% all-applications cutoff.
     iso_approval_cuts['Challenger LightGBM M4']=float(iso_approval_cuts['Challenger LightGBM M4'])
-    scp=mon.pd_scorecard_recal_platt.to_numpy(); lp=mon.pd_lgbm_recal_platt.to_numpy()
+    scp=mon.pd_scorecard_recal_intercept.to_numpy(); lp=mon.pd_lgbm_recal_intercept.to_numpy()
     req=mon.credamount_770A.fillna(0).clip(lower=0).to_numpy(); inc=mon.maininc_215A.to_numpy(); debt=mon.active_bureau_monthly_debt.fillna(0).clip(lower=0).to_numpy()
     dpd=mon.bureau_active_max_dpd.fillna(-1).to_numpy(); hist=mon.static_avg_dpd_tol_closure24m.fillna(0).to_numpy(); early=mon.static_pct_inst_paid_early_3d.to_numpy()
     tier=np.select([lp<.01,lp<.02,lp<.04,lp<.07],[0,1,2,3],4); rates=np.array([.09,.12,.15,.18,0]); mults=np.array([4,3,2,1,0]); fallback=np.array([.8,.75,.7,.6,0])
@@ -145,9 +146,11 @@ def main():
         n=int(mask.sum());bad_count=int(ymon[mask].sum());vol=eng["limit"][mask]
         enp=stage6_profit(vol,pd_values[mask],eng["apr"][mask],eng["term"][mask],.04,.75)
         model_rollups[name]={"approved":n,"approval_pct":100*n/len(mon),"bads":bad_count,"bad_rate_pct":100*bad_count/n if n else None,"expected_profit":float(enp.sum())}
-    gray=float(json.loads((ROOT/"configs"/"decision_engine_policy_v2.json").read_text(encoding="utf-8"))["tri_state_router"]["grey_zone_half_width_absolute_pd"])
-    cutoff=lgb_cut;manual=((np.abs(lp-cutoff)<=gray)|(sc_approve!=lg_approve))&~combined
-    route_auto_approve=(lp<cutoff-gray)&~combined&(sc_approve==lg_approve)
+    gray=float(policy_cfg["tri_state_router"]["grey_zone_half_width_absolute_pd"])
+    dsr_exhausted=verified&(debt>=float(policy_cfg["limit_policy"]["dsr_cap"])*inc)
+    route_stops=combined|dsr_exhausted|(tier==4)|(limit<=0)
+    cutoff=lgb_cut;manual=((np.abs(lp-cutoff)<=gray)|(sc_approve!=lg_approve))&~route_stops
+    route_auto_approve=(lp<cutoff-gray)&~route_stops&(sc_approve==lg_approve)&(limit>0)
     route_auto_decline=~(manual|route_auto_approve)
     date_span=con.execute(f"SELECT min(TRY_CAST(date_decision AS DATE)),max(TRY_CAST(date_decision AS DATE)) FROM read_parquet('{mart}') WHERE WEEK_NUM BETWEEN 78 AND 91").fetchone()
     monitor_days=max(1,(date_span[1]-date_span[0]).days+1) if date_span[0] and date_span[1] else 98
@@ -359,7 +362,7 @@ def main():
     except Exception: pass
     # pbi_01 and pbi_03 are not consumed by any of the seven UI panels; retain only live UI inputs.
     ui_pbi={k:v for k,v in pbi.items() if k not in {"pbi01","pbi03"}}
-    payload=json_clean({"pbi":ui_pbi,"timeline":timeline,"calibration_curves":calibration_curves,"calibration_metrics":calibration_metrics,"monitor_metrics":monitor_metrics,"iso_approval":iso_approval,"iso_risk":iso_risk,"ablation":ablation,"cases":cases,"stress_profile":stress_profile,"workflow":workflow,"woe_explorer":woe_explorer,"quarterly_cohorts":quarterly,"batch_sample":batch_rows,"scorecard":{"features":features,"params":params,"factor":float(scorecard["factor"]),"base_score":float(scorecard["base_score"]),"rules":{f:rules[f] for f in features},"defaults":defaults,"points":point_rows,"calibration_alpha":alpha_sc,"operational_platt":calibrator['methods']['scorecard']['platt'],'thresholds':{"iso_risk_scorecard":sc_cut,"iso_risk_lgbm":lgb_cut}},"lgbm_features":lgb_features,"lgbm_defaults":lgb_defaults,"policy_cutoffs":{"Iso-Approval":iso_approval_cuts,"Iso-Risk":{"Champion Scorecard":sc_cut,"Challenger LightGBM M4":lgb_cut}},"swap_matrix":swap_matrix,"calibration":calibrator,"integrity":integrity,"architecture":{"stages":stages,"details":stage_details,"raw_files":raw_meta,"processed_artifacts":processed_meta,"sql":sql_sources,"duckdb_configured_memory_limit":"3GB","web_builder_peak_working_set_mb":peak_ws_mb,"historical_stage_peak_ram":"Step 1 recorded benchmarks: DuckDB SQL mart query 0.21 s / 333.9 MB Peak RSS; OOT_Monitor dual scoring (151,707 rows) 16.73 s / 542.0 MB Peak RSS; standalone bundle export 8.82 s / 491.5 MB Peak RSS"},"data_notes":{"timeline_rows":len(timeline),"all_timeline_cases":len(raw),"monitor_rows":len(mon),"case_rows":len(cases),"valid_cutoffs_source":"Stage 5 OOT_Valid frozen Iso-Risk cutoffs"}})
+    payload=json_clean({"pbi":ui_pbi,"timeline":timeline,"calibration_curves":calibration_curves,"calibration_metrics":calibration_metrics,"monitor_metrics":monitor_metrics,"iso_approval":iso_approval,"iso_risk":iso_risk,"ablation":ablation,"cases":cases,"stress_profile":stress_profile,"workflow":workflow,"woe_explorer":woe_explorer,"quarterly_cohorts":quarterly,"batch_sample":batch_rows,"tri_state_router":{**policy_cfg["tri_state_router"],"dsr_cap":policy_cfg["limit_policy"]["dsr_cap"]},"decision_pd_scale":policy_cfg["thresholds"]["decision_pd_scale"],"scorecard":{"features":features,"params":params,"factor":float(scorecard["factor"]),"base_score":float(scorecard["base_score"]),"rules":{f:rules[f] for f in features},"defaults":defaults,"points":point_rows,"calibration_alpha":alpha_sc,"operational_platt":calibrator['methods']['scorecard']['platt'],'thresholds':{"iso_risk_scorecard":sc_cut,"iso_risk_lgbm":lgb_cut}},"lgbm_features":lgb_features,"lgbm_defaults":lgb_defaults,"policy_cutoffs":{"Iso-Approval":iso_approval_cuts,"Iso-Risk":{"Champion Scorecard":sc_cut,"Challenger LightGBM M4":lgb_cut}},"swap_matrix":swap_matrix,"calibration":calibrator,"integrity":integrity,"architecture":{"stages":stages,"details":stage_details,"raw_files":raw_meta,"processed_artifacts":processed_meta,"sql":sql_sources,"duckdb_configured_memory_limit":"3GB","web_builder_peak_working_set_mb":peak_ws_mb,"historical_stage_peak_ram":"Step 1 recorded benchmarks: DuckDB SQL mart query 0.21 s / 333.9 MB Peak RSS; OOT_Monitor dual scoring (151,707 rows) 16.73 s / 542.0 MB Peak RSS; standalone bundle export 8.82 s / 491.5 MB Peak RSS"},"data_notes":{"timeline_rows":len(timeline),"all_timeline_cases":len(raw),"monitor_rows":len(mon),"case_rows":len(cases),"valid_cutoffs_source":"Stage 5 OOT_Valid frozen intercept-recalibrated PD cutoffs"}})
     audit=json.loads((DATA/"mrm_reconciled_truth.json").read_text(encoding="utf-8"))
     ab=audit["section_3_weekly_stability_and_bootstrap"]["oot_monitor_bootstrap"]
     cb=audit["section_4_economics_cutoff_and_kgb"]["model_neutral_paired_policy_bootstrap"]

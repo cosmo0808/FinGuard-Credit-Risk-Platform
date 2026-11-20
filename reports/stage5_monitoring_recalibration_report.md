@@ -1,6 +1,6 @@
 # Stage 5 OOT Monitoring、Recalibration 与 Fair Lending 审计
 
-`OOT_Valid` (`WEEK_NUM 65–77`) exclusively fitted both recalibrators. `OOT_Monitor` (`WEEK_NUM 78–91`, 151,707 rows) was scored only after parameters were frozen and used only for forward blind evaluation. Stage 5 Challenger is the approved `pd_lgbm_raw`, not the Stage 3 isotonic output. `OOT_Monitor` labels were not used in recalibration, CSI bins, tier/cutoff fitting, or Iso-Risk threshold selection.
+`OOT_Valid` (`WEEK_NUM 65–77`) exclusively fitted both recalibrators and all operating cutoffs. `pd_intercept` (Stage 5 Intercept-Recalibrated PD) is the canonical decision scale for risk tiers, Iso-Approval/Iso-Risk cutoff fitting, and 3-driver limits; `pd_platt` remains a calibration diagnostic. `OOT_Monitor` (`WEEK_NUM 78–91`, 151,707 rows) was scored only after parameters were frozen and used only for forward blind evaluation. Stage 5 Challenger is the approved `pd_lgbm_raw`, not the Stage 3 isotonic output. `OOT_Monitor` labels were not used in recalibration, CSI bins, tier/cutoff fitting, or Iso-Risk threshold selection.
 
 ## Recalibration parameters
 
@@ -122,14 +122,14 @@ Intercept-only recalibration preserves exact rank when beta=1. Platt recalibrati
 
 ## Table 3: OOT_Monitor Iso-Approval vs Iso-Risk Commercial Comparison
 
-Iso-Approval thresholds match 75% acceptance on OOT_Valid by unlabeled risk rank and then apply forward to OOT_Monitor. Iso-Risk sets the Challenger cutoff on OOT_Valid to match Champion Scorecard's observed bad rate at its 75% OOT_Valid operating point, then applies the cutoff forward to OOT_Monitor. OOT_Monitor outcomes are not used to choose either cutoff.
+Iso-Approval thresholds target 75% acceptance on OOT_Valid by `pd_intercept` risk rank and then apply forward to OOT_Monitor. Iso-Risk sets the Challenger `pd_intercept` cutoff on OOT_Valid to match Champion Scorecard's observed bad rate at its 75% OOT_Valid operating point, then applies the cutoff forward to OOT_Monitor. OOT_Monitor outcomes are not used to choose either cutoff.
 
-| Operating Mode   | Model                  |   PD Cutoff (OOT_Valid) |   Approval Rate % |   Approved Count |   Observed Bad Rate % |   Total Recommended Loan Volume |   Simulated ENP |   Valid Reference Bad Rate % |
-|:-----------------|:-----------------------|------------------------:|------------------:|-----------------:|----------------------:|--------------------------------:|----------------:|-----------------------------:|
-| Iso-Approval     | Champion Scorecard     |                  0.0308 |           70.7970 |           107404 |                0.9990 |                 5052707765.7302 |  132180253.7712 |                     nan      |
-| Iso-Approval     | Challenger LightGBM M4 |                  0.0336 |           67.0846 |           101772 |                0.7026 |                 4672695317.6058 |  123501046.5098 |                     nan      |
-| Iso-Risk         | Champion Scorecard     |                  0.0308 |           70.7970 |           107404 |                0.9990 |                 5052707765.7302 |  132180253.7712 |                       1.2623 |
-| Iso-Risk         | Challenger LightGBM M4 |                  0.0465 |           75.1587 |           114021 |                0.8832 |                 5095059964.0588 |  140125997.0085 |                       1.2623 |
+| Operating Mode   | Model                  |   PD Cutoff · Intercept-Recalibrated (OOT_Valid) |   Approval Rate % |   Approved Count |   Observed Bad Rate % |   Total Recommended Loan Volume |   Simulated ENP |   Valid Reference Bad Rate % |
+|:-----------------|:-----------------------|-------------------------------------------------:|------------------:|-----------------:|----------------------:|--------------------------------:|----------------:|-----------------------------:|
+| Iso-Approval     | Champion Scorecard     |                                           0.0310 |           70.7970 |           107404 |                0.9990 |                 5043906826.6780 |  133659751.9881 |                     nan      |
+| Iso-Approval     | Challenger LightGBM M4 |                                           0.0341 |           67.0846 |           101772 |                0.7026 |                 4656467309.6565 |  125709359.7933 |                     nan      |
+| Iso-Risk         | Champion Scorecard     |                                           0.0310 |           70.7970 |           107404 |                0.9990 |                 5043906826.6780 |  133659751.9881 |                       1.2623 |
+| Iso-Risk         | Challenger LightGBM M4 |                                           0.0463 |           75.1587 |           114021 |                0.8832 |                 5077289608.1822 |  142305881.3731 |                       1.2623 |
 
 Parametric ENP assumptions follow Stage 4: COF=4.0%, OPEX=1.5%, assumed LGD=75%, APR 9%/12%/15%/18% by tiers A–D capped at 18%; these are commercial simulation assumptions, not statutory constants.
 

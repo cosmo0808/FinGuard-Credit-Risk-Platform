@@ -1,5 +1,5 @@
 {
-  "generated_at_utc": "2026-11-19T13:55:50.492397+00:00",
+  "generated_at_utc": "2026-11-20T07:20:04.047167+00:00",
   "browser": "Playwright bundled Chromium headless",
   "viewport": "1680x1080",
   "device_scale_factor": 2,
@@ -27,7 +27,7 @@
       "clipped_header_count": 0,
       "decision_matrix_cells": 5,
       "screenshot": "D:\\data analysis\\FinGuard\\dashboard\\webapp_screenshots\\tab03_workflow_rule_engine.png",
-      "bytes": 483490
+      "bytes": 481867
     },
     "v4": {
       "overflow_count": 0,
@@ -36,7 +36,7 @@
       "table_header_count": 38,
       "clipped_header_count": 0,
       "screenshot": "D:\\data analysis\\FinGuard\\dashboard\\webapp_screenshots\\tab04_strategy_and_stress_simulator.png",
-      "bytes": 1037921
+      "bytes": 1035762
     },
     "v5": {
       "overflow_count": 0,
@@ -66,7 +66,7 @@
       "table_header_count": 4,
       "clipped_header_count": 0,
       "screenshot": "D:\\data analysis\\FinGuard\\dashboard\\webapp_screenshots\\tab07_architecture_sql_verification.png",
-      "bytes": 1348100
+      "bytes": 1377761
     }
   },
   "parity": [
@@ -130,7 +130,7 @@
   ],
   "memo_screenshot": {
     "path": "D:\\data analysis\\FinGuard\\dashboard\\webapp_screenshots\\modal_underwriting_memo.png",
-    "bytes": 292875
+    "bytes": 292840
   },
   "js_errors": [],
   "console_errors": [],

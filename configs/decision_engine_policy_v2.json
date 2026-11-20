@@ -7,8 +7,9 @@
     "challenger": {"intercept_alpha": -0.27812185198150563, "platt_alpha": -0.10972912650931903, "platt_beta": 1.059846024844399}
   },
   "thresholds": {
-    "iso_approval": {"champion_pd_cutoff": 0.030810455894633697, "challenger_pd_cutoff": 0.03356910754805267, "valid_target_eligible_approval_rate": 0.75},
-    "iso_risk": {"champion_pd_cutoff": 0.030810455894633697, "challenger_pd_cutoff": 0.04648983019655445, "valid_reference_bad_rate": 0.012622675619834711}
+    "decision_pd_scale": "stage5_intercept_recalibrated_pd",
+    "iso_approval": {"champion_pd_cutoff": 0.03098037547342626, "challenger_pd_cutoff": 0.03406375333233522, "valid_target_eligible_approval_rate": 0.75},
+    "iso_risk": {"champion_pd_cutoff": 0.03098037547342626, "challenger_pd_cutoff": 0.0463125046661152, "valid_reference_bad_rate": 0.012622675619834711}
   },
   "hard_knockout_rules": [
     {"rule_id": "R01", "field": "bureau_active_max_dpd", "operator": ">=", "value": 90, "reason_code": "SEVERE_ACTIVE_DELINQUENCY"},

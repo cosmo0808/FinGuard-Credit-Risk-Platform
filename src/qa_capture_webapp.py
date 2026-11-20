@@ -83,12 +83,12 @@ def main():
             errors.append(f"Tab panels do not all have 24px horizontal padding: {pads}")
         if not page.evaluate("!!window.FG_BUNDLE && !!window.FG_ENGINE"):
             errors.append("Local model bundle or browser inference engine did not initialize")
-        if os.environ.get("FINGUARD_QA_BOOTSTRAP") != "1" and page.locator("#integrityBadge").inner_text() != "16/16 integrity invariants | PASS":
-            errors.append("Embedded integrity scorecard is not 16/16 PASS")
-        if page.locator("#integrityPanel tbody tr").count() != 16:
-            errors.append("Tab 07 does not show all 16 invariant rows")
-        if page.locator("#integrityPanel tbody tr td:first-child").all_inner_texts() != [f"{i:02d}" for i in range(1, 17)]:
-            errors.append("Tab 07 invariant row sequence is not 01 through 16")
+        if os.environ.get("FINGUARD_QA_BOOTSTRAP") != "1" and page.locator("#integrityBadge").inner_text() != "17/17 integrity invariants | PASS":
+            errors.append("Embedded integrity scorecard is not 17/17 PASS")
+        if page.locator("#integrityPanel tbody tr").count() != 17:
+            errors.append("Tab 07 does not show all 17 invariant rows")
+        if page.locator("#integrityPanel tbody tr td:first-child").all_inner_texts() != [f"{i:02d}" for i in range(1, 18)]:
+            errors.append("Tab 07 invariant row sequence is not 01 through 17")
         if page.locator("#integrityPanel th").all_inner_texts() != [
             "#", "Test invariant name", "Verified metric / tolerance", "Result"
         ]:
@@ -98,8 +98,8 @@ def main():
         integrity_layout = page.locator("#integrityPanel .integrity-detail .tablewrap").evaluate("e=>({maxHeight:getComputedStyle(e).maxHeight,scroll:e.scrollHeight,client:e.clientHeight,rows:[...e.querySelectorAll('tbody tr')].map(r=>({top:r.getBoundingClientRect().top,bottom:r.getBoundingClientRect().bottom}))})")
         if integrity_layout["maxHeight"] != "none":
             errors.append("Tab 06 invariant table has a scroll-height cutoff")
-        if len(integrity_layout["rows"]) != 16:
-            errors.append("Tab 07 does not expose all 16 rows in the expanded table")
+        if len(integrity_layout["rows"]) != 17:
+            errors.append("Tab 07 does not expose all 17 rows in the expanded table")
         top_position = page.locator(".top").evaluate("e=>getComputedStyle(e).position")
         if top_position in ("sticky", "fixed"):
             errors.append(f"Top header is {top_position}; full-page captures could cut across content")
@@ -169,7 +169,7 @@ def main():
                         errors.append(f"Fairness evidence missing {token}")
 
             if view == "v1":
-                for token in ("151,707", "75.16%", "0.8832%", "140.13M"):
+                for token in ("151,707", "75.16%", "0.8832%", "142.31M"):
                     if token not in state["text"]:
                         errors.append(f"v1 missing verified KPI {token}")
                 page.locator("#metric").select_option("stability")
@@ -198,6 +198,7 @@ def main():
                         errors.append(f"{label} Python/browser parity error {maximum}")
 
                     if index == 3:
+                        page.wait_for_timeout(1250)  # Let the smooth scroll finish before measuring layout bounds.
                         score = page.locator("#scoreGauge").text_content() or ""
                         dsr = page.locator("#dsrGauge").text_content() or ""
                         income = page.evaluate("D.cases[3].raw_features.maininc_215A")

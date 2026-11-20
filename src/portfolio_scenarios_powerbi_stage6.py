@@ -151,11 +151,11 @@ def main():
       LEFT JOIN prior_dpd d USING(case_id)
     ), model_pd AS (
       SELECT *, 'Champion Scorecard' Model, pd_scorecard PD_Raw,
-             pd_scorecard_recal_intercept PD_Intercept, pd_scorecard_recal_platt PD_Operational
+             pd_scorecard_recal_intercept PD_Intercept, pd_scorecard_recal_intercept PD_Operational
       FROM joined
       UNION ALL
       SELECT *, 'Challenger LightGBM M4', pd_lgbm_raw,
-             pd_lgbm_recal_intercept, pd_lgbm_recal_platt
+             pd_lgbm_recal_intercept, pd_lgbm_recal_intercept
       FROM joined
     ), tagged AS (
       SELECT *, CASE WHEN PD_Intercept < .01 THEN '{TIERS[0]}' WHEN PD_Intercept < .02 THEN '{TIERS[1]}'
@@ -204,8 +204,8 @@ def main():
     FROM eng3
     """)
 
-    # Calibrate valid-only operational cutoffs. Retain the exact Stage 5 75%
-    # target semantics; Iso-Risk matches scorecard observed Valid bad rate.
+    # Calibrate valid-only decision cutoffs on canonical intercept-recalibrated PD.
+    # Retain the Stage 5 75% target semantics; Iso-Risk matches scorecard Valid bad rate.
     def load_split(split):
         return con.execute(f"SELECT * FROM cases WHERE split_name='{split}'").fetchdf()
     valid = load_split("OOT_Valid")

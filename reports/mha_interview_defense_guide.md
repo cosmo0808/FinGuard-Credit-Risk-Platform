@@ -26,7 +26,7 @@ Sequential OOT_Valid KS was M1 `0.3236`, M2 `0.4290`, M3 `0.4671`, M4 `0.4929`. 
 
 ### 6. Why is the Iso-Risk finding commercially interesting but not a causal uplift claim?
 
-On forward OOT_Monitor, challenger approval was `75.1587%` vs Champion `70.7970%` (+6,617), bad rate `0.8832%` vs `0.9990%`, simulated ENP `140.13M` vs `132.18M`. The lending sample has labels only for historically funded cases, and ENP uses assumed economics. There is no randomized assignment or observed outcome for rejected applicants; thus this is a policy replay, not incremental causal profit.
+On forward OOT_Monitor, challenger approval was `75.1587%` vs Champion `70.7970%` (+6,617), bad rate `0.8832%` vs `0.9990%`, simulated ENP `142.31M` vs `133.66M`. The lending sample has labels only for historically funded cases, and ENP uses assumed economics. There is no randomized assignment or observed outcome for rejected applicants; thus this is a policy replay, not incremental causal profit.
 
 ### 7. How do you explain Iso-Approval ticket-size asymmetry?
 

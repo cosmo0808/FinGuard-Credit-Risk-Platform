@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import json
+import os
 import pickle
 import re
 import sys
@@ -176,7 +177,7 @@ def test_10_oot_monitor_isorisk_headline_matches_stage6_artifact():
     assert int(r.Approved_Count) == 114021
     assert abs(float(r.Monitor_Approval_Pct) - 75.16) < .005
     assert abs(float(r.Observed_Bad_Rate_Pct) - .8832) < .0001
-    assert abs(float(r.Model_Implied_Expected_Net_Profit) - 140_126_000) < 50_000
+    assert abs(float(r.Model_Implied_Expected_Net_Profit) - 142_305_881) < 50_000
 
 
 def test_11_exported_ui_has_no_fabricated_currency_labels():
@@ -213,52 +214,137 @@ def test_13_policy_config_json_schema_and_thresholds():
     assert {(r["risk_tier"], r["affordability_band"]) for r in matrix} == {
         (tier, band) for tier in "ABCDE" for band in ("VERIFIED_INCOME", "UNVERIFIED_INCOME")}
     assert cfg["model_versions"]["oot_monitor_used_for_fit"] is False
-    assert cfg["thresholds"]["iso_risk"]["challenger_pd_cutoff"] == pytest.approx(.04648983019655445)
+    assert cfg["thresholds"]["decision_pd_scale"] == "stage5_intercept_recalibrated_pd"
+    assert cfg["thresholds"]["iso_risk"]["challenger_pd_cutoff"] == pytest.approx(.0463125046661152)
 
 
 def test_14_fastapi_health_and_single_underwrite_parity():
-    from api.app import app, batch_underwrite, health, underwrite
+    from fastapi.testclient import TestClient
+    from api.app import app
     from api.decision import runtime
-    from api.schemas import Applicant, BatchRequest, DecisionResponse
+    from api.schemas import DecisionResponse
     sys.path.insert(0, str(ROOT / "src"))
     from portfolio_scenarios_powerbi_stage6 import loan_engine
     con = duckdb.connect()
     con.execute("SET memory_limit='256MB'; SET threads=1")
     defaults = json.loads((PROC / "model_feature_defaults.json").read_text(encoding="utf-8"))
     features = list(dict.fromkeys([*defaults["challenger"], *defaults["scorecard"]]))
-    cases = con.execute(f"""SELECT p.case_id,p.pd_scorecard,p.pd_lgbm_raw,p.pd_scorecard_recal_platt,
-      p.pd_lgbm_recal_platt,m.{','.join(chr(34)+f+chr(34) for f in features)}
+    cases = con.execute(f"""SELECT p.case_id,p.pd_scorecard,p.pd_lgbm_raw,p.pd_scorecard_recal_intercept,
+      p.pd_lgbm_recal_intercept,p.pd_scorecard_recal_platt,p.pd_lgbm_recal_platt,
+      m.credamount_770A op_request,m.annuity_780A op_annuity,m.maininc_215A op_income,
+      m.active_bureau_monthly_debt op_debt,m.bureau_active_max_dpd op_dpd,
+      m.static_avg_dpd_tol_closure24m op_history,m.static_pct_inst_paid_early_3d op_early,
+      m.{','.join(chr(34)+f+chr(34) for f in features)}
       FROM read_parquet('{PRED}') p JOIN read_parquet('{MART}') m USING(case_id,WEEK_NUM)
       WHERE p.split_name='OOT_Monitor' LIMIT 2""").fetchdf()
     con.close()
     runtime()
     assert {"/v1/health", "/v1/underwrite", "/v1/batch-underwrite"}.issubset(app.openapi()["paths"])
-    health_result = health()
+    client = TestClient(app)
+    health_result = client.get("/v1/health").json()
     assert health_result["feature_counts"] == {"champion": 19, "challenger": 73}
     assert health_result["calibration_status"]["oot_monitor_used_for_fit"] is False
     assert len(cases) == 2
     applicants = []
+    responses = []
+    browser_cases = []
+    cfg = json.loads((ROOT / "configs/decision_engine_policy_v2.json").read_text(encoding="utf-8"))
+    thresholds = cfg["thresholds"]["iso_risk"]
     for _, row in cases.iterrows():
         applicant_features = {f: (None if pd.isna(row[f]) else row[f].item() if isinstance(row[f], np.generic) else row[f])
                               for f in features}
-        applicant = Applicant(case_id=int(row.case_id), features=applicant_features)
-        applicants.append(applicant)
-        result = underwrite(applicant)
+        applicant_features.update({"bureau_active_max_dpd": None if pd.isna(row.op_dpd) else float(row.op_dpd),
+                                   "static_avg_dpd_tol_closure24m": None if pd.isna(row.op_history) else float(row.op_history),
+                                   "static_pct_inst_paid_early_3d": None if pd.isna(row.op_early) else float(row.op_early)})
+        request = {"case_id": int(row.case_id), "requested_amount": float(row.op_request),
+                   "annuity": None if pd.isna(row.op_annuity) else float(row.op_annuity),
+                   "monthly_income": None if pd.isna(row.op_income) else float(row.op_income),
+                   "existing_monthly_debt": None if pd.isna(row.op_debt) else float(row.op_debt),
+                   "features": applicant_features}
+        applicants.append(request)
+        browser_cases.append({**applicant_features, "credamount_770A": request["requested_amount"],
+                              "annuity_780A": request["annuity"], "maininc_215A": request["monthly_income"],
+                              "active_bureau_monthly_debt": request["existing_monthly_debt"]})
+        response = client.post("/v1/underwrite", json=request)
+        assert response.status_code == 200, response.text
+        result = response.json()
+        responses.append(result)
         DecisionResponse.model_validate(result)
         assert result["champion"]["pd_raw"] == pytest.approx(float(row.pd_scorecard), abs=1e-9)
         assert result["challenger"]["pd_raw"] == pytest.approx(float(row.pd_lgbm_raw), abs=1e-9)
+        assert result["champion"]["pd_intercept"] == pytest.approx(float(row.pd_scorecard_recal_intercept), abs=1e-9)
+        assert result["challenger"]["pd_intercept"] == pytest.approx(float(row.pd_lgbm_recal_intercept), abs=1e-9)
         assert result["champion"]["pd_platt"] == pytest.approx(float(row.pd_scorecard_recal_platt), abs=1e-9)
         assert result["challenger"]["pd_platt"] == pytest.approx(float(row.pd_lgbm_recal_platt), abs=1e-9)
         assert len(result["trace_id"]) == 24 and len(result["decision_signature"]) == 64
-        stage4 = loan_engine(pd.DataFrame([applicant_features]), np.asarray([float(row.pd_lgbm_recal_platt)]))
-        for api_key, stage_key in (("final_limit", "limit"), ("term_months", "term")):
-            assert result["limit_math"][api_key] == pytest.approx(float(stage4[stage_key][0]), abs=1e-6), api_key
+        expected_sc_verdict = "APPROVE" if row.pd_scorecard_recal_intercept <= thresholds["champion_pd_cutoff"] else "DECLINE"
+        expected_lg_verdict = "APPROVE" if row.pd_lgbm_recal_intercept <= thresholds["challenger_pd_cutoff"] else "DECLINE"
+        assert result["champion"]["verdict"] == expected_sc_verdict
+        assert result["challenger"]["verdict"] == expected_lg_verdict
+        stage_features = {**applicant_features, "credamount_770A": float(row.op_request),
+                          "annuity_780A": request["annuity"], "maininc_215A": request["monthly_income"],
+                          "active_bureau_monthly_debt": request["existing_monthly_debt"]}
+        stage4 = loan_engine(pd.DataFrame([stage_features]), np.asarray([float(row.pd_lgbm_recal_intercept)]))
+        assert result["limit_math"]["risk_tier"] == stage4["tier"][0].split(":")[0][-1]
+        expected_final_limit = float(stage4["limit"][0]) if row.pd_lgbm_recal_intercept <= thresholds["challenger_pd_cutoff"] else 0.0
+        assert result["limit_math"]["final_limit"] == pytest.approx(expected_final_limit, abs=1e-6)
+        assert result["limit_math"]["term_months"] == pytest.approx(float(stage4["term"][0]), abs=1e-6)
         assert result["limit_math"]["apr_pct"] == pytest.approx(float(stage4["apr"][0] * 100), abs=1e-6)
-    batch = batch_underwrite(BatchRequest(applicants=applicants))
+        income_value = request["monthly_income"]
+        debt_ratio = request["existing_monthly_debt"] / income_value if income_value and income_value > 100 else None
+        hard = (request["features"].get("bureau_active_max_dpd") is not None and request["features"]["bureau_active_max_dpd"] >= 90) or (debt_ratio is not None and debt_ratio > .60)
+        dsr_exhausted = debt_ratio is not None and debt_ratio >= cfg["limit_policy"]["dsr_cap"]
+        disagreement = expected_sc_verdict != expected_lg_verdict
+        if hard or dsr_exhausted or stage4["tier"][0] == "Tier E: Decline":
+            expected_route = "AUTO_DECLINE"
+        elif abs(float(row.pd_lgbm_recal_intercept) - thresholds["challenger_pd_cutoff"]) <= cfg["tri_state_router"]["grey_zone_half_width_absolute_pd"] or disagreement:
+            expected_route = "MANUAL_REVIEW"
+        elif row.pd_lgbm_recal_intercept < thresholds["challenger_pd_cutoff"] and expected_final_limit > 0:
+            expected_route = "AUTO_APPROVE"
+        else:
+            expected_route = "AUTO_DECLINE"
+        assert result["tri_state_route"] == expected_route
+        assert result["tri_state_route"] != "AUTO_APPROVE" or result["limit_math"]["final_limit"] > 0
+    batch_response = client.post("/v1/batch-underwrite", json={"applicants": applicants})
+    assert batch_response.status_code == 200
+    batch = batch_response.json()
     assert batch["count"] == 2 and len(batch["decisions"]) == 2
+    for single, batched in zip(responses, batch["decisions"]):
+        assert batched["tri_state_route"] == single["tri_state_route"]
+        assert batched["challenger"]["verdict"] == single["challenger"]["verdict"]
+        assert batched["limit_math"]["risk_tier"] == single["limit_math"]["risk_tier"]
+        assert batched["limit_math"]["final_limit"] == pytest.approx(single["limit_math"]["final_limit"], abs=1e-9)
+
+    os.environ.setdefault("PLAYWRIGHT_BROWSERS_PATH", str(ROOT / ".playwright-browsers"))
+    from playwright.sync_api import sync_playwright
+    browser_errors = []
+    with sync_playwright() as playwright:
+        browser = playwright.chromium.launch(headless=True, args=["--disable-gpu"])
+        page = browser.new_page()
+        page.on("pageerror", lambda error: browser_errors.append(str(error)))
+        page.on("console", lambda message: browser_errors.append(message.text) if message.type == "error" else None)
+        page.goto((ROOT / "docs" / "index.html").as_uri(), wait_until="load")
+        for (_, row), api_result, browser_features in zip(cases.iterrows(), responses, browser_cases):
+            decision = page.evaluate("""data=>{
+              const raw={};D.scorecard.features.forEach(f=>{raw[f]=Object.hasOwn(data,f)?data[f]:D.scorecard.defaults[f];const e=document.querySelector(`#f_${CSS.escape(f)}`);if(e)e.value=raw[f]===null?'':String(raw[f])});
+              for(const [id,key] of [['request','credamount_770A'],['income','maininc_215A'],['debt','active_bureau_monthly_debt']]){const e=document.querySelector('#'+id);if(e)e.value=data[key]===null?'':String(data[key])}
+              const req=Number(data.credamount_770A)||0,ann=Number(data.annuity_780A)||0,term=document.querySelector('#tenor');if(term)term.value=String(ann>0?Math.max(3,Math.min(60,Math.round(req/ann))):12);
+              window.__liveVector=D.lgbm_features.map(f=>fgEncode(f,Object.hasOwn(data,f)?data[f]:D.lgbm_defaults[f]));window.FG_ENGINE.render(window.__liveVector,raw);return window.__lastDecision
+            }""", browser_features)
+            assert decision["champion"]["verdict"] == api_result["champion"]["verdict"]
+            assert decision["challenger"]["verdict"] == api_result["challenger"]["verdict"]
+            assert decision["challenger"]["risk_tier"].split(":")[0].replace("Tier ", "") == api_result["limit_math"]["risk_tier"]
+            assert decision["tri_state_route"] == api_result["tri_state_route"]
+            assert decision["final_limit"] == pytest.approx(api_result["limit_math"]["final_limit"], abs=1e-6)
+        assert browser_errors == []
+        browser.close()
 
 
 def test_15_rule_waterfall_and_tristate_accounting_identity(con, policy):
+    sys.path.insert(0, str(ROOT / "src"))
+    from portfolio_scenarios_powerbi_stage6 import loan_engine
+    cfg = json.loads((ROOT / "configs/decision_engine_policy_v2.json").read_text(encoding="utf-8"))
+    cutoff = cfg["thresholds"]["iso_risk"]["challenger_pd_cutoff"]
     frame, _ = policy
     dpd = frame.bureau_active_max_dpd.to_numpy(float)
     income = frame.maininc_215A.to_numpy(float)
@@ -271,23 +357,29 @@ def test_15_rule_waterfall_and_tristate_accounting_identity(con, policy):
     assert int(r01.sum()) + int(net_r02.sum()) == int(knocked.sum())
     assert int(knocked.sum()) + int((~knocked).sum()) == 151707
     assert np.all(np.isfinite(np.asarray([r01.mean(), net_r02.mean(), knocked.mean()])))
-    decisions = con.execute(f"""SELECT p.pd_scorecard_recal_platt,p.pd_lgbm_recal_platt,
-      m.bureau_active_max_dpd,m.maininc_215A,m.active_bureau_monthly_debt
+    decisions = con.execute(f"""SELECT p.pd_scorecard_recal_intercept,p.pd_lgbm_recal_intercept,
+      m.bureau_active_max_dpd,m.maininc_215A,m.active_bureau_monthly_debt,
+      m.credamount_770A,m.annuity_780A,m.static_avg_dpd_tol_closure24m,m.static_pct_inst_paid_early_3d
       FROM read_parquet('{PRED}') p JOIN read_parquet('{MART}') m USING(case_id,WEEK_NUM)
       WHERE p.split_name='OOT_Monitor'""").fetchdf()
-    sc = decisions.pd_scorecard_recal_platt.to_numpy(float)
-    lg = decisions.pd_lgbm_recal_platt.to_numpy(float)
+    sc = decisions.pd_scorecard_recal_intercept.to_numpy(float)
+    lg = decisions.pd_lgbm_recal_intercept.to_numpy(float)
     d = decisions.bureau_active_max_dpd.to_numpy(float)
     inc = decisions.maininc_215A.to_numpy(float)
     existing_debt = np.nan_to_num(decisions.active_bureau_monthly_debt.to_numpy(float), nan=0.)
     hard = (np.nan_to_num(d, nan=-1.) >= 90) | (np.isfinite(inc) & (inc > 100) & (existing_debt / np.where(inc > 0, inc, 1) > .60))
-    scorecard_approve = sc <= .030810455894633697
-    challenger_approve = lg <= .04648983019655445
+    dsr_exhausted = np.isfinite(inc) & (inc > 100) & (existing_debt >= .50 * inc)
+    scorecard_approve = sc <= cfg["thresholds"]["iso_risk"]["champion_pd_cutoff"]
+    challenger_approve = lg <= cutoff
     tier_e = lg >= .07
-    review = (np.abs(lg - .04648983019655445) <= .005) | (scorecard_approve != challenger_approve)
-    routes = np.where(hard | tier_e, "AUTO_DECLINE", np.where(review, "MANUAL_REVIEW", np.where(challenger_approve, "AUTO_APPROVE", "AUTO_DECLINE")))
+    challenger_limits = loan_engine(decisions, lg)
+    review = (np.abs(lg - cutoff) <= cfg["tri_state_router"]["grey_zone_half_width_absolute_pd"]) | (scorecard_approve != challenger_approve)
+    routes = np.where(hard | dsr_exhausted | tier_e, "AUTO_DECLINE",
+                      np.where(review, "MANUAL_REVIEW",
+                               np.where(challenger_approve & (challenger_limits["limit"] > 0), "AUTO_APPROVE", "AUTO_DECLINE")))
     assert len(routes) == 151707
     assert sum(int((routes == route).sum()) for route in ("AUTO_APPROVE", "MANUAL_REVIEW", "AUTO_DECLINE")) == 151707
+    assert np.all(challenger_limits["limit"][routes == "AUTO_APPROVE"] > 0)
 
 
 def test_16_woe_bin_explorer_completeness():
@@ -317,3 +409,49 @@ def test_16_woe_bin_explorer_completeness():
             assert np.isfinite([bin_row["woe"], bin_row["points"], bin_row["train_count"], bin_row["monitor_count"]]).all()
             for rate in (bin_row["train_bad_rate_pct"], bin_row["monitor_bad_rate_pct"]):
                 assert rate is None or np.isfinite(rate)
+
+
+def test_17_dsr_capacity_boundaries_and_auto_approve_limit_invariant(monkeypatch):
+    from types import SimpleNamespace
+    import api.decision as decision
+
+    cfg = json.loads((ROOT / "configs/decision_engine_policy_v2.json").read_text(encoding="utf-8"))
+    for model in cfg["calibration"].values():
+        model["intercept_alpha"] = 0.0
+        model["platt_alpha"] = 0.0
+        model["platt_beta"] = 1.0
+
+    class ConstantChallenger:
+        booster_ = SimpleNamespace(pandas_categorical=[], params={})
+
+        @staticmethod
+        def predict_proba(_frame):
+            return np.asarray([[0.995, 0.005]])
+
+    fake_runtime = {
+        "config": cfg,
+        "scorecard": {"features": [], "coef": np.asarray([np.log(.005 / .995)])},
+        "challenger": {"features": ["bureau_active_max_dpd"], "model": ConstantChallenger()},
+        "rules": {},
+        "defaults": {"scorecard": {}, "challenger": {}},
+    }
+    monkeypatch.setattr(decision, "runtime", lambda: fake_runtime)
+
+    for ratio in (0.49, 0.50, 0.55, 0.60, 0.61):
+        result = decision.evaluate({
+            "case_id": int(ratio * 100), "requested_amount": 1000.0, "annuity": 100.0,
+            "monthly_income": 1000.0, "existing_monthly_debt": ratio * 1000.0,
+            "features": {"bureau_active_max_dpd": 0, "static_avg_dpd_tol_closure24m": 0,
+                         "static_pct_inst_paid_early_3d": 0},
+        })
+        if ratio == 0.49:
+            assert result["tri_state_route"] == "AUTO_APPROVE"
+            assert result["limit_math"]["final_limit"] > 0.0
+            assert "DSR_CAPACITY_EXHAUSTED" not in result["reason_codes"]
+        else:
+            assert result["tri_state_route"] == "AUTO_DECLINE", f"debt ratio {ratio:.0%}"
+            assert result["limit_math"]["final_limit"] == 0.0
+            assert "DSR_CAPACITY_EXHAUSTED" in result["reason_codes"]
+            if ratio == 0.61:
+                assert "EXISTING_DEBT_TO_INCOME_OVER_60_PERCENT" in result["reason_codes"]
+        assert result["tri_state_route"] != "AUTO_APPROVE" or result["limit_math"]["final_limit"] > 0.0

@@ -373,53 +373,57 @@ def main():
     temporal = pd.DataFrame(temporal_rows)
     temporal.to_csv(DATA / "stage5_temporal_tracking.csv", index=False)
 
-    # OOT_Valid development cutoffs and risk appetite, then forward-apply to Monitor.
+    # Decision cutoffs use one canonical Stage 5 PD scale: intercept-recalibrated PD.
     valid_decisions = pd.read_parquet(STAGE4)
     valid_frame = valid_decisions.copy()
+    valid_frame["pd_scorecard_recal_intercept"] = rec_p(valid_frame.pd_scorecard.to_numpy(float), specs["scorecard"]["intercept"])
+    valid_frame["pd_lgbm_recal_intercept"] = rec_p(valid_frame.pd_lgbm_raw.to_numpy(float), specs["lgbm_raw"]["intercept"])
     valid_frame["pd_scorecard_recal_platt"] = rec_p(valid_frame.pd_scorecard.to_numpy(float), specs["scorecard"]["platt"])
     valid_frame["pd_lgbm_recal_platt"] = rec_p(valid_frame.pd_lgbm_raw.to_numpy(float), specs["lgbm_raw"]["platt"])
     valid_frame["target"] = valid_decisions.target.to_numpy(np.int8)
-    vsc = loan_engine(valid_frame, valid_frame.pd_scorecard_recal_platt.to_numpy(float))
-    vlgb = loan_engine(valid_frame, valid_frame.pd_lgbm_recal_platt.to_numpy(float))
+    vsc = loan_engine(valid_frame, valid_frame.pd_scorecard_recal_intercept.to_numpy(float))
+    vlgb = loan_engine(valid_frame, valid_frame.pd_lgbm_recal_intercept.to_numpy(float))
     esc, elgb = eligible_mask(valid_frame, vsc), eligible_mask(valid_frame, vlgb)
     k75 = int(round(.75 * len(valid_frame))); k75 = min(k75, int(esc.sum()), int(elgb.sum()))
-    va_sc = exact_k_approval(esc, valid_frame.pd_scorecard_recal_platt, valid_frame.case_id, k75)
-    va_lgb = exact_k_approval(elgb, valid_frame.pd_lgbm_recal_platt, valid_frame.case_id, k75)
+    va_sc = exact_k_approval(esc, valid_frame.pd_scorecard_recal_intercept, valid_frame.case_id, k75)
+    va_lgb = exact_k_approval(elgb, valid_frame.pd_lgbm_recal_intercept, valid_frame.case_id, k75)
     appetite = float(valid_frame.target.to_numpy(np.int8)[va_sc].mean())
     # Choose the challenger Valid prefix whose observed bad rate is nearest the Scorecard 75% appetite.
-    ids = np.flatnonzero(elgb); ord_l = np.lexsort((valid_frame.case_id.to_numpy()[ids], valid_frame.pd_lgbm_recal_platt.to_numpy()[ids]))
+    ids = np.flatnonzero(elgb); ord_l = np.lexsort((valid_frame.case_id.to_numpy()[ids], valid_frame.pd_lgbm_recal_intercept.to_numpy()[ids]))
     ids = ids[ord_l]; y_order = valid_frame.target.to_numpy(np.int8)[ids]
     cum_rate = np.cumsum(y_order) / np.arange(1, len(ids) + 1)
     k_risk = int(np.argmin(np.abs(cum_rate - appetite)) + 1)
-    risk_cut_lgb = float(valid_frame.pd_lgbm_recal_platt.to_numpy()[ids[k_risk - 1]])
+    risk_cut_lgb = float(valid_frame.pd_lgbm_recal_intercept.to_numpy()[ids[k_risk - 1]])
     # Scorecard Iso-Risk baseline is the 75% scorecard cutoff learned on Valid.
-    iso_cut_sc = float(np.max(valid_frame.pd_scorecard_recal_platt.to_numpy()[va_sc]))
-    iso_cut_lgb_approval = float(np.max(valid_frame.pd_lgbm_recal_platt.to_numpy()[va_lgb]))
+    iso_cut_sc = float(np.max(valid_frame.pd_scorecard_recal_intercept.to_numpy()[va_sc]))
+    iso_cut_lgb_approval = float(np.max(valid_frame.pd_lgbm_recal_intercept.to_numpy()[va_lgb]))
     iso_cut_lgb_risk = risk_cut_lgb
 
     # Stage 5 recalibrated values and Stage 4 driver engine on OOT_Monitor.
     mon = mon_pred.copy()
+    mon["pd_scorecard_recal_intercept"] = rec_p(mon.pd_scorecard, specs["scorecard"]["intercept"])
+    mon["pd_lgbm_recal_intercept"] = rec_p(mon.pd_lgbm_raw, specs["lgbm_raw"]["intercept"])
     mon["pd_scorecard_recal_platt"] = rec_p(mon.pd_scorecard, specs["scorecard"]["platt"])
     mon["pd_lgbm_recal_platt"] = rec_p(mon.pd_lgbm_raw, specs["lgbm_raw"]["platt"])
-    mon_sc = loan_engine(monitor, mon.pd_scorecard_recal_platt.to_numpy(float))
-    mon_lgb = loan_engine(monitor, mon.pd_lgbm_recal_platt.to_numpy(float))
+    mon_sc = loan_engine(monitor, mon.pd_scorecard_recal_intercept.to_numpy(float))
+    mon_lgb = loan_engine(monitor, mon.pd_lgbm_recal_intercept.to_numpy(float))
     commercial_rows = []
     for mode, cut_sc, cut_lgb in [("Iso-Approval", iso_cut_sc, iso_cut_lgb_approval), ("Iso-Risk", iso_cut_sc, iso_cut_lgb_risk)]:
-        for name, p, eng, cut in [("Champion Scorecard", mon.pd_scorecard_recal_platt.to_numpy(float), mon_sc, cut_sc),
-                                  ("Challenger LightGBM M4", mon.pd_lgbm_recal_platt.to_numpy(float), mon_lgb, cut_lgb)]:
+        for name, p, eng, cut in [("Champion Scorecard", mon.pd_scorecard_recal_intercept.to_numpy(float), mon_sc, cut_sc),
+                                  ("Challenger LightGBM M4", mon.pd_lgbm_recal_intercept.to_numpy(float), mon_lgb, cut_lgb)]:
             approved = eligible_mask(monitor, eng) & (p <= cut)
             princ = np.where(approved, eng["limit"], 0.0)
             enp = expected_profit(princ, p, eng["apr"], eng["term"])
-            commercial_rows.append({"Operating Mode": mode, "Model": name, "PD Cutoff (OOT_Valid)": cut,
+            commercial_rows.append({"Operating Mode": mode, "Model": name, "PD Cutoff · Intercept-Recalibrated (OOT_Valid)": cut,
                 "Approval Rate %": 100 * approved.mean(), "Approved Count": int(approved.sum()),
                 "Observed Bad Rate %": 100 * mon.target.to_numpy(np.int8)[approved].mean() if approved.any() else np.nan,
                 "Total Recommended Loan Volume": float(princ.sum()), "Simulated ENP": float(enp.sum()),
                 "Valid Reference Bad Rate %": 100 * appetite if mode == "Iso-Risk" else np.nan})
     commercial = pd.DataFrame(commercial_rows)
 
-    # Fair Lending audit on monitor only, using Iso-Approval operational cutoffs and Platt PDs.
-    approval_sc = eligible_mask(monitor, mon_sc) & (mon.pd_scorecard_recal_platt.to_numpy(float) <= iso_cut_sc)
-    approval_lgb = eligible_mask(monitor, mon_lgb) & (mon.pd_lgbm_recal_platt.to_numpy(float) <= iso_cut_lgb_approval)
+    # Fair Lending audit on Monitor uses the same intercept-PD decision cutoffs as the API.
+    approval_sc = eligible_mask(monitor, mon_sc) & (mon.pd_scorecard_recal_intercept.to_numpy(float) <= iso_cut_sc)
+    approval_lgb = eligible_mask(monitor, mon_lgb) & (mon.pd_lgbm_recal_intercept.to_numpy(float) <= iso_cut_lgb_approval)
     # Age bins are learned only on Train_Dev, then applied to Monitor.
     train_age = con.execute(f"SELECT person_age FROM read_parquet('{MART.as_posix()}') WHERE WEEK_NUM<=64").fetchdf().person_age.to_numpy(np.float32)
     age_edges = np.unique(np.quantile(train_age, [0, .2, .4, .6, .8, 1]))
@@ -495,7 +499,7 @@ def main():
     drift_info = ("0.10 (moderate) and 0.25 (major) are configurable operational monitoring reference thresholds only, not universal statutory standards.")
     report = f"""# Stage 5 OOT Monitoring、Recalibration 与 Fair Lending 审计
 
-`OOT_Valid` (`WEEK_NUM 65–77`) exclusively fitted both recalibrators. `OOT_Monitor` (`WEEK_NUM 78–91`, 151,707 rows) was scored only after parameters were frozen and used only for forward blind evaluation. Stage 5 Challenger is the approved `pd_lgbm_raw`, not the Stage 3 isotonic output. `OOT_Monitor` labels were not used in recalibration, CSI bins, tier/cutoff fitting, or Iso-Risk threshold selection.
+`OOT_Valid` (`WEEK_NUM 65–77`) exclusively fitted both recalibrators and all operating cutoffs. `pd_intercept` (Stage 5 Intercept-Recalibrated PD) is the canonical decision scale for risk tiers, Iso-Approval/Iso-Risk cutoff fitting, and 3-driver limits; `pd_platt` remains a calibration diagnostic. `OOT_Monitor` (`WEEK_NUM 78–91`, 151,707 rows) was scored only after parameters were frozen and used only for forward blind evaluation. Stage 5 Challenger is the approved `pd_lgbm_raw`, not the Stage 3 isotonic output. `OOT_Monitor` labels were not used in recalibration, CSI bins, tier/cutoff fitting, or Iso-Risk threshold selection.
 
 ## Recalibration parameters
 
@@ -526,7 +530,7 @@ Intercept-only recalibration preserves exact rank when beta=1. Platt recalibrati
 
 ## Table 3: OOT_Monitor Iso-Approval vs Iso-Risk Commercial Comparison
 
-Iso-Approval thresholds match 75% acceptance on OOT_Valid by unlabeled risk rank and then apply forward to OOT_Monitor. Iso-Risk sets the Challenger cutoff on OOT_Valid to match Champion Scorecard's observed bad rate at its 75% OOT_Valid operating point, then applies the cutoff forward to OOT_Monitor. OOT_Monitor outcomes are not used to choose either cutoff.
+Iso-Approval thresholds target 75% acceptance on OOT_Valid by `pd_intercept` risk rank and then apply forward to OOT_Monitor. Iso-Risk sets the Challenger `pd_intercept` cutoff on OOT_Valid to match Champion Scorecard's observed bad rate at its 75% OOT_Valid operating point, then applies the cutoff forward to OOT_Monitor. OOT_Monitor outcomes are not used to choose either cutoff.
 
 {report_table(commercial)}
 

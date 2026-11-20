@@ -114,11 +114,28 @@ def _limit(pd_value: float, features: dict[str, Any], policy: dict[str, Any]) ->
         affordability_band = "UNVERIFIED_INCOME"
     shadow = max(0.0, min(request, risk, affordability))
     final = 0.0 if hard_dpd or hard_debt or tier["tier"] == "E" else shadow
+    dsr_capacity_exhausted = bool(income_verified and debt >= policy["dsr_cap"] * income)
     return {"risk_tier": tier["tier"], "affordability_band": affordability_band,
             "requested": request, "risk_behavior_cap": risk, "affordability_cap": affordability,
             "shadow_limit": shadow, "final_limit": final, "apr_pct": tier["apr_pct"],
             "behavior_multiplier": behavior, "term_months": term, "dsr_cap": policy["dsr_cap"],
-            "income_verified": bool(income_verified), "hard_policy_decline": bool(hard_dpd or hard_debt)}
+            "income_verified": bool(income_verified), "hard_policy_decline": bool(hard_dpd or hard_debt),
+            "dsr_capacity_exhausted": dsr_capacity_exhausted}
+
+
+def _tri_state_route(champion: dict[str, Any], challenger: dict[str, Any],
+                     limit: dict[str, Any], hard_rule: bool,
+                     cutoff: float, router: dict[str, Any]) -> str:
+    disagreement = champion["verdict"] != challenger["verdict"]
+    if hard_rule or limit["risk_tier"] == "E" or limit["dsr_capacity_exhausted"]:
+        return "AUTO_DECLINE"
+    if abs(challenger["pd_intercept"] - cutoff) <= router["grey_zone_half_width_absolute_pd"] or (
+        router["model_disagreement_routes_to_review"] and disagreement
+    ):
+        return "MANUAL_REVIEW"
+    if challenger["pd_intercept"] < cutoff and limit["final_limit"] > 0.0:
+        return "AUTO_APPROVE"
+    return "AUTO_DECLINE"
 
 
 def evaluate(applicant: dict[str, Any]) -> dict[str, Any]:
@@ -158,10 +175,10 @@ def evaluate(applicant: dict[str, Any]) -> dict[str, Any]:
                   "pd_intercept": _sigmoid(_logit(challenger_raw) + challenger_cal["intercept_alpha"]),
                   "pd_platt": _sigmoid(challenger_cal["platt_alpha"] + challenger_cal["platt_beta"] * _logit(challenger_raw))}
     thresholds = cfg["thresholds"]["iso_risk"]
-    champion["verdict"] = "APPROVE" if champion["pd_platt"] <= thresholds["champion_pd_cutoff"] else "DECLINE"
-    challenger["verdict"] = "APPROVE" if challenger["pd_platt"] <= thresholds["challenger_pd_cutoff"] else "DECLINE"
+    champion["verdict"] = "APPROVE" if champion["pd_intercept"] <= thresholds["champion_pd_cutoff"] else "DECLINE"
+    challenger["verdict"] = "APPROVE" if challenger["pd_intercept"] <= thresholds["challenger_pd_cutoff"] else "DECLINE"
     lp = cfg["limit_policy"]
-    limit = _limit(challenger["pd_platt"], features, lp)
+    limit = _limit(challenger["pd_intercept"], features, lp)
     rule_dpd = float(features.get("bureau_active_max_dpd") or 0) >= 90
     income = features.get("maininc_215A")
     debt = float(features.get("active_bureau_monthly_debt") or 0)
@@ -171,19 +188,13 @@ def evaluate(applicant: dict[str, Any]) -> dict[str, Any]:
         {"rule_id": "R01", "triggered": rule_dpd, "reason_code": "SEVERE_ACTIVE_DELINQUENCY" if rule_dpd else None},
         {"rule_id": "R02", "triggered": rule_debt, "reason_code": "EXISTING_DEBT_TO_INCOME_OVER_60_PERCENT" if rule_debt else None},
     ]
-    router = cfg["tri_state_router"]
     cutoff = thresholds["challenger_pd_cutoff"]
-    grey = router["grey_zone_half_width_absolute_pd"]
     disagreement = champion["verdict"] != challenger["verdict"]
-    if rule_dpd or rule_debt or limit["risk_tier"] == "E":
-        route = "AUTO_DECLINE"
-    elif abs(challenger["pd_platt"] - cutoff) <= grey or (router["model_disagreement_routes_to_review"] and disagreement):
-        route = "MANUAL_REVIEW"
-    elif challenger["pd_platt"] < cutoff:
-        route = "AUTO_APPROVE"
-    else:
-        route = "AUTO_DECLINE"
+    router = cfg["tri_state_router"]
+    route = _tri_state_route(champion, challenger, limit, rule_dpd or rule_debt, cutoff, router)
     reasons = [r["reason_code"] for r in hard_trace if r["triggered"]]
+    if limit["dsr_capacity_exhausted"]:
+        reasons.append("DSR_CAPACITY_EXHAUSTED")
     if challenger["verdict"] == "DECLINE":
         reasons.append("CHALLENGER_PD_ABOVE_ISO_RISK_CUTOFF")
     if disagreement:

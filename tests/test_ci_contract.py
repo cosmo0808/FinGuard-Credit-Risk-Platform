@@ -14,6 +14,8 @@ def test_policy_schema_and_two_dimensional_matrix():
     config = json.loads((ROOT / "configs/decision_engine_policy_v2.json").read_text(encoding="utf-8"))
     schema = json.loads((ROOT / "configs/decision_engine_policy_v2.schema.json").read_text(encoding="utf-8"))
     validate(config, schema)
+    assert config["thresholds"]["decision_pd_scale"] == "stage5_intercept_recalibrated_pd"
+    assert config["thresholds"]["iso_approval"]["champion_pd_cutoff"] == config["thresholds"]["iso_risk"]["champion_pd_cutoff"]
     cells = {(r["risk_tier"], r["affordability_band"]) for r in config["limit_policy"]["decision_matrix"]}
     assert cells == {(tier, band) for tier in "ABCDE" for band in ("VERIFIED_INCOME", "UNVERIFIED_INCOME")}
 
