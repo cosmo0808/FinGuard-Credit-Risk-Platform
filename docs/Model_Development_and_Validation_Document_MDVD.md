@@ -87,7 +87,7 @@ Stage 5 fitted intercept and Platt recalibration only on OOT_Valid and applied f
 | Approval rate | 70.7970% | 75.1587% | +4.3617 pp |
 | Approved cases | 107,404 | 114,021 | +6,617 |
 | Observed bad rate | 0.9990% | 0.8832% | −0.1158 pp |
-| Simulated expected net profit (ENP) | 132.1802538M | 140.125997M | +7.945743M |
+| S1 Baseline Model-Implied Scenario Expected Net Profit Proxy (not realized lifecycle profit; Intercept-Recalibrated PD) | 133.659752M (133,659,752) | 142.305881M (142,305,881) | +8.646129M (+8,646,129; +6.47%) |
 
 This is a blind forward application of Valid-frozen calibration/cutoff policies to observed Monitor data, with simulated ENP assumptions; it is not a randomized business impact estimate. Iso-Approval answers a different question and may favor the Champion because the challenger can select fewer but larger-ticket accounts under matched approval count.
 

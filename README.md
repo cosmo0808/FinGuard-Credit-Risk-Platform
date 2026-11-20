@@ -29,7 +29,7 @@
 | Champion | 19-feature WOE Logistic Scorecard; OOT_Valid `ROC-AUC=0.7768`, `KS=0.4346`; OOT_Monitor `KS=0.4222` |
 | Challenger | 73-feature monotonic LightGBM M4; OOT_Valid raw `ROC-AUC=0.8173`, `KS=0.4929`; OOT_Monitor `KS=0.5006` |
 | Incremental lift | OOT_Valid KS rises from M1 `0.3236` to M4 `0.4929` across four feature-group additions |
-| Forward Iso-Risk comparison | Monitor approval `70.7970% → 75.1587%` (+6,617 cases); bad rate `0.9990% → 0.8832%`; simulated ENP `132.18M → 140.13M` (+7.95M) |
+| Forward Iso-Risk comparison | Monitor approval `70.7970% → 75.1587%` (+6,617 cases); observed bad rate `0.9990% → 0.8832%`. Under unified `Intercept-Recalibrated PD`, Stage 6 S1 Baseline Model-Implied Scenario Expected Net Profit Proxy (not realized lifecycle profit): Champion `133.66M` (`133,659,752`) → Challenger `142.31M` (`142,305,881`), uplift `+8.65M` (`+8,646,129`, `+6.47%`). |
 | MRM remediation | M4-NoDrift removes 4 severe-drift features: Monitor Score PSI 0.0772 → 0.0069 (11.2× lower), while blind Monitor KS remains 0.5006 → 0.5001 |
 | Reject-bias sensitivity | k* = 2.99× break-even sensitivity; this is not an estimate of unobserved reject outcomes |
 | Governance | No synthetic MOB curves: prior-contract DPD severity migration used because source table lacks monthly snapshots |
