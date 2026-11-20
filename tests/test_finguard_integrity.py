@@ -455,3 +455,14 @@ def test_17_dsr_capacity_boundaries_and_auto_approve_limit_invariant(monkeypatch
             if ratio == 0.61:
                 assert "EXISTING_DEBT_TO_INCOME_OVER_60_PERCENT" in result["reason_codes"]
         assert result["tri_state_route"] != "AUTO_APPROVE" or result["limit_math"]["final_limit"] > 0.0
+
+    unverified_income = decision.evaluate({
+        "case_id": 100, "requested_amount": 1000.0, "annuity": 100.0,
+        "monthly_income": 100.0, "existing_monthly_debt": 80.0,
+        "features": {"bureau_active_max_dpd": 0, "static_avg_dpd_tol_closure24m": 0,
+                     "static_pct_inst_paid_early_3d": 0},
+    })
+    assert unverified_income["limit_math"]["income_verified"] is False
+    assert unverified_income["limit_math"]["hard_policy_decline"] is False
+    assert unverified_income["hard_rule_trace"][1]["triggered"] is False
+    assert "EXISTING_DEBT_TO_INCOME_OVER_60_PERCENT" not in unverified_income["reason_codes"]

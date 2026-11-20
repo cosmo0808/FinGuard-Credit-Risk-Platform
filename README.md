@@ -4,7 +4,7 @@
 > **[Launch FinGuard Credit Decisioning & MRM Workbench →](https://finguard-credit-risk.netlify.app/)** — interactive dual-model inference (`19-feature Scorecard` + `73-feature LightGBM M4`), 3-driver DSR limit waterfall, KGB reject-bias sensitivity (`k* = 2.99×`), and MRM drift remediation (`M4-NoDrift`).
 
 
-**A retrospective credit decisioning and model-risk-management (MRM) prototype for Malaysian and Southeast Asian fintech.** FinGuard builds a transparent WOE scorecard and a monotonic LightGBM challenger, then evaluates calibration, limit policy, portfolio economics, drift and stress assumptions without fitting on the forward monitoring period.
+**A retrospective credit decisioning and model-risk-management (MRM) prototype for Malaysian and Southeast Asian fintech.** FinGuard builds a transparent WOE scorecard and a monotonic LightGBM challenger. Canonical Champion and M4 Full evaluations keep OOT_Monitor blind; M4-NoDrift is a separately labeled post-hoc sensitivity because its feature exclusions use Monitor CSI.
 
 > **Scope:** retrospective portfolio case study using historical observed loan outcomes. Simulated approvals and profit are assumptions-based comparisons, not causal treatment effects, legal advice, or production approval.
 
@@ -23,13 +23,13 @@
 
 | Result | Verified finding |
 |---|---|
-| Portfolio | 1,526,659 unique cases; overall observed bad rate 3.1437% |
+| Portfolio | 1,526,659 historical application-level records from the Home Credit 2024 dataset; historical decision window 2019-Q1 to 2020-Q4; OOT_Monitor covers 2020-06-30 to 2020-10-05; overall observed bad rate 3.1437% |
 | Temporal design | **1,292,350 Dev** (Train_Dev W0–64) \| **82,602 Valid** (OOT_Valid W65–77) \| **151,707 Monitor** (OOT_Monitor W78–91) |
 | Champion | 19-feature WOE Logistic Scorecard; OOT_Valid `ROC-AUC=0.7768`, `KS=0.4346`; OOT_Monitor `KS=0.4222` |
 | Challenger | 73-feature monotonic LightGBM M4; OOT_Valid raw `ROC-AUC=0.8173`, `KS=0.4929`; OOT_Monitor `KS=0.5006` |
 | Incremental lift | OOT_Valid KS rises from M1 `0.3236` to M4 `0.4929` across four feature-group additions |
 | Forward Iso-Risk comparison | Monitor approval `70.7970% → 75.1587%` (+6,617 cases); observed bad rate `0.9990% → 0.8832%`. Under unified `Intercept-Recalibrated PD`, Stage 6 S1 Baseline Model-Implied Scenario Expected Net Profit Proxy (not realized lifecycle profit): Champion `133.66M` (`133,659,752`) → Challenger `142.31M` (`142,305,881`), uplift `+8.65M` (`+8,646,129`, `+6.47%`). |
-| MRM remediation | M4-NoDrift removes 4 severe-drift features: Monitor Score PSI 0.0772 → 0.0069 (11.2× lower), while blind Monitor KS remains 0.5006 → 0.5001 |
+| MRM remediation | M4-NoDrift is a post-hoc drift-remediation sensitivity analysis: 4 exclusions were informed by Train_Dev vs OOT_Monitor CSI, so its Monitor metrics are not an independent blind OOT validation. Score PSI 0.0772 → 0.0069; KS 0.5006 → 0.5001. Promotion requires a subsequent mature-window independent validation or Shadow Mode. |
 | Reject-bias sensitivity | k* = 2.99× break-even sensitivity; this is not an estimate of unobserved reject outcomes |
 | Governance | No synthetic MOB curves: prior-contract DPD severity migration used because source table lacks monthly snapshots |
 
@@ -99,13 +99,13 @@ FinGuard/
 
    Exact CLI names and prerequisites are documented in each script and corresponding `reports/stage*_*.md`. Outputs depend on the licensed/source dataset and deterministic package/platform behavior; no raw dataset is bundled here.
 
-4. Review split boundaries before running any fitting code. `OOT_Valid` was used for Stage 5 recalibration/cutoff selection; `OOT_Monitor` remained forward-only for fitting and policy selection.
+4. Review split boundaries before running any fitting code. For canonical Champion and M4 Full, `OOT_Valid` was used for Stage 5 recalibration/cutoff selection and `OOT_Monitor` remained blind (`monitor_used_for_fit_or_selection: false`). M4-NoDrift is an exception: its post-hoc feature exclusion was informed by `Train_Dev vs OOT_Monitor` CSI, so it is not an independent blind OOT validation.
 
 ### Data and model governance
 
 The repository intentionally tracks reviewed code, documentation, figures and aggregated portfolio marts, while ignoring raw parquet, processed row-level parquet, serialized models, local spills, virtual environments and credentials. A successful Git ignore check is not a data privacy review. Confirm aggregation, small-cell risk and applicable permissions before publishing portfolio exports.
 
-The Stage 4 APR, DSR, LGD and cost values are project assumptions, not blanket statutory caps. Confirm entity/product scope with compliance counsel. See the [MDVD regulatory and limitations register](docs/Model_Development_and_Validation_Document_MDVD.md#10-limitations-register--production-governance).
+The live Netlify URL serves standalone zero-backend browser inference. `FastAPI` in `api/decision.py` is a local inference prototype that requires locally generated model `.pkl` artifacts, which are excluded via `.gitignore`. The Malaysia section is a conceptual regulatory framework mapping (BNM Responsible Financing, CCRIS / CTOS, and MFRS 9), not a compliance certification or a full ECL engine. The Stage 4 APR, DSR, LGD and cost values are project assumptions, not blanket statutory caps. Confirm entity/product scope with compliance counsel. See the [MDVD regulatory and limitations register](docs/Model_Development_and_Validation_Document_MDVD.md#10-limitations-register--production-governance).
 
 ## 中文简介
 

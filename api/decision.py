@@ -94,7 +94,7 @@ def _limit(pd_value: float, features: dict[str, Any], policy: dict[str, Any]) ->
     history = num("static_avg_dpd_tol_closure24m")
     early = num("static_pct_inst_paid_early_3d", float("nan"))
     hard_dpd = dpd >= 90
-    debt_ratio = debt / income if math.isfinite(income) and income > 0 else None
+    debt_ratio = debt / income if income_verified else None
     hard_debt = debt_ratio is not None and debt_ratio > 0.60
     behavior = policy["minor_dpd_behavior_multiplier"] if dpd > 0 or history > 0 else policy["clean_history_behavior_multiplier"]
     if behavior == policy["clean_history_behavior_multiplier"] and math.isfinite(early) and early >= policy["early_payment_ratio_threshold"]:

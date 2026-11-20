@@ -6,6 +6,8 @@
 
 Canonical split truth 以已保存 `WEEK_NUM` 分配为准；Train_Dev case-ID artifact、Feature Mart、Stage 3 与 Stage 5 均作交叉核验。
 
+Home Credit 2024 dataset：1.53M historical application-level records；historical decision window 2019-Q1 to 2020-Q4；OOT_Monitor covers 2020-06-30 to 2020-10-05. This is a retrospective historical window, not a 2024 time series.
+
 | Split | Rows | Week range | Date range | Observed target % | Observed bad rate % |
 |---|---|---|---|---|---|
 | Train_Dev | 1292350 | W0–64 | 2019-01-01 00:00:00–2020-03-30 00:00:00 | 100.0000 | 3.3154 |
@@ -60,6 +62,8 @@ The exact OOT_Valid cutoffs, OOT_Valid metrics, OOT_Monitor results, bootstrap d
 ## 5. Missing income, CSI remediation and fairness proxies
 
 Missing-income alternative policies are counterfactual routing rules; outcomes are not changed or imputed. Fairness rates are descriptive and conditioned on each model's own calibrated-PD tier.
+
+**Validation independence:** Canonical Champion and M4 Full use strict blind `OOT_Monitor` evaluation (`monitor_used_for_fit_or_selection: false`). M4-NoDrift is a **post-hoc drift remediation sensitivity analysis**: its feature exclusions were informed by `Train_Dev vs OOT_Monitor` CSI (`monitor_used_for_fit_or_selection: true`), so it is **not an independent blind OOT validation**. Production promotion requires independent validation on a subsequent mature time window or Shadow Mode.
 
 | Gender value | OOT_Monitor count | Share % |
 |---|---|---|

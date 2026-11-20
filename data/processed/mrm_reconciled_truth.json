@@ -153,7 +153,13 @@
     "discrepancy_case_ids": [],
     "discrepancy_case_ids_status": "NOT_REPRODUCIBLE_FROM_CURRENT_ARTIFACTS",
     "canonical_week_split_verified": true,
-    "interpretation": "The mart, Stage 3 predictions, Stage 5 predictions, and Train_Dev case-ID artifact agree on WEEK_NUM splits. Current artifacts do not contain a 35-row membership difference to enumerate. The 1,292,315/82,637 pair is therefore not reproduced; retain 1,292,350/82,602 as canonical for the saved week-based artifacts."
+    "interpretation": "The mart, Stage 3 predictions, Stage 5 predictions, and Train_Dev case-ID artifact agree on WEEK_NUM splits. Current artifacts do not contain a 35-row membership difference to enumerate. The 1,292,315/82,637 pair is therefore not reproduced; retain 1,292,350/82,602 as canonical for the saved week-based artifacts.",
+    "dataset_scope": {
+      "dataset": "Home Credit 2024 dataset",
+      "historical_application_level_records": 1526659,
+      "historical_decision_window": "2019-Q1 to 2020-Q4",
+      "oot_monitor_date_range": "2020-06-30 to 2020-10-05"
+    }
   },
   "section_2_resource_telemetry": {
     "duckdb_sample_mart_query": {
@@ -3919,11 +3925,24 @@
         "a_over_e": 0.8533834245790131,
         "valid_frozen_cutoff": 0.03788214281008923
       },
-      "training_protocol": {
-        "fit_split": "Train_Dev W0-W54",
-        "early_stopping": "Train_Dev W55-W64",
-        "calibration_and_cutoff_selection": "OOT_Valid W65-W77",
-        "monitor_used_for_fit_or_selection": false
+      "validation_protocols": {
+        "canonical_champion_and_m4_full": {
+          "fit_split": "Train_Dev W0-W54",
+          "early_stopping": "Train_Dev W55-W64",
+          "calibration_and_cutoff_selection": "OOT_Valid W65-W77",
+          "monitor_used_for_fit_or_selection": false,
+          "validation_status": "Strict blind OOT_Monitor evaluation; Monitor excluded from fitting and model/cutoff selection."
+        },
+        "M4-NoDrift": {
+          "analysis_type": "Post-hoc drift remediation sensitivity analysis",
+          "fit_split": "Train_Dev W0-W54",
+          "early_stopping": "Train_Dev W55-W64",
+          "calibration_and_cutoff_selection": "OOT_Valid W65-W77",
+          "feature_exclusion_basis": "SEVERE_CSI_FEATURES selected using Train_Dev vs OOT_Monitor CSI.",
+          "monitor_used_for_fit_or_selection": true,
+          "independent_blind_oot_validation": false,
+          "promotion_requirement": "Independent validation on a subsequent mature time window or Shadow Mode."
+        }
       }
     },
     "variant_training_details": {

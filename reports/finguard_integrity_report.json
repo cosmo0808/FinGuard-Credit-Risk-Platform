@@ -1,5 +1,5 @@
 {
-  "generated_at_utc": "2026-11-20T12:51:38.952869+00:00",
+  "generated_at_utc": "2026-11-20T14:49:33.949971+00:00",
   "suite": "FinGuard institutional integrity",
   "invariants": 17,
   "test_cases": 20,
@@ -17,102 +17,102 @@
     {
       "test": "tests/test_ci_contract.py::test_policy_schema_and_two_dimensional_matrix",
       "status": "passed",
-      "duration_seconds": 0.010752
+      "duration_seconds": 0.009104
     },
     {
       "test": "tests/test_ci_contract.py::test_scorecard_pdo_constants_reconstruct_factor",
       "status": "passed",
-      "duration_seconds": 0.001589
+      "duration_seconds": 0.001275
     },
     {
       "test": "tests/test_ci_contract.py::test_api_request_contract_and_bounds",
       "status": "passed",
-      "duration_seconds": 0.001008
+      "duration_seconds": 0.00162
     },
     {
       "test": "tests/test_finguard_integrity.py::test_01_temporal_splits_are_disjoint_and_complete",
       "status": "passed",
-      "duration_seconds": 0.216801
+      "duration_seconds": 0.222891
     },
     {
       "test": "tests/test_finguard_integrity.py::test_02_fitted_models_exclude_leakage_and_sensitive_fields",
       "status": "passed",
-      "duration_seconds": 0.000561
+      "duration_seconds": 0.000596
     },
     {
       "test": "tests/test_finguard_integrity.py::test_03_champion_coefficients_pvalues_and_vif_pass",
       "status": "passed",
-      "duration_seconds": 3.556792
+      "duration_seconds": 3.639707
     },
     {
       "test": "tests/test_finguard_integrity.py::test_04_pdo_score_reconstructs_saved_logit_pd",
       "status": "passed",
-      "duration_seconds": 0.136758
+      "duration_seconds": 0.131976
     },
     {
       "test": "tests/test_finguard_integrity.py::test_05_oot_valid_bad_rates_strictly_decrease_across_ten_risk_deciles",
       "status": "passed",
-      "duration_seconds": 0.090801
+      "duration_seconds": 0.095155
     },
     {
       "test": "tests/test_finguard_integrity.py::test_06_recalibrator_is_valid_only_and_intercept_preserves_rank",
       "status": "passed",
-      "duration_seconds": 0.273442
+      "duration_seconds": 0.252712
     },
     {
       "test": "tests/test_finguard_integrity.py::test_07_recommended_limits_are_bounded_finite",
       "status": "passed",
-      "duration_seconds": 0.003497
+      "duration_seconds": 0.002969
     },
     {
       "test": "tests/test_finguard_integrity.py::test_08_policy_knockouts_always_have_zero_limit",
       "status": "passed",
-      "duration_seconds": 0.006847
+      "duration_seconds": 0.007641
     },
     {
       "test": "tests/test_finguard_integrity.py::test_09_verified_income_approvals_satisfy_total_dsr_cap",
       "status": "passed",
-      "duration_seconds": 0.013992
+      "duration_seconds": 0.015315
     },
     {
       "test": "tests/test_finguard_integrity.py::test_10_oot_monitor_isorisk_headline_matches_stage6_artifact",
       "status": "passed",
-      "duration_seconds": 0.008035
+      "duration_seconds": 0.008376
     },
     {
       "test": "tests/test_finguard_integrity.py::test_11_exported_ui_has_no_fabricated_currency_labels",
       "status": "passed",
-      "duration_seconds": 0.88805
+      "duration_seconds": 0.888772
     },
     {
       "test": "tests/test_finguard_integrity.py::test_12_python_model_parity_fixtures_cover_five_monitor_spotlights",
       "status": "passed",
-      "duration_seconds": 0.029616
+      "duration_seconds": 0.027821
     },
     {
       "test": "tests/test_finguard_integrity.py::test_13_policy_config_json_schema_and_thresholds",
       "status": "passed",
-      "duration_seconds": 0.009523
+      "duration_seconds": 0.008359
     },
     {
       "test": "tests/test_finguard_integrity.py::test_14_fastapi_health_and_single_underwrite_parity",
       "status": "passed",
-      "duration_seconds": 3.180666
+      "duration_seconds": 3.02081
     },
     {
       "test": "tests/test_finguard_integrity.py::test_15_rule_waterfall_and_tristate_accounting_identity",
       "status": "passed",
-      "duration_seconds": 0.524257
+      "duration_seconds": 0.556553
     },
     {
       "test": "tests/test_finguard_integrity.py::test_16_woe_bin_explorer_completeness",
       "status": "passed",
-      "duration_seconds": 0.06348
+      "duration_seconds": 0.062403
     },
     {
       "test": "tests/test_finguard_integrity.py::test_17_dsr_capacity_boundaries_and_auto_approve_limit_invariant",
       "status": "passed",
-      "duration_seconds": 0.005106
+      "duration_seconds": 0.007469
     }
   ]
 }

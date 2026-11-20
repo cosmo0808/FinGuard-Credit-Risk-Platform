@@ -45,6 +45,7 @@ HTML_FILES = [ROOT / "docs" / "index.html", ROOT / "dashboard" / "FinGuard_Inter
 BOOTSTRAPS = 1000
 SEED = 42
 BAD_RATE_REFERENCE = 0.012622675619834711
+# Post-hoc sensitivity only: exclusions were selected from Train_Dev vs OOT_Monitor CSI.
 SEVERE_CSI_FEATURES = ["has_tax_registry_record", "person_education_level", "tax_verified_income_ratio", "person_family_status"]
 
 
@@ -171,7 +172,9 @@ def empirical_split_audit(con):
     canonical_counts = {r["split_name"]: int(r["rows"]) for r in rows}
     discrepancy = {k: {"claimed_rows": v, "canonical_rows": canonical_counts[k],
                        "claimed_minus_canonical": v-canonical_counts[k]} for k,v in claimed.items()}
-    return {"canonical_split_rows": rows, "artifact_split_rows": source, "stage3_prediction_split_rows": stage3,
+    return {"dataset_scope":{"dataset":"Home Credit 2024 dataset","historical_application_level_records":1526659,
+            "historical_decision_window":"2019-Q1 to 2020-Q4","oot_monitor_date_range":"2020-06-30 to 2020-10-05"},
+            "canonical_split_rows": rows, "artifact_split_rows": source, "stage3_prediction_split_rows": stage3,
             "train_dev_case_id_artifact": ids, "case_level_assignment_mismatches": mismatch.to_dict("records"),
             "date_boundary_reconciliation": date_boundary, "claimed_count_discrepancy": discrepancy,
             "discrepancy_case_ids": [], "discrepancy_case_ids_status": "NOT_REPRODUCIBLE_FROM_CURRENT_ARTIFACTS",
@@ -590,8 +593,10 @@ def main():
     iso_c=config["thresholds"]["iso_risk"]["champion_pd_cutoff"];iso_m=config["thresholds"]["iso_risk"]["challenger_pd_cutoff"]
     merged_for_audit=pred_frame
 
-    # Train Dev feature matrices for M2 and M4-NoDrift; OOT_Valid is used only
-    # for calibration/cutoff selection, and OOT_Monitor remains evaluation only.
+    # M2 is a predefined feature-group sensitivity. M4-NoDrift is post-hoc:
+    # SEVERE_CSI_FEATURES were selected using Train_Dev vs OOT_Monitor CSI,
+    # so its Monitor metrics are descriptive, not an independent blind OOT test.
+    # Canonical Champion and M4 Full retain strict blind OOT_Monitor evaluation.
     feature_groups=pd.read_csv(MAPPING_PATH).set_index("column_name").feature_group.to_dict()
     m2_features=[f for f in features if feature_groups.get(f) in {"Group_1_Traditional_Credit","Group_2_Repayment_Behaviour"}]
     nodrift_features=[f for f in features if f not in SEVERE_CSI_FEATURES]
@@ -658,8 +663,16 @@ def main():
        "score_psi_train_dev_to_monitor":variants["M2 Zero Demographic/Employment Proxies"]["score_psi_train_dev_to_monitor"],
        "max_feature_csi_retained_features":m2_max,"a_over_e":variants["M2 Zero Demographic/Employment Proxies"]["monitor_a_over_e"],
        "valid_frozen_cutoff":variants["M2 Zero Demographic/Employment Proxies"]["valid_frozen_iso_risk_cutoff"]},
-       "training_protocol":{"fit_split":"Train_Dev W0-W54","early_stopping":"Train_Dev W55-W64",
-          "calibration_and_cutoff_selection":"OOT_Valid W65-W77","monitor_used_for_fit_or_selection":False}}
+       "validation_protocols":{
+        "canonical_champion_and_m4_full":{"fit_split":"Train_Dev W0-W54","early_stopping":"Train_Dev W55-W64",
+          "calibration_and_cutoff_selection":"OOT_Valid W65-W77","monitor_used_for_fit_or_selection":False,
+          "validation_status":"Strict blind OOT_Monitor evaluation; Monitor excluded from fitting and model/cutoff selection."},
+        "M4-NoDrift":{"analysis_type":"Post-hoc drift remediation sensitivity analysis",
+          "fit_split":"Train_Dev W0-W54","early_stopping":"Train_Dev W55-W64",
+          "calibration_and_cutoff_selection":"OOT_Valid W65-W77",
+          "feature_exclusion_basis":"SEVERE_CSI_FEATURES selected using Train_Dev vs OOT_Monitor CSI.",
+          "monitor_used_for_fit_or_selection":True,"independent_blind_oot_validation":False,
+          "promotion_requirement":"Independent validation on a subsequent mature time window or Shadow Mode."}}}
 
     # Benchmark runtime for real OOT_Monitor scoring and deterministic limit computation.
     def score_monitor_benchmark():
@@ -835,6 +848,7 @@ def render_report(result):
       f"生成时间：{result['metadata']['generated_at_local']}。本步骤仅写入 reconciled JSON 与本报告；HTML unchanged = **{result['metadata']['html_untouched']}**。",
       "", "## 1. Sample selection、outcome observability 与 split reconciliation", "",
       "Canonical split truth 以已保存 `WEEK_NUM` 分配为准；Train_Dev case-ID artifact、Feature Mart、Stage 3 与 Stage 5 均作交叉核验。",
+      "本研究使用 Home Credit 2024 dataset 的 1.53M historical application-level records；历史 decision window 为 2019-Q1 至 2020-Q4。OOT_Monitor 覆盖 2020-06-30 至 2020-10-05。These are retrospective application outcomes, not a 2024 time series.",
       "",md_table(["Split","Rows","Week range","Date range","Observed target %","Observed bad rate %"],
         [{"Split":r["split_name"],"Rows":r["rows"],"Week range":f"W{r['week_min']}–{r['week_max']}","Date range":f"{r['date_min']}–{r['date_max']}",
           "Observed target %":r["target_observed_pct"],"Observed bad rate %":r["observed_bad_rate_pct"]} for r in s1["canonical_split_rows"]]),
@@ -862,6 +876,7 @@ def render_report(result):
       "", "The exact OOT_Valid cutoffs, OOT_Valid metrics, OOT_Monitor results, bootstrap deltas, and Stage 5 provenance are structured in the JSON output.",
       "", "## 5. Missing income, CSI remediation and fairness proxies", "",
       "Missing-income alternative policies are counterfactual routing rules; outcomes are not changed or imputed. Fairness rates are descriptive and conditioned on each model's own calibrated-PD tier.",
+      "**Validation independence:** Canonical Champion and M4 Full use strict blind `OOT_Monitor` evaluation (`monitor_used_for_fit_or_selection: false`). M4-NoDrift is a **post-hoc drift remediation sensitivity analysis**: its feature exclusions were informed by `Train_Dev vs OOT_Monitor` CSI (`monitor_used_for_fit_or_selection: true`), so it is **not an independent blind OOT validation**. Production promotion requires independent validation on a subsequent mature time window or Shadow Mode.",
       "",md_table(["Gender value","OOT_Monitor count","Share %"],[{"Gender value":k,"OOT_Monitor count":v["count"],"Share %":v["share_pct"]} for k,v in s5["gender_missingness_oot_monitor"].items()]),
       "",md_table(["Variant","Features","Monitor KS","Score PSI","Max retained-feature CSI","A/E"],[
        {"Variant":name,"Features":d.get("features"),"Monitor KS":d.get("oot_monitor_ks"),"Score PSI":d.get("score_psi_train_dev_to_monitor"),
