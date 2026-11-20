@@ -1,7 +1,8 @@
 # FinGuard | Credit Decisioning & MRM Prototype
 
-> 🚀 **Live Interactive Enterprise Console (GitHub Pages)**  
-> Explore the [FinGuard Risk OS](docs/index.html) — executive portfolio trends, the underwriting sandbox, strategy and stress views, MRM monitoring, and scorecard governance. Enable **GitHub Pages → Deploy from `/docs`** to publish the self-contained app.
+> 🚀 **Live Interactive Workbench (Zero-Install Web App)**
+> **[Launch FinGuard Credit Decisioning & MRM Workbench →](https://finguard-credit-risk.netlify.app/)** — interactive dual-model inference (`19-feature Scorecard` + `73-feature LightGBM M4`), 3-driver DSR limit waterfall, KGB reject-bias sensitivity (`k* = 2.99×`), and MRM drift remediation (`M4-NoDrift`).
+
 
 **A retrospective credit decisioning and model-risk-management (MRM) prototype for Malaysian and Southeast Asian fintech.** FinGuard builds a transparent WOE scorecard and a monotonic LightGBM challenger, then evaluates calibration, limit policy, portfolio economics, drift and stress assumptions without fitting on the forward monitoring period.
 
